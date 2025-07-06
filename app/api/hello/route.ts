@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/Mongodb";
-import cloudinary from "@/lib/cloudinary"; 
+// import cloudinary from "@/lib/cloudinary"; 
+import cloudinary from "@/lib/Cloudinary";
 import { Product } from "@/models/Product";
 
 export async function POST(req: NextRequest) {
