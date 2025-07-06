@@ -77,7 +77,7 @@ const ProductsData = [
 
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center py-8'>
         <p className='text-2xl font-bold'>Sale Sale Sale</p>
         <div className='flex flex-row gap-3'>
             {ProductsData.map((item)=>{

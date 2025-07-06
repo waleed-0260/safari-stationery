@@ -1,4 +1,7 @@
+import CallToEmail from "@/components/home/CallToEmail";
 import Collections from "@/components/home/Collections";
+import Faq from "@/components/home/Faq";
+import Footer from "@/components/home/Footer";
 import Header from "@/components/home/Header";
 import Hero from "@/components/home/Hero";
 import Products from "@/components/home/Products";
@@ -11,6 +14,9 @@ export default function Home() {
     <Hero/>
     <Products/>
     <Collections/>
+    <Faq/>
+    <CallToEmail/>
+    <Footer/>
     </div>
   );
 }

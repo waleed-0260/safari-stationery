@@ -11,7 +11,7 @@ const Collections = () => {
             name:"Pens & Pencil",
         },
         {
-            image:"https://www.thepaperworm.com/cdn/shop/collections/photo-1609775436218-78e51e5e61dd.jpg?v=1618769039&width=535",
+            image:"https://www.thepaperworm.com/cdn/shop/collections/IMG-20200305-WA0036.jpg?v=1652974308&width=535",
             name:"Notebooks",
         },
         {
@@ -46,7 +46,7 @@ const Collections = () => {
             {collectionData.map((item:any, index:any)=>{
                 return(
                     <div key={index} className='flex flex-col w-[200px] h-[220px]'>
-                        <img src="https://www.thepaperworm.com/cdn/shop/collections/celebration.jpg?v=1746687014&width=535" alt="" />
+                        <img src={item.image} alt="" />
                         <p>{item.name}</p>
                     </div>
                 )

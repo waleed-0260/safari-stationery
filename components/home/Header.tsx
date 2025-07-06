@@ -7,7 +7,7 @@ import { CiShoppingCart } from "react-icons/ci";
 
 const Header = () => {
   return (
-    <div className='flex flex-row justify-between items-center py-[10px] bg-pink-500 w-[90%]'>
+    <div className='flex flex-row justify-between items-center py-[18px] bg-pink-500 w-full'>
         <div>
             <img src="logo" alt="" />
         </div>
