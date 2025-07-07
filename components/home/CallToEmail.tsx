@@ -29,7 +29,7 @@ const CallToEmail = ({heading, desc, btn}:any) => {
         className="bg-[#231f20] text-white sm:w-[210px] sm:mt-0 mt-8 w-[80%] h-12 text-lg rounded-md transition duration-300"
         disabled={loading}
       >
-        {loading ? "Submitting..." : btn}
+        Subscribe Now
       </button>
   </form>
 </div>
