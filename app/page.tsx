@@ -1,3 +1,4 @@
+import Boxes from "@/components/home/Boxes";
 import CallToEmail from "@/components/home/CallToEmail";
 import Collections from "@/components/home/Collections";
 import Faq from "@/components/home/Faq";
@@ -13,6 +14,7 @@ export default function Home() {
     <div className="container flex flex-col items-center justify-center">
     <Header/>
     <Hero/>
+    <Boxes/>
     <Products/>
     <Collections/>
     <SingleProduct/>

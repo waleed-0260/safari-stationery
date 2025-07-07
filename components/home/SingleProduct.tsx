@@ -15,6 +15,7 @@ const SingleProduct = () => {
                 <p className="text-red-500"> Rs 200 PKR</p>
                 <p className=' bg-black text-white py-1 px-3 rounded-full '>Sale</p>
             </div>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid molestias dicta dolore possimus facere sapiente libero laborum aliquam amet porro rem dolorum, ducimus magni quisquam minima magnam. Harum quisquam tempore, maxime, vel, nam error numquam perspiciatis quasi accusamus placeat dolorum laudantium quam vitae tenetur nostrum voluptates porro. Accusantium, perspiciatis inventore.</p>
             <p className='text-sm'>Quantity</p>
             <div className='border-2 h-[50px] w-[120px] flex items-center justify-around'>
                 <p>-</p>
