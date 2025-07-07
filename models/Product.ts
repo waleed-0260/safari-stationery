@@ -4,14 +4,15 @@ const productSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    Price: { type: Number, required: true },
-    CompareAtPrice: {type: Number, required: true},
+    price: { type: Number, required: true },
+    compare_at_price: {type: Number, required: true},
     images: [{ type: String }], // URLs (Cloudinary or other)
     category: [{type: String}],
-    // brand: { type: String }, // Optional
+    sub_category:[{type: String}],
+    colors: [{type: String}],
     stock: { type: Number, default: 0 },
     // tags: [{ type: String }], // For search/filter
-    // isFeatured: { type: Boolean, default: false }, // for "Deals"
+    isFeatured: { type: Boolean, default: false }, // for "Deals"
   },
   { timestamps: true }
 );

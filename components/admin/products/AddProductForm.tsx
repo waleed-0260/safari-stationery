@@ -15,27 +15,41 @@ interface FormValues {
   price: string;
   compare_at_price: string;
   category: string[];           // ✅ string array
-  sub_category: string;
+  sub_category: string[];
   stock: string;
   isFeatured: string;
   images: File[];
+  colors: string[];
 }
 
 const AddProductForm = () => {
   const categoryOptions = [
     { value: 'Sale', label: 'Sale' },
     { value: 'Deals', label: 'Deals' },
-    { value: 'Daily Stationery', label: 'Daily Stationery' },
+    { value: 'Study Essentials', label: 'Study Essentials' },
     { value: 'School Supplies', label: 'School Supplies' },
     { value: 'Art Supplies', label: 'Art Supplies' },
     { value: 'Party Supplies', label: 'Party Supplies' },
     { value: 'Toys', label: 'Toys' },
+    { value: 'Trending', label: 'Trending' },
   ];
 
   const subCategoryMap = {
-  "Sale": [
-    { value: "Painting", label: "Painting" },
-    { value: "Sculpture", label: "Sculpture" },
+  "Study Essentials": [
+       { value: "Pens", label: "Pens" },
+    { value: "Pointers", label: "Pointers" },
+    { value: "Pencils", label: "Pencils" },
+    { value: "Markers", label: "Markers" },
+    { value: "Highlighters", label: "Highlighters" },
+    { value: "Correction Pen/Tape", label: "Correction Pen/Tape" },
+    { value: "Eraser", label: "Eraser" },
+    { value: "Sharpener", label: "Sharpener" },
+    { value: "Ruler/Scale", label: "Ruler/Scale" },
+    { value: "Thumbpins/Paper Clips", label: "Thumbpins/Paper Clips" },
+    { value: "Sticky Notes", label: "Sticky Notes" },
+    { value: "Stapler", label: "Stapler" },
+    { value: "Journals", label: "Journals" },
+    { value: "Registers", label: "Regsiters" },
   ],
   "Deals": [
     { value: "Notebooks", label: "Notebooks" },
@@ -46,10 +60,27 @@ const AddProductForm = () => {
     { value: "Washi Tape", label: "Washi Tape" },
   ],
   "School Supplies": [
-    { value: "Files", label: "Files" },
-    { value: "Staplers", label: "Staplers" },
+      { value: "Bags", label: "Bags" },
+    { value: "Pouches", label: "Pouches" },
+    { value: "Lunch Box", label: "Lunch Box" },
+    { value: "Water Bottle", label: "Water Bottle" },
   ],
 };
+
+const colorsOptions = [
+  { value: "#FF0000", label: "Red" },
+  { value: "#00FF00", label: "Green" },
+  { value: "#0000FF", label: "Blue" },
+  { value: "#FFFF00", label: "Yellow" },
+  { value: "#800080", label: "Purple" },
+  { value: "#00FFFF", label: "Cyan" },
+  { value: "#FFA500", label: "Orange" },
+  { value: "#FFC0CB", label: "Pink" },
+  { value: "#008080", label: "Teal" },
+  { value: "#A52A2A", label: "Brown" },
+  { value: "#000000", label: "Black" },
+  { value: "#ffffff", label: "white" }
+];
 
   const formik = useFormik<FormValues>({
     initialValues: {
@@ -58,10 +89,11 @@ const AddProductForm = () => {
       price: "",
       compare_at_price: "",
       category: [],
-      sub_category: "",
+      sub_category: [],
       stock: "",
       isFeatured: "false",
       images: [],
+      colors: [],
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
@@ -69,12 +101,13 @@ const AddProductForm = () => {
       price: Yup.number().required("Price is required"),
       compare_at_price: Yup.number(),
       category: Yup.array().min(1, "Select at least one category"),
-      sub_category: Yup.string().required("Sub Category is required"),
+      sub_category: Yup.array().min(1, "Select at least one sub category"),
       stock: Yup.number().required("Stock is required"),
       isFeatured: Yup.string().required("Please choose an option"),
+      colors: Yup.array().min(1, "select atles"),
       images: Yup.array()
         .min(2, "Please upload 2 images")
-        .max(2, "Only 2 images are allowed"),
+        .max(4, "Only 2 images are allowed"),
     }),
     onSubmit: async (values) => {
       try {
@@ -87,7 +120,8 @@ const AddProductForm = () => {
         formData.append("stock", values.stock);
         formData.append("isFeatured", values.isFeatured);
         formData.append("category", JSON.stringify(values.category));
-        formData.append("sub_category", values.sub_category);
+        formData.append("sub_category", JSON.stringify(values.sub_category));
+        formData.append("colors", JSON.stringify(values.colors));
 
         values.images.forEach((file: File) => {
           formData.append("images", file);
@@ -112,14 +146,12 @@ const AddProductForm = () => {
     },
   });
 
-
-  const subCategoryOptions =
-    formik.values.category.length > 0 &&
-    formik.values.category[0] in subCategoryMap
-      ? subCategoryMap[
-          formik.values.category[0] as keyof typeof subCategoryMap
-        ]
-      : [];
+const subCategoryOptions =
+  formik.values.category.length > 0
+    ? formik.values.category.flatMap((cat) =>
+        subCategoryMap[cat as keyof typeof subCategoryMap] || []
+      )
+    : [];
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -195,23 +227,6 @@ const AddProductForm = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block mb-1 font-medium text-gray-700">Category</label>
-           {/* <select
-  name="category"
-  multiple
-  onChange={(e) => {
-    const options = Array.from(e.target.selectedOptions).map((opt) => opt.value);
-    formik.setFieldValue("category", options);
-  }}
-  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
->
-  <option value="Fine Arts">Fine Arts</option>
-  <option value="School Supplies">School Supplies</option>
-  <option value="Cute Stationery">Cute Stationery</option>
-  <option value="Office Supplies">Office Supplies</option>
-  <option value="Birthday & Gifts">Birthday & Gifts</option>
-  <option value="Sports & Toys">Sports & Toys</option>
-  <option value="Packing & Industry">Packing & Industry</option>
-</select> */}
 <Select
   isMulti
   name="category"
@@ -232,22 +247,40 @@ value={categoryOptions.filter(option => formik.values.category.includes(option.v
           <div>
             <label className="block mb-1 font-medium text-gray-700">Sub Category</label>
             <Select
-          name="sub_category"
-          options={subCategoryOptions}
-          isDisabled={!formik.values.category}
-          value={subCategoryOptions.find(
-            (opt:any) => opt.value === formik.values.sub_category
-          )}
-            onChange={(option) => {
-    if (option) {
-      formik.setFieldValue("sub_category", option.value);
-    } else {
-      formik.setFieldValue("sub_category", ""); // or null
-    }
+  name="sub_category"
+  options={subCategoryOptions}
+  isDisabled={!formik.values.category.length}
+  value={subCategoryOptions.find(
+    (opt: any) => opt.value === formik.values.sub_category
+  )}
+  onChange={(selected) => {
+    formik.setFieldValue(
+      "sub_category",
+      selected ? selected.map((item: any) => item.value) : []
+    );
   }}
-        />
+  isMulti
+/>
             {formik.touched.sub_category && formik.errors.sub_category && (
               <p className="text-red-500 text-sm mt-1">{formik.errors.sub_category}</p>
+            )}
+          </div>
+           <div>
+            <label className="block mb-1 font-medium text-gray-700">Colors</label>
+            <Select
+  isMulti
+  name="colors"
+  options={colorsOptions}
+  className="basic-multi-select"
+  classNamePrefix="select"
+value={colorsOptions.filter(option => formik.values.colors.includes(option.value))}
+  onChange={(selected) =>
+    formik.setFieldValue("colors", selected.map((item) => item.value))
+  }
+/>
+
+            {formik.touched.colors && formik.errors.colors && (
+              <p className="text-red-500 text-sm mt-1">{formik.errors.colors}</p>
             )}
           </div>
         </div>
@@ -302,7 +335,7 @@ value={categoryOptions.filter(option => formik.values.category.includes(option.v
        {/* Image Upload (Only 2 images allowed) */}
 <div>
   <label className="block mb-1 font-medium text-gray-700">
-    Upload 2 Images
+    Upload 4 Images
   </label>
 
   <div className="grid grid-cols-2 gap-4">
@@ -328,7 +361,7 @@ value={categoryOptions.filter(option => formik.values.category.includes(option.v
         </div>
       ))}
 
-    {formik.values.images.length < 2 && (
+    {formik.values.images.length < 4 && (
       <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md h-32 cursor-pointer hover:bg-gray-100">
         <span className="text-gray-400 text-sm">Click to upload</span>
         <input
@@ -339,7 +372,7 @@ value={categoryOptions.filter(option => formik.values.category.includes(option.v
             const file = e.currentTarget.files?.[0];
             if (!file) return;
             const newImages = [...formik.values.images, file];
-            if (newImages.length <= 2) {
+            if (newImages.length <= 4) {
               formik.setFieldValue("images", newImages);
             }
           }}
