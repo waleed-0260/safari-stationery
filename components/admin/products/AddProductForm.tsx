@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Select from 'react-select';
@@ -23,6 +23,9 @@ interface FormValues {
 }
 
 const AddProductForm = () => {
+
+  const [loading, setLoading] = useState(false);
+
   const categoryOptions = [
     { value: 'Sale', label: 'Sale' },
     { value: 'Deals', label: 'Deals' },
@@ -106,10 +109,11 @@ const colorsOptions = [
       isFeatured: Yup.string().required("Please choose an option"),
       colors: Yup.array().min(1, "select atles"),
       images: Yup.array()
-        .min(2, "Please upload 2 images")
+      .min(2, "Please upload 2 images")
         .max(4, "Only 2 images are allowed"),
-    }),
-    onSubmit: async (values) => {
+      }),
+      onSubmit: async (values) => {
+      setLoading(true);
       try {
         const formData = new FormData();
 
@@ -136,10 +140,13 @@ const colorsOptions = [
         if (data.success) {
           alert("Product added successfully!");
           formik.resetForm();
+          setLoading(false);
         } else {
           alert("Failed to add product.");
+          setLoading(false);
         }
       } catch (error) {
+          setLoading(false);
         console.error("Error uploading product:", error);
         alert("Something went wrong.");
       }
@@ -152,6 +159,7 @@ const subCategoryOptions =
         subCategoryMap[cat as keyof typeof subCategoryMap] || []
       )
     : [];
+    console.log("loas", loading)
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -390,9 +398,11 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition cursor-pointer"
+          disabled={loading}
         >
-          Submit
+          {/* Submit */}
+          {loading ? "adding product please wait...": "Submit"}
         </button>
       </form>
     </div>
