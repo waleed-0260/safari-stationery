@@ -38,6 +38,8 @@ export async function POST(req: NextRequest) {
       price: Number(formData.get("Price")),
       compare_at_price: Number(formData.get("CompareAtPrice")),
       category: JSON.parse(formData.get("category") as string),
+      sub_category: JSON.parse(formData.get("sub_category") as string),
+      colors: JSON.parse(formData.get("colors") as string),
       stock: Number(formData.get("stock")),
       // isFeatured: formData.get("isFeatured") === "true",
       images: imageUrls,
@@ -51,6 +53,13 @@ export async function POST(req: NextRequest) {
 }
 
 
-export async function GET(req:NextRequest) {
-  return NextResponse.json({success:"it is working"})
+export async function GET(req: NextRequest) {
+  try {
+    await connectDB();
+    const products = await Product.find(); // or with filters
+    return NextResponse.json({ success: true, data: products });
+  } catch (error) {
+    console.error("Products fetch error:", error);
+    return NextResponse.json({ success: false, message: "Failed to fetch products" }, { status: 500 });
+  }
 }

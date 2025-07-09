@@ -24,11 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <html lang="en">
+      <body>
+        
     <SidebarProvider>
       <AppSidebar />
       <main className=" w-full">
         <SidebarTrigger />
         {children}
       </main>
-    </SidebarProvider>  );
+    </SidebarProvider>  
+      </body>
+    </html>
+    );
 }

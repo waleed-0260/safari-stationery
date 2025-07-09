@@ -71,18 +71,18 @@ const AddProductForm = () => {
 };
 
 const colorsOptions = [
-  { value: "#FF0000", label: "Red" },
-  { value: "#00FF00", label: "Green" },
-  { value: "#0000FF", label: "Blue" },
-  { value: "#FFFF00", label: "Yellow" },
-  { value: "#800080", label: "Purple" },
-  { value: "#00FFFF", label: "Cyan" },
-  { value: "#FFA500", label: "Orange" },
-  { value: "#FFC0CB", label: "Pink" },
-  { value: "#008080", label: "Teal" },
-  { value: "#A52A2A", label: "Brown" },
-  { value: "#000000", label: "Black" },
-  { value: "#ffffff", label: "white" }
+  { value: "Red", label: "Red" },
+  { value: "Green", label: "Green" },
+  { value: "Blue", label: "Blue" },
+  { value: "Yellow", label: "Yellow" },
+  { value: "Purple", label: "Purple" },
+  { value: "Cyan", label: "Cyan" },
+  { value: "Orange", label: "Orange" },
+  { value: "Pink", label: "Pink" },
+  { value: "Teal", label: "Teal" },
+  { value: "Brown", label: "Brown" },
+  { value: "Black", label: "Black" },
+  { value: "white", label: "white" }
 ];
 
   const formik = useFormik<FormValues>({
@@ -93,10 +93,10 @@ const colorsOptions = [
       compare_at_price: "",
       category: [],
       sub_category: [],
+      colors: [],
       stock: "",
       isFeatured: "false",
       images: [],
-      colors: [],
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
@@ -107,7 +107,7 @@ const colorsOptions = [
       sub_category: Yup.array().min(1, "Select at least one sub category"),
       stock: Yup.number().required("Stock is required"),
       isFeatured: Yup.string().required("Please choose an option"),
-      colors: Yup.array().min(1, "select atles"),
+      colors: Yup.array().min(1, "select atleast"),
       images: Yup.array()
       .min(2, "Please upload 2 images")
         .max(4, "Only 2 images are allowed"),
@@ -131,7 +131,7 @@ const colorsOptions = [
           formData.append("images", file);
         });
 
-        const res = await fetch("/api/hello", {
+        const res = await fetch("/api/products", {
           method: "POST",
           body: formData,
         });
