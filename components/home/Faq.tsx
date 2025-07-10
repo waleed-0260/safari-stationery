@@ -9,8 +9,8 @@ import {
 
 const Faq = () => {
   return (
-    <div className="w-full flex items-center justify-center my-[50px]">
-      <div className="w-[80%] flex flex-col items-center ">
+    <div className="flex items-center justify-center container">
+      <div className="w-full flex flex-col items-center ">
         <p className="md:text-4xl text-2xl heading font-bold">FAQS</p>
         <Accordion type="single" collapsible className="w-[100%]">
   <AccordionItem value="item-1">

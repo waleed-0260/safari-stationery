@@ -8,21 +8,19 @@ export async function GET(
   {
   params,
 }: {
-  params: Promise<{ category: string }>
+  params: Promise<{ SubCategory: string }>
 }
 ) {
-  const {category} = await params;
+  const {SubCategory} = await params;
   try {
     await connectDB();
 
     // Decode in case category has spaces or special characters
-    const decodeCategory = decodeURIComponent(category);
+    const decodedSubCategory = decodeURIComponent(SubCategory);
 
-    // const products = await Product.find({ items });
-     const products = await Product.find({
-          category: { $in: [decodeCategory] },
-        });
-
+    const products = await Product.find({
+      sub_category: { $in: [decodedSubCategory] },
+    });
     if (!products || products.length === 0) {
       return NextResponse.json({ success: false, message: 'No products found in this category' }, { status: 404 });
     }

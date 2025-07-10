@@ -1,8 +1,13 @@
+import Products from '@/components/ProductsPage/Products';
+import { GetProducts } from '@/lib/GetProducts'
 import React from 'react'
 
-const page = () => {
+const page = async() => {
+  const products = await GetProducts();
   return (
-    <div>Products page coming soon</div>
+    <div className='flex flex-col justify-center items-center w-full'>
+      <Products ProductsData={products}/>
+    </div>
   )
 }
 

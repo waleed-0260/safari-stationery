@@ -8,7 +8,7 @@ import 'react-medium-image-zoom/dist/styles.css'
 
 const SingleProducts = ({data}:any) => {
   return (
-    <div className='w-[90%] flex flex-row justify-around items-start py-8'>
+    <div className='container flex flex-row justify-between items-start py-8'>
         <div className='w-[45%]'>
             {/* <img src="https://www.thepaperworm.com/cdn/shop/files/3PcsRainbowTiePastelColoredNotebook.webp?v=1714498273&width=823" alt="" /> */}
 {/* <InnerImageZoom
@@ -26,7 +26,7 @@ const SingleProducts = ({data}:any) => {
             <div className='flex flex-row gap-4'>
                 <p className="line-through text-gray-500">Rs {data.compare_at_price}</p>
                 <p className="text-red-500">Rs {data.price}</p>
-                <p className=' bg-black text-white py-1 px-3 rounded-full '>Sale</p>
+                {/* <p className=' bg-black text-white py-1 px-3 rounded-full '>Sale</p> */}
             </div>
             <p>{data.description}</p>
             <p className='text-sm'>Quantity</p>

@@ -21,7 +21,7 @@ import Link from "next/link";
 const Products = ({ ProductsData }: any) => {
 
   return (
-    <div className="w-full py-8">
+    <div className="w-full py-8 container">
       <h2 className="text-center text-2xl font-bold mb-6">Trending Products</h2>
 
       <div className="relative">

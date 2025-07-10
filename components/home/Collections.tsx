@@ -40,7 +40,7 @@ const Collections = () => {
         }
     ]
   return (
-    <div className='flex flex-col items-center py-6'>
+    <div className='flex flex-col items-center py-6 container'>
         <p className='text-2xl font-bold'>Our Collections</p>
         <div className='grid grid-cols-5 gap-4'>
             {collectionData.map((item:any, index:any)=>{

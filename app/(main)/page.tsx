@@ -12,8 +12,8 @@ export default async function Home() {
   const allProducts = await GetProducts();
   return (
     <>
-    <div className="flex items-center justify-center">
-      <div className="w-full">
+    <div className="flex items-center justify-center flex-col w-full">
+      {/* <div className="w-full"> */}
     <Hero/>
     <Boxes/>
     <Products ProductsData={allProducts}/>
@@ -22,7 +22,7 @@ export default async function Home() {
     <Faq/>
     <CallToEmail/>
       </div>
-    </div>
+    {/* </div> */}
     </>
   );
 }

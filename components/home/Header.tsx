@@ -7,23 +7,31 @@ import Image from 'next/image';
 import logo from "@/public/images/logo1.png"
 import { FaAngleDown } from "react-icons/fa6";
 import Link from 'next/link';
-
-
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { Search } from 'lucide-react';
 const Header = () => {
   return (
-    <div className='flex flex-row justify-around items-center py-[5px] bgColors w-full h-[90px]'>
+    <div className='flex items-center justify-center bgColors w-full h-[90px]'>
+    <div className='flex flex-row items-center justify-between w-[90%]'>
         <Link href={"/"} className='w-[100px] h-[100px]'>
             <Image src={logo} alt="" />
         </Link>
-        <div className='flex flex-row gap-4'>
+        <div className='grid grid-cols-4'>
             {categoryOptions.map((item: any, index) => {
   const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
 
   return (
     <div key={index} className="relative group cursor-pointer">
-      <p className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200">
-        {item.icon} {item.label} <FaAngleDown/>
-      </p>
+      <Link className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200 ml-3 mt-1" href={`/products/categories/${item.value}`}>
+        {item.icon} {item.label} 
+      </Link>
 
       {/* Dropdown - only if subcategories exist */}
       {subCategories && (
@@ -33,8 +41,12 @@ const Header = () => {
               <li
                 key={subIndex}
                 className="hover:text-primary hover:translate-x-1 transition-all duration-150"
-              >
+                >
+                <Link 
+                href={`/products/sub-category/${subItem.value}`}
+                >
                 {subItem.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -48,11 +60,31 @@ const Header = () => {
         </div>
 
         <div className='flex flex-row gap-4'>
-            <p className='text-3xl cursor-pointer'><IoSearch/></p>
+          <Sheet>
+  <SheetTrigger>            <p className='text-3xl cursor-pointer'><IoSearch/></p>
+</SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle><div className="relative w-full max-w-sm">
+  <input
+    type="text"
+    placeholder="Search..."
+    className="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+    <Search className="text-gray-500" />
+  </div>
+</div></SheetTitle>
+      <SheetDescription>
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
             <p className='text-3xl cursor-pointer'><VscAccount/></p>
             <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>0</p></Link>
         </div>
 
+    </div>
     </div>
   )
 }

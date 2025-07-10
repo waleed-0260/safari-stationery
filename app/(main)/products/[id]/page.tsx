@@ -4,7 +4,8 @@ import { FaChevronRight } from "react-icons/fa";
 import { LuBlocks } from "react-icons/lu";
 import SingleProducts from '@/components/Products/SingleProducts';
 import { GetProductsById } from '@/lib/GetProducts';
-import { GetProductsByCategory } from '@/lib/GetProducts';
+// import { GetProductsByCategory } from '@/lib/GetProducts';
+import { GetProductsBySubCategory } from '@/lib/GetProducts';
 import Products from '@/components/home/Products';
 const page = async({
   params,
@@ -16,28 +17,34 @@ const page = async({
 
   // console.log("data", data)
 
-    const category = data?.category?.[0] || data?.category; // handles both array and string
+    const category = data?.sub_category?.[0] || data?.sub_category; // handles both array and string
 
   // 3. Fetch related products by category (excluding current one)
   const relatedProducts = category
-    ? (await GetProductsByCategory(category)).filter((item: any) => item._id !== id)
+    ? (await GetProductsBySubCategory(category)).filter((item: any) => item._id !== id)
     : [];
 
     // console.log("relatedProducts", relatedProducts)
 
   return (
-    <div>
-        <div className='bg-gray-300 flex flex-row justify-between items-center py-5 w-full'>
+    <div className='flex flex-col items-center justify-center w-full'>
+        <div className='bg-gray-300  w-full flex flex-row justify-center items-center'>
+          <div className='container flex flex-row justify-between items-center'>
+
             <p>Home  Electric Portable Hand Fans  Sanrio Character Handheld - Portable Fan Style 2</p>
-            <div>
-                <p><FaChevronLeft/></p>
-                <p><LuBlocks/></p>
-                <p><FaChevronRight/></p>
+            <div className='flex flex-row gap-4'>
+                <p><FaChevronLeft className='text-xl'/></p>
+                <p><LuBlocks className='text-xl'/></p>
+                <p><FaChevronRight className='text-xl'/></p>
             </div>
+          </div>
         </div>
 
         <SingleProducts data={data}/>
-        <Products ProductsData={relatedProducts}/>
+        {relatedProducts.length > 0  ? 
+        <Products ProductsData={relatedProducts}/> :
+        null  
+      }
     </div>
   )
 }

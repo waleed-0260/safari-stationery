@@ -2,7 +2,7 @@ import React from 'react';
 
 const Boxes = () => {
   return (
-    <div className="flex h-screen w-full p-4 gap-4">
+    <div className="flex h-screen w-full container gap-4">
       {/* Left 50% */}
       <div className="w-1/2 bg-gray-200 rounded-xl shadow-lg flex items-center justify-center">
         <div className=" w-full h-full rounded-xl text-white text-xl flex items-center justify-center">
