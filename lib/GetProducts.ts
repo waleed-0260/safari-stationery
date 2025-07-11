@@ -65,3 +65,21 @@ export async function GetProductsBySubCategory(SubCategory: string) {
     return [];
   }
 }
+
+export async function GetProductsBySearch(query: string) {
+    try {
+      console.log("query", query)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/products/search?q=${query}`, {
+      next: { revalidate: 60 },
+    });
+
+    const json = await res.json();
+
+    // if (!res.ok) throw new Error(json.message || 'Failed to fetch products by category');
+
+    return json.data;
+  } catch (err) {
+    console.error(`❌ Error in GetProductsByCategory (${query}):`, err);
+    return [];
+  }
+}

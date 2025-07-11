@@ -7,16 +7,10 @@ import Image from 'next/image';
 import logo from "@/public/images/logo1.png"
 import { FaAngleDown } from "react-icons/fa6";
 import Link from 'next/link';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { Search } from 'lucide-react';
+import SearchProducts from './SearchProducts';
+
 const Header = () => {
+  
   return (
     <div className='flex items-center justify-center bgColors w-full h-[90px]'>
     <div className='flex flex-row items-center justify-between w-[90%]'>
@@ -60,7 +54,8 @@ const Header = () => {
         </div>
 
         <div className='flex flex-row gap-4'>
-          <Sheet>
+          <SearchProducts/>
+          {/* <Sheet>
   <SheetTrigger>            <p className='text-3xl cursor-pointer'><IoSearch/></p>
 </SheetTrigger>
   <SheetContent>
@@ -79,7 +74,7 @@ const Header = () => {
       </SheetDescription>
     </SheetHeader>
   </SheetContent>
-</Sheet>
+</Sheet> */}
             <p className='text-3xl cursor-pointer'><VscAccount/></p>
             <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>0</p></Link>
         </div>
