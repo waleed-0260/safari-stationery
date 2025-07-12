@@ -35,8 +35,8 @@ export async function POST(req: NextRequest) {
     const newProduct = await Product.create({
       title: formData.get("title"),
       description: formData.get("description"),
-      price: Number(formData.get("Price")),
-      compare_at_price: Number(formData.get("CompareAtPrice")),
+      price: Number(formData.get("price")),
+      compare_at_price: Number(formData.get("compare_at_Price")),
       category: JSON.parse(formData.get("category") as string),
       sub_category: JSON.parse(formData.get("sub_category") as string),
       colors: JSON.parse(formData.get("colors") as string),

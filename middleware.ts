@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
-  console.log("token", token)
+  // console.log("token", token)
 
   if (!token) {
     return NextResponse.redirect(new URL("/adminlogin", req.url));

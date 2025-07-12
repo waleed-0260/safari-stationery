@@ -1,20 +1,22 @@
 import React from 'react'
 import {categoryOptions, subCategoryMap} from "@/lib/Categories"
-import { IoSearch } from "react-icons/io5";
+// import { IoSearch } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
 import { CiShoppingCart } from "react-icons/ci";
 import Image from 'next/image';
-import logo from "@/public/images/logo1.png"
+import logo from "@/public/images/logo.png"
 import { FaAngleDown } from "react-icons/fa6";
 import Link from 'next/link';
 import SearchProducts from './SearchProducts';
+import { GetCartProducts } from '@/lib/GetProducts';
 
-const Header = () => {
+const Header = async() => {
+  const cartLength = await GetCartProducts();
   
   return (
     <div className='flex items-center justify-center bgColors w-full h-[90px]'>
     <div className='flex flex-row items-center justify-between w-[90%]'>
-        <Link href={"/"} className='w-[100px] h-[100px]'>
+        <Link href={"/"} className='h-[150px] w-[150px]'>
             <Image src={logo} alt="" />
         </Link>
         <div className='grid grid-cols-4'>
@@ -76,7 +78,7 @@ const Header = () => {
   </SheetContent>
 </Sheet> */}
             <p className='text-3xl cursor-pointer'><VscAccount/></p>
-            <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>0</p></Link>
+            <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>{cartLength[0].items.length}</p></Link>
         </div>
 
     </div>

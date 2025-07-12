@@ -17,41 +17,11 @@ interface CartItem {
   quantity: number
   color?: string
   size?: string
-  inStock: boolean
+  stock: boolean
 }
 
-export default function Cart() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: "1",
-      name: "Wireless Bluetooth Headphones",
-      price: 79.99,
-      originalPrice: 99.99,
-      image: "/placeholder.svg?height=120&width=120",
-      quantity: 1,
-      color: "Black",
-      inStock: true,
-    },
-    {
-      id: "2",
-      name: "Premium Cotton T-Shirt",
-      price: 29.99,
-      image: "/placeholder.svg?height=120&width=120",
-      quantity: 2,
-      color: "Navy Blue",
-      size: "M",
-      inStock: true,
-    },
-    {
-      id: "3",
-      name: "Leather Wallet",
-      price: 45.0,
-      image: "/placeholder.svg?height=120&width=120",
-      quantity: 1,
-      color: "Brown",
-      inStock: false,
-    },
-  ])
+export default function Cart({cartProducts}:any) {
+  const [cartItems, setCartItems] = useState<any[]>(cartProducts)
 
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return
@@ -102,7 +72,7 @@ export default function Cart() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => (
-              <Card key={item.id}>
+              <Card key={item._id}>
                 <CardContent className="p-6">
                   <div className="flex gap-4">
                     <div className="relative">
@@ -111,7 +81,7 @@ export default function Cart() {
                         alt={item.name}
                         className="w-24 h-24 object-cover rounded-lg"
                       />
-                      {!item.inStock && (
+                      {!item.stock && (
                         <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
                           <span className="text-white text-xs font-medium">Out of Stock</span>
                         </div>
@@ -133,7 +103,7 @@ export default function Cart() {
                                 Size {item.size}
                               </Badge>
                             )}
-                            {!item.inStock && (
+                            {!item.stock && (
                               <Badge variant="destructive" className="text-xs">
                                 Out of Stock
                               </Badge>
@@ -164,7 +134,7 @@ export default function Cart() {
                             size="icon"
                             className="w-8 h-8 bg-transparent"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            disabled={item.quantity <= 1 || !item.inStock}
+                            disabled={item.quantity <= 1 || !item.stock}
                           >
                             <Minus className="w-3 h-3" />
                           </Button>
@@ -174,14 +144,14 @@ export default function Cart() {
                             onChange={(e) => updateQuantity(item.id, Number.parseInt(e.target.value) || 1)}
                             className="w-16 text-center"
                             min="1"
-                            disabled={!item.inStock}
+                            disabled={!item.stock}
                           />
                           <Button
                             variant="outline"
                             size="icon"
                             className="w-8 h-8 bg-transparent"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            disabled={!item.inStock}
+                            disabled={!item.stock}
                           >
                             <Plus className="w-3 h-3" />
                           </Button>

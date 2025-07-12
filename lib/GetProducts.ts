@@ -83,3 +83,20 @@ export async function GetProductsBySearch(query: string) {
     return [];
   }
 }
+
+export async function GetCartProducts() {
+    try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/cart`, {
+      next: { revalidate: 60 }, // optional: ISR caching
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || 'Failed to fetch');
+
+    return json.data;
+  } catch (err) {
+    console.error("❌ Error in getProducts:", err);
+    return [];
+  }
+}

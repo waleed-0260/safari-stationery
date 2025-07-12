@@ -1,9 +1,11 @@
 import Cart from '@/components/Cart/Cart'
 import React from 'react'
+import { GetCartProducts } from '@/lib/GetProducts'
 
-const page = () => {
+const page = async() => {
+  const CartProducts = await GetCartProducts();
   return (
-    <div><Cart/></div>
+    <div><Cart cartProducts={CartProducts[0].items}/></div>
   )
 }
 

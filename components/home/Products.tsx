@@ -17,6 +17,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Link from "next/link";
+import SingleProduct from "./SingleProduct";
+import ProductPopup from "./ProductPopup";
 
 const Products = ({ ProductsData }: any) => {
 
@@ -43,8 +45,8 @@ const Products = ({ ProductsData }: any) => {
         >
           {ProductsData.map((item: any) => (
             <SwiperSlide key={item._id}>
-              <Link className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-full" href={`/products/${item._id}`}>
-                <div className="relative group w-full h-64 overflow-hidden">
+              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-full group"  >
+                <Link className="relative w-full h-64 overflow-hidden" href={`/products/${item._id}`}>
                   {/* Primary Image */}
                   <Image
                     src={item.images[0]}
@@ -67,28 +69,23 @@ const Products = ({ ProductsData }: any) => {
                     Sale
                   </p>
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="bg-white text-black py-2 px-4 rounded-full text-sm">
-                      Quick View
-                    </button>
-
+                </Link>
+               <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex flex-col gap-4">
                     <Dialog>
-                      <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm">
-                        Quick Shop
+                      <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm cursor-pointer">
+                        Quick View
                       </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Are you absolutely sure?</DialogTitle>
-                          <DialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
-                          </DialogDescription>
-                        </DialogHeader>
-                      </DialogContent>
+                            <DialogContent className="max-w-4xl w-full h-[80vh] p-0 overflow-hidden">
+                              <DialogTitle className="bg-red-700 h-[1px]"></DialogTitle>
+                              <ProductPopup id={item._id}/>
+      </DialogContent>
                     </Dialog>
+                    <button className="bg-white text-black py-2 px-4 rounded-full text-sm">
+                      Quick Shop
+                    </button>
+</div>
                   </div>
-                </div>
 
                 <div className="p-4 flex flex-col gap-1">
                   <p className="text-base font-medium">{item.title}</p>
@@ -99,26 +96,16 @@ const Products = ({ ProductsData }: any) => {
                     Rs {item.price} PKR
                   </p>
                 </div>
-              </Link>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* Navigation Arrows at Bottom Center */}
-        {/* <div className="flex justify-center gap-6 mt-6">
-          <button className="swiper-button-prev bg-gray-200 p-2 rounded-full hover:bg-gray-300">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button className="swiper-button-next bg-gray-200 p-2 rounded-full hover:bg-gray-300">
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div> */}
       </div>
 
       <div className="flex justify-center mt-8">
         <Link
           // variant={"outline"}
-          className="p-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer"
+          className="p-2 px-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer rounded-xl"
           href={"/products"}
         >
           View More

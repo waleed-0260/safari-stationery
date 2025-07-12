@@ -4,7 +4,7 @@ import { Button } from '../ui/button'
 const SingleProduct = () => {
   return (
     <div className=' flex flex-row justify-between items-start py-8 container'>
-        <div className='w-[45%]'>
+        <div className='flex w-[45%]'>
             <img src="https://www.thepaperworm.com/cdn/shop/files/3PcsRainbowTiePastelColoredNotebook.webp?v=1714498273&width=823" alt="" />
         </div>
         <div className='flex flex-col gap-4 w-[45%]'>
