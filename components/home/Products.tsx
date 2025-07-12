@@ -43,7 +43,7 @@ const Products = ({ ProductsData }: any) => {
           modules={[Autoplay]}
           autoplay={{ delay: 4000 }}
         >
-          {ProductsData.map((item: any) => (
+          {ProductsData?.map((item: any) => (
             <SwiperSlide key={item._id}>
               <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-full group"  >
                 <Link className="relative w-full h-64 overflow-hidden" href={`/products/${item._id}`}>
