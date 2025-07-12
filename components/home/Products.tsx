@@ -88,7 +88,7 @@ const Products = ({ ProductsData }: any) => {
                   </div>
 
                 <div className="p-4 flex flex-col gap-1">
-                  <p className="text-base font-medium">{item.title}</p>
+                  <p className="text-base font-semibold">{item.title}</p>
                   <p className="line-through text-sm text-gray-500">
                     Rs {item.compare_at_price} PKR
                   </p>

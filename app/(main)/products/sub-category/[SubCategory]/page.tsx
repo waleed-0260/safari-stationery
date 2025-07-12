@@ -11,8 +11,8 @@ const page = async({
     const products = await GetProductsBySubCategory(SubCategory)
     // console.log("subcategory", products)
   return (
-    <div>
-        <Products ProductsData={products}/>
+   <div className='flex flex-col justify-center items-center w-full'>
+      <Products ProductsData={products}/>
     </div>
   )
 }

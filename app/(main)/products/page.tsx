@@ -5,7 +5,7 @@ import React from 'react'
 const page = async() => {
   const products = await GetProducts();
   return (
-    <div className='flex flex-col justify-center items-center w-full'>
+    <div className='flex flex-col justify-center items-center w-full bg-green-700'>
       <Products ProductsData={products}/>
     </div>
   )
