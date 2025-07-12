@@ -9,14 +9,14 @@ import Image from "next/image";
 import { GetProducts } from "@/lib/GetProducts";
 
 export default async function Home() {
-  // const allProducts = await GetProducts();
+  const allProducts = await GetProducts();
   return (
     <>
     <div className="flex items-center justify-center flex-col w-full">
       {/* <div className="w-full"> */}
     <Hero/>
     <Boxes/>
-    {/* <Products ProductsData={allProducts}/> */}
+    <Products ProductsData={allProducts}/>
     <Collections/>
     <SingleProduct/>
     <Faq/>

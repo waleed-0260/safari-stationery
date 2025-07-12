@@ -8,10 +8,10 @@ import logo from "@/public/images/logo.png"
 import { FaAngleDown } from "react-icons/fa6";
 import Link from 'next/link';
 import SearchProducts from './SearchProducts';
-import { GetCartProducts } from '@/lib/GetProducts';
+// import { GetCartProducts } from '@/lib/GetProducts';
 
 const Header = async() => {
-  const cartLength = await GetCartProducts();
+  // const cartLength = await GetCartProducts();
   
   return (
     <div className='flex items-center justify-center bgColors w-full h-[90px]'>
@@ -78,7 +78,7 @@ const Header = async() => {
   </SheetContent>
 </Sheet> */}
             <p className='text-3xl cursor-pointer'><VscAccount/></p>
-            <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>{cartLength[0].items.length}</p></Link>
+            <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>0</p></Link>
         </div>
 
     </div>
