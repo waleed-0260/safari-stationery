@@ -4,8 +4,10 @@ import { GetCartProducts } from '@/lib/GetProducts'
 
 const page = async() => {
   const CartProducts = await GetCartProducts();
+    const items = CartProducts?.[0]?.items || []
+
   return (
-    <div><Cart cartProducts={CartProducts[0].items}/></div>
+    <div><Cart cartProducts={items}/></div>
   )
 }
 
