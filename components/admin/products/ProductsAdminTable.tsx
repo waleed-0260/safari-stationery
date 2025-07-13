@@ -68,7 +68,7 @@ const handleDelete = async (id: string) => {
                 <TableRow>
                   <TableHead className="w-[200px]">Title</TableHead>
                   <TableHead className="max-w-[300px]">Description</TableHead>
-                  <TableHead className="w-[100px]">Price</TableHead>
+                  {/* <TableHead className="w-[100px]">Price</TableHead> */}
                   <TableHead className="w-[100px]">Stock</TableHead>
                   <TableHead className="w-[200px]">Categories</TableHead>
                   <TableHead className="w-[100px]">Actions</TableHead>
@@ -83,7 +83,7 @@ const handleDelete = async (id: string) => {
                       <TableCell className="max-w-[300px]">
                         <p className="text-sm text-muted-foreground line-clamp-2">{product.description.slice(0,20)}...</p>
                       </TableCell>
-                      <TableCell className="font-semibold">${product.price?.toFixed(2)}</TableCell>
+                      {/* <TableCell className="font-semibold">${product.price?.toFixed(2)}</TableCell> */}
                       <TableCell>
                         <div className="flex flex-col gap-1">
                           <span className="font-medium">{product.stock}</span>

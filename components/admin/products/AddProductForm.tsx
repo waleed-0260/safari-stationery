@@ -460,7 +460,7 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
        {/* Image Upload (Only 2 images allowed) */}
 <div>
   <label className="block mb-1 font-medium text-gray-700">
-    Upload 4 Images
+    Upload maximum 6 and minimum 2 Images
   </label>
 
   <div className="grid grid-cols-2 gap-4">
