@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Select from 'react-select';
+import { Button } from "@/components/ui/button";
+
 
 type CategoryOption = {
   value: string;
@@ -12,14 +14,15 @@ type CategoryOption = {
 interface FormValues {
   title: string;
   description: string;
-  price: string;
-  compare_at_price: string;
+  // price: string;
+  // compare_at_price: string;
   category: string[];           // ✅ string array
   sub_category: string[];
   stock: string;
   isFeatured: string;
   images: File[];
   colors: string[];
+  sets: { set: string; price: number, compare_at_price: number, size: string }[];
 }
 
 const AddProductForm = () => {
@@ -89,25 +92,36 @@ const colorsOptions = [
     initialValues: {
       title: "",
       description: "",
-      price: "",
-      compare_at_price: "",
+      // price: "",
+      // compare_at_price: "",
       category: [],
       sub_category: [],
       colors: [],
       stock: "",
       isFeatured: "false",
       images: [],
+      sets: []
     },
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       description: Yup.string().required("Description is required"),
-      price: Yup.number().required("Price is required"),
+      // price: Yup.number().required("Price is required"),
       compare_at_price: Yup.number(),
       category: Yup.array().min(1, "Select at least one category"),
       sub_category: Yup.array().min(1, "Select at least one sub category"),
       stock: Yup.number().required("Stock is required"),
       isFeatured: Yup.string().required("Please choose an option"),
       colors: Yup.array().min(1, "select atleast"),
+      sets: Yup.array()
+  .min(1, "Add at least one set")
+  .of(
+    Yup.object().shape({
+      set: Yup.string(),
+      price: Yup.number().required("Set price required"),
+      compare_at_price: Yup.number(),
+      size: Yup.string()
+    })
+  ),
       images: Yup.array()
       .min(2, "Please upload 2 images")
         .max(4, "Only 2 images are allowed"),
@@ -119,13 +133,14 @@ const colorsOptions = [
 
         formData.append("title", values.title);
         formData.append("description", values.description);
-        formData.append("price", values.price);
-        formData.append("compare_at_price", values.compare_at_price);
+        // formData.append("price", values.price);
+        // formData.append("compare_at_price", values.compare_at_price);
         formData.append("stock", values.stock);
         formData.append("isFeatured", values.isFeatured);
         formData.append("category", JSON.stringify(values.category));
         formData.append("sub_category", JSON.stringify(values.sub_category));
         formData.append("colors", JSON.stringify(values.colors));
+        formData.append("sets", JSON.stringify(values.sets));
 
         values.images.forEach((file: File) => {
           formData.append("images", file);
@@ -184,7 +199,7 @@ const subCategoryOptions =
         </div>
 
         {/* Price & Compare Price */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block mb-1 font-medium text-gray-700">Price (Rs)</label>
             <input
@@ -213,7 +228,109 @@ const subCategoryOptions =
               placeholder="0.00"
             />
           </div>
+        </div> */}
+        {/* Sets & Prices */}
+<div>
+  <label className="block mb-1 font-medium text-gray-700">Sets & Prices</label>
+
+  {formik.values.sets.map((item, index) => (
+    <div key={index} className="border p-3 rounded-md mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Set (e.g. 12)</label>
+          <input
+            type="text"
+            placeholder="12, 24, etc."
+            value={item.set}
+            onChange={(e) => {
+              const updated = [...formik.values.sets];
+              updated[index].set = e.target.value;
+              formik.setFieldValue("sets", updated);
+            }}
+            className="w-full px-3 py-2 border rounded-md"
+          />
         </div>
+
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Price (Rs)</label>
+          <input
+            type="number"
+            placeholder="Price"
+            value={item.price || ""}
+            onChange={(e) => {
+              const updated = [...formik.values.sets];
+              updated[index].price = parseFloat(e.target.value);
+              formik.setFieldValue("sets", updated);
+            }}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Compare Price (Rs)</label>
+          <input
+            type="number"
+            placeholder="Compare_at_price"
+            value={item.compare_at_price || ""}
+            onChange={(e) => {
+              const updated = [...formik.values.sets];
+              updated[index].compare_at_price = parseFloat(e.target.value);
+              formik.setFieldValue("sets", updated);
+            }}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        </div>
+        <div>
+          <label className="block text-sm text-gray-600 mb-1">Size</label>
+          <input
+            type="text"
+            placeholder="Size"
+            value={item.size || ""}
+            onChange={(e) => {
+              const updated = [...formik.values.sets];
+              updated[index].size = e.target.value;
+              formik.setFieldValue("sets", updated);
+            }}
+            className="w-full px-3 py-2 border rounded-md"
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-end mt-2">
+        <button
+          type="button"
+          onClick={() => {
+            const updated = [...formik.values.sets];
+            updated.splice(index, 1);
+            formik.setFieldValue("sets", updated);
+          }}
+          className="text-red-600 font-bold text-sm"
+        >
+          × Remove
+        </button>
+      </div>
+    </div>
+  ))}
+
+  <Button
+    type="button"
+    onClick={() =>
+      formik.setFieldValue("sets", [
+        ...formik.values.sets,
+        { set: "", price: 0, compare_at_price: 0 },
+      ])
+    }
+    className="cursor-pointer"
+  >
+    + Add Another Set
+  </Button>
+
+  {formik.touched.sets && typeof formik.errors.sets === "string" && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.sets}</p>
+  )}
+</div>
+
+
 
         {/* Stock */}
         <div>
@@ -369,7 +486,7 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
         </div>
       ))}
 
-    {formik.values.images.length < 4 && (
+    {formik.values.images.length < 6 && (
       <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md h-32 cursor-pointer hover:bg-gray-100">
         <span className="text-gray-400 text-sm">Click to upload</span>
         <input
@@ -380,7 +497,7 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
             const file = e.currentTarget.files?.[0];
             if (!file) return;
             const newImages = [...formik.values.images, file];
-            if (newImages.length <= 4) {
+            if (newImages.length <= 6) {
               formik.setFieldValue("images", newImages);
             }
           }}

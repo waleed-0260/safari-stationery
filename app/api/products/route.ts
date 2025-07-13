@@ -31,18 +31,26 @@ export async function POST(req: NextRequest) {
       imageUrls.push(uploaded.secure_url);
     }
 
+    // Parse and validate sets array
+    const setsRaw = JSON.parse(formData.get("sets") as string) as any[];
+    const sets = setsRaw.map((item) => ({
+      set: item.set,
+      price: Number(item.price),
+      compare_at_price: Number(item.compare_at_price || 0), // fallback
+      size: item.size 
+    }));
+
     // Create the product document
     const newProduct = await Product.create({
       title: formData.get("title"),
       description: formData.get("description"),
-      price: Number(formData.get("price")),
-      compare_at_price: Number(formData.get("compare_at_Price")),
       category: JSON.parse(formData.get("category") as string),
       sub_category: JSON.parse(formData.get("sub_category") as string),
       colors: JSON.parse(formData.get("colors") as string),
       stock: Number(formData.get("stock")),
-      // isFeatured: formData.get("isFeatured") === "true",
+      isFeatured: formData.get("isFeatured") === "true",
       images: imageUrls,
+      sets, // ✅ New
     });
 
     return NextResponse.json({ success: true, data: newProduct }, { status: 201 });
@@ -51,6 +59,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, message: "Upload failed" }, { status: 500 });
   }
 }
+
 
 
 export async function GET(req: NextRequest) {

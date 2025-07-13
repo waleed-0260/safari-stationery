@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft } from "lucide-react"
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
+import { getGuestId } from "@/hooks/getGuestId"
 interface CartItem {
   id: string
   name: string
@@ -20,8 +20,14 @@ interface CartItem {
   stock: boolean
 }
 
-export default function Cart({cartProducts}:any) {
-  const [cartItems, setCartItems] = useState<any[]>(cartProducts)
+export default function Cart({allCartData}:{allCartData:any[]}) {
+  const [cartItems, setCartItems] = useState<any[]>([])
+
+  useEffect(() => {
+  const guestId = getGuestId()
+  const userCart = allCartData.find(cart => cart.userId === guestId)
+  setCartItems(userCart?.items || [])
+}, [allCartData])
 
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return

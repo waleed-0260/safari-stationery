@@ -67,7 +67,7 @@ const SingleProducts = ({ data }: any) => {
         {/* Quantity Selector */}
         <div>
           <p className="text-sm">Quantity</p>
-          <div className="border-2 h-[50px] w-[120px] flex items-center justify-around">
+          <div className="border-2 h-[50px] w-[120px] flex items-center justify-around cursor-pointer">
             <button onClick={decreaseQty}>-</button>
             <p>{quantity}</p>
             <button onClick={increaseQty}>+</button>
@@ -81,7 +81,7 @@ const SingleProducts = ({ data }: any) => {
               <button
                 key={index}
                 onClick={() => setSelectedColor(color)}
-                className={`border px-3 py-1 rounded-md text-sm ${
+                className={`border px-3 py-1 rounded-md text-sm cursor-pointer ${
                   selectedColor === color ? "bg-black text-white" : "text-gray-800"
                 }`}
               >
@@ -92,10 +92,10 @@ const SingleProducts = ({ data }: any) => {
         )}
 
         {/* Buttons */}
-        <Button variant="outline" onClick={handleAddToCart}>
+        <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer">
           Add To Cart
         </Button>
-        <Button variant="default">Buy Now</Button>
+        <Button variant="default" className="cursor-pointer">Buy Now</Button>
       </div>
     </div>
   );

@@ -100,3 +100,42 @@ export async function GetCartProducts() {
     return [];
   }
 }
+
+export async function DeleteProductById(id: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/products/${id}`, {
+      method: "DELETE",
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || 'Failed to delete product');
+
+    return json.data; // or true if deletion successful
+  } catch (err) {
+    console.error(`❌ Error deleting product (id: ${id}):`, err);
+    return null;
+  }
+}
+
+
+export async function UpdateProductById(id: string, payload: any) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/products/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || 'Failed to update product');
+
+    return json.data;
+  } catch (err) {
+    console.error(`❌ Error updating product (id: ${id}):`, err);
+    return null;
+  }
+}

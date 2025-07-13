@@ -4,10 +4,10 @@ import { GetCartProducts } from '@/lib/GetProducts'
 
 const page = async() => {
   const CartProducts = await GetCartProducts();
-    const items = CartProducts?.[0]?.items || []
+    // const items = CartProducts?.[0]?.items || []
 
   return (
-    <div><Cart cartProducts={items}/></div>
+    <div><Cart allCartData={CartProducts || []}/></div>
   )
 }
 
