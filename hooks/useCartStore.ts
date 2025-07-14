@@ -3,7 +3,8 @@ import { getGuestId } from "./getGuestId";
 type CartItem = {
   productId: string;
   title: string;
-  price: number;
+  // price: number;
+  sets: { set: string; price: number, compare_at_price: number, size: string }[];
   quantity: number;
   color?: string;
   stock: string;

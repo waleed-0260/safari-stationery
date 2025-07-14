@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft } from "lucide-react"
 import { useState, useEffect } from "react"
 import { getGuestId } from "@/hooks/getGuestId"
+import { useCartStore } from "@/hooks/useCartStore"
 interface CartItem {
   id: string
   name: string
@@ -20,14 +21,16 @@ interface CartItem {
   stock: boolean
 }
 
-export default function Cart({allCartData}:{allCartData:any[]}) {
-  const [cartItems, setCartItems] = useState<any[]>([])
-
-  useEffect(() => {
-  const guestId = getGuestId()
-  const userCart = allCartData.find(cart => cart.userId === guestId)
-  setCartItems(userCart?.items || [])
-}, [allCartData])
+export default function Cart({allCartData}:any) {
+  // console.log("allcartdata", allCartData)
+  const [cartItems, setCartItems] = useState<any[]>(allCartData.items)
+//   const cart = useCartStore((state)=> state.cart)
+//   console.log("cart", cart)
+//   useEffect(() => {
+//   const guestId = getGuestId()
+//   const userCart = allCartData.find(cart => cart.userId === guestId)
+//   setCartItems(userCart?.items || [])
+// }, [allCartData])
 
   const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return
@@ -97,7 +100,7 @@ export default function Cart({allCartData}:{allCartData:any[]}) {
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-2">
                         <div>
-                          <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                          <h3 className="font-semibold text-gray-900">{item.title}</h3>
                           <div className="flex gap-2 mt-1">
                             {item.color && (
                               <Badge variant="secondary" className="text-xs">
@@ -128,7 +131,7 @@ export default function Cart({allCartData}:{allCartData:any[]}) {
 
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-lg">${item.price.toFixed(2)}</span>
+                          <span className="font-semibold text-lg">${item.price?.toFixed(2)}</span>
                           {item.originalPrice && (
                             <span className="text-sm text-gray-500 line-through">${item.originalPrice.toFixed(2)}</span>
                           )}

@@ -3,13 +3,13 @@ import { Button } from '../ui/button'
 
 const SingleProduct = () => {
   return (
-    <div className=' flex flex-row justify-between items-start py-8 container'>
+    <div className=' flex flex-row justify-between items-start py-8 container' data-aos="fade-up">
         <div className='flex w-[45%]'>
             <img src="https://www.thepaperworm.com/cdn/shop/files/3PcsRainbowTiePastelColoredNotebook.webp?v=1714498273&width=823" alt="" />
         </div>
         <div className='flex flex-col gap-4 w-[45%]'>
             <p className='text-sm'>The paperworn</p>
-            <p className='text-4xl font-semibold'>Lorem ipsum dolor sit amet.</p>
+            <p className='text-4xl font-semibold heading'>Lorem ipsum dolor sit amet.</p>
             <div className='flex flex-row gap-4'>
                 <p className="line-through text-gray-500"> Rs 500 PKR</p>
                 <p className="text-red-500"> Rs 200 PKR</p>

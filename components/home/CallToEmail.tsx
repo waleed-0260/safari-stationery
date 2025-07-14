@@ -1,6 +1,5 @@
 "use client"
 import React, {useState} from 'react'
-
 const CallToEmail = ({heading, desc, btn}:any) => {
 
   const [email, setEmail] = useState("");
@@ -9,7 +8,7 @@ const CallToEmail = ({heading, desc, btn}:any) => {
 
   return (
 <div className="w-full flex flex-col items-center justify-center space-y-4 p-6 border-t-[1px] borer-[#b3b2af] mt-[30px]" data-aos="zoom-in">
-  <h1 className="text-3xl font-bold text-center text-gray-800">
+  <h1 className="text-3xl font-bold text-center text-gray-800 heading">
   Stay informed
   </h1>
   <p className=" text-center textColor max-w-2xl">
@@ -32,6 +31,7 @@ const CallToEmail = ({heading, desc, btn}:any) => {
         Subscribe Now
       </button>
   </form>
+
 </div>
   )
 }

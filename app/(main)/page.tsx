@@ -7,6 +7,7 @@ import Products from "@/components/home/Products";
 import SingleProduct from "@/components/home/SingleProduct";
 import Image from "next/image";
 import { GetProducts } from "@/lib/GetProducts";
+import AOSInitializer from "@/components/AOSInitializer";
 
 export default async function Home() {
   const allProducts = await GetProducts();
@@ -14,6 +15,7 @@ export default async function Home() {
     <>
     <div className="flex items-center justify-center flex-col w-full">
       {/* <div className="w-full"> */}
+      <AOSInitializer/>
     <Hero/>
     <Boxes/>
     <Products ProductsData={allProducts}/>

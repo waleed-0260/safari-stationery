@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {categoryOptions, subCategoryMap} from "@/lib/Categories"
 // import { IoSearch } from "react-icons/io5";
@@ -9,11 +10,17 @@ import { FaAngleDown } from "react-icons/fa6";
 import Link from 'next/link';
 import SearchProducts from './SearchProducts';
 // import { GetCartProducts } from '@/lib/GetProducts';
+import { getGuestId } from '@/hooks/getGuestId';
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+import Carticon from '../Cart/Carticon';
 
-const Header = async() => {
+const Header = () => {
+  // const guestIdddd = getGuestId();
+  // console.log("header is gusee fi", guestIdddd)
   // const cartLength = await GetCartProducts();
   
   return (
+    <>
     <div className='flex items-center justify-center bgColors w-full h-[90px]'>
     <div className='flex flex-row items-center justify-between w-[90%]'>
         <Link href={"/"} className='h-[150px] w-[150px]'>
@@ -22,10 +29,10 @@ const Header = async() => {
         <div className='grid grid-cols-4'>
             {categoryOptions.map((item: any, index) => {
   const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
-
+  
   return (
     <div key={index} className="relative group cursor-pointer">
-      <Link className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200 ml-3 mt-1" href={`/products/categories/${item.value}`}>
+      <Link className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200 ml-3 mt-1 heading font-semibold" href={`/products/categories/${item.value}`}>
         {item.icon} {item.label} 
       </Link>
 
@@ -59,30 +66,40 @@ const Header = async() => {
           <SearchProducts/>
           {/* <Sheet>
   <SheetTrigger>            <p className='text-3xl cursor-pointer'><IoSearch/></p>
-</SheetTrigger>
+  </SheetTrigger>
   <SheetContent>
-    <SheetHeader>
-      <SheetTitle><div className="relative w-full max-w-sm">
+  <SheetHeader>
+  <SheetTitle><div className="relative w-full max-w-sm">
   <input
-    type="text"
-    placeholder="Search..."
-    className="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  type="text"
+  placeholder="Search..."
+  className="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
   <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
     <Search className="text-gray-500" />
-  </div>
-</div></SheetTitle>
-      <SheetDescription>
+    </div>
+    </div></SheetTitle>
+    <SheetDescription>
       </SheetDescription>
-    </SheetHeader>
+      </SheetHeader>
   </SheetContent>
 </Sheet> */}
             <p className='text-3xl cursor-pointer'><VscAccount/></p>
-            <Link href={"/cart"} className='text-3xl cursor-pointer relative'><CiShoppingCart/> <p className='absolute top-[-5px] right-0 px-1 rounded-full bg-black text-white text-sm'>0</p></Link>
+            <Carticon/>
         </div>
 
     </div>
     </div>
+       <FloatingWhatsApp
+          phoneNumber="+923342987718"
+          accountName="Paper N Play"
+          statusMessage="Replies within 15 minutes"
+          chatMessage="Hello there! How can I help you ?"
+          avatar="/images/logo.jpeg"
+          chatboxHeight={350}
+          buttonClassName="floating-whatsapp-button"
+        />
+      </>
   )
 }
 

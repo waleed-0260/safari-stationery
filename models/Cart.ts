@@ -4,8 +4,14 @@ const cartItemSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
   title: { type: String, required: true },
   quantity: { type: Number, required: true },
-  price: {type: Number, required: true},
-  color: { type: String },
+sets: [
+  {
+    set: { type: String },
+    price: { type: Number },
+    compare_at_price: {type:Number},
+    size: {type: String},
+  }
+],  color: { type: String },
   stock: {type: String},
   image: {type: String}
 });

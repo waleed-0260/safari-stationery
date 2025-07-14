@@ -139,3 +139,23 @@ export async function UpdateProductById(id: string, payload: any) {
     return null;
   }
 }
+
+export async function GetCartById(id: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/cart/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || 'Failed to update product');
+
+    return json.data;
+  } catch (err) {
+    console.error(`❌ Error updating product (id: ${id}):`, err);
+    return null;
+  }
+}

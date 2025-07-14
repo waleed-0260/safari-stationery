@@ -23,8 +23,8 @@ import ProductPopup from "./ProductPopup";
 const Products = ({ ProductsData }: any) => {
 
   return (
-    <div className="w-full py-8 container">
-      <h2 className="text-center text-2xl font-bold mb-6">Trending Products</h2>
+    <div className="w-full py-8 container" data-aos='fade-up'>
+      <h2 className="text-center text-2xl heading font-bold mb-6">Trending Products</h2>
 
       <div className="relative">
         <Swiper
@@ -45,7 +45,7 @@ const Products = ({ ProductsData }: any) => {
         >
           {ProductsData?.map((item: any) => (
             <SwiperSlide key={item._id}>
-              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-full group"  >
+              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[90%] group"  >
                 <Link className="relative w-full h-64 overflow-hidden" href={`/products/${item._id}`}>
                   {/* Primary Image */}
                   <Image
@@ -88,7 +88,7 @@ const Products = ({ ProductsData }: any) => {
                   </div>
 
                 <div className="p-4 flex flex-col gap-1">
-                  <p className="text-base font-semibold">{item.title}</p>
+                  <p className="text-base font-semibold heading">{item.title}</p>
                   <p className="line-through text-sm text-gray-500">
                     Rs {item.compare_at_price} PKR
                   </p>

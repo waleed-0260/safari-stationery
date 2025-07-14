@@ -4,8 +4,11 @@ import { Button } from "../ui/button";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useCartStore } from "@/hooks/useCartStore";
+import { getGuestId } from "@/hooks/getGuestId";
 
 const SingleProducts = ({ data }: any) => {
+  const guestId = getGuestId();
+  console.log("guestidd", guestId)
   const addToCart = useCartStore((state) => state.addToCart);
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
 
@@ -19,11 +22,12 @@ const SingleProducts = ({ data }: any) => {
     addToCart({
       productId: data._id,
       title: data.title,
-      price: data.price,
+      // price: data.price,
       quantity,
       color: selectedColor,
       stock: data.stock,
       image: data.images[0],
+      sets: data.sets
     });
 
     saveCartToBackend(); // Optional: sync with backend

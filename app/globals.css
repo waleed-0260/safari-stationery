@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
-@custom-variant dark (&:is(.dark *));
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -136,6 +135,10 @@
   background-color: #D9C2E9;
 }
 
-*{
-    font-family: "Roboto Condensed", sans-serif;
+.heading{
+    font-family: "PT Serif", serif;
+}
+.text{
+    font-family: "Roboto Flex", sans-serif;
+    font-weight: 700;
 }
