@@ -9,6 +9,8 @@ import { Minus, Plus, Trash2, ShoppingCart, ArrowLeft } from "lucide-react"
 import { useState, useEffect } from "react"
 import { getGuestId } from "@/hooks/getGuestId"
 import { useCartStore } from "@/hooks/useCartStore"
+import { useMemo } from "react"
+import Link from "next/link"
 interface CartItem {
   id: string
   name: string
@@ -41,7 +43,12 @@ export default function Cart({allCartData}:any) {
     setCartItems((items) => items.filter((item) => item.id !== id))
   }
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    const subtotal = useMemo(() => {
+    return cartItems.reduce((total, item) => {
+      const price = item.sets?.[0]?.price || 0; // fallback if sets or price is missing
+      return total + price * item.quantity;
+    }, 0);
+  }, [cartItems]);
   const shipping = subtotal > 50 ? 0 : 9.99
   const tax = subtotal * 0.08
   const total = subtotal + shipping + tax
@@ -107,9 +114,9 @@ export default function Cart({allCartData}:any) {
                                 {item.color}
                               </Badge>
                             )}
-                            {item.size && (
+                            {item.sets.size && (
                               <Badge variant="secondary" className="text-xs">
-                                Size {item.size}
+                                Size {item.sets.size}
                               </Badge>
                             )}
                             {!item.stock && (
@@ -122,7 +129,7 @@ export default function Cart({allCartData}:any) {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeItem(item._id)}
                           className="text-gray-400 hover:text-red-500"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -131,7 +138,7 @@ export default function Cart({allCartData}:any) {
 
                       <div className="flex justify-between items-center">
                         <div className="flex items-center gap-2">
-                          <span className="font-semibold text-lg">${item.price?.toFixed(2)}</span>
+                          <span className="font-semibold text-lg">{item?.sets[0]?.price?.toFixed(2)} PKR</span>
                           {item.originalPrice && (
                             <span className="text-sm text-gray-500 line-through">${item.originalPrice.toFixed(2)}</span>
                           )}
@@ -142,7 +149,7 @@ export default function Cart({allCartData}:any) {
                             variant="outline"
                             size="icon"
                             className="w-8 h-8 bg-transparent"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item._id, item.quantity - 1)}
                             disabled={item.quantity <= 1 || !item.stock}
                           >
                             <Minus className="w-3 h-3" />
@@ -150,7 +157,7 @@ export default function Cart({allCartData}:any) {
                           <Input
                             type="number"
                             value={item.quantity}
-                            onChange={(e) => updateQuantity(item.id, Number.parseInt(e.target.value) || 1)}
+                            onChange={(e) => updateQuantity(item._id, Number.parseInt(e.target.value) || 1)}
                             className="w-16 text-center"
                             min="1"
                             disabled={!item.stock}
@@ -159,7 +166,7 @@ export default function Cart({allCartData}:any) {
                             variant="outline"
                             size="icon"
                             className="w-8 h-8 bg-transparent"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item._id, item.quantity + 1)}
                             disabled={!item.stock}
                           >
                             <Plus className="w-3 h-3" />
@@ -208,12 +215,16 @@ export default function Cart({allCartData}:any) {
                 )}
 
                 <div className="space-y-3">
-                  <Button className="w-full" size="lg">
+                  <Link href={"/checkout"}>
+                  <Button className="w-full cursor-pointer" size="lg">
                     Proceed to Checkout
                   </Button>
-                  <Button variant="outline" className="w-full bg-transparent">
+                  </Link>
+                  <Link href={"/products"}>
+                  <Button variant="outline" className="w-full bg-transparent cursor-pointer">
                     Continue Shopping
                   </Button>
+                  </Link>
                 </div>
 
                 <div className="mt-6 text-center">

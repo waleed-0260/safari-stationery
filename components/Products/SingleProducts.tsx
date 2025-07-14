@@ -34,7 +34,8 @@ const SingleProducts = ({ data }: any) => {
   };
 
     const [selectedImage, setSelectedImage] = useState(data.images[0])
-
+  const [selectedSetIndex, setSelectedSetIndex] = useState(0);
+    const sets = data.sets;
 
   return (
     <div className="container flex flex-row justify-between items-start py-8">
@@ -62,8 +63,54 @@ const SingleProducts = ({ data }: any) => {
         <p className="text-4xl font-semibold">{data.title}</p>
 
         <div className="flex flex-row gap-4">
+          {/* {data.sets[0].compare_at_price ?
           <p className="line-through text-gray-500">Rs {data.compare_at_price}</p>
-          <p className="text-red-500">Rs {data.price}</p>
+          :null}
+          <p className="text-red-500">Rs {data.sets}</p> */}
+              <div className="mt-4">
+      {/* If only 1 set */}
+      {sets.length === 1 ? (
+        <p className="text-red-500 text-lg font-semibold">
+          Rs {sets[0].price}
+          {sets[0].compare_at_price && (
+            <span className="line-through text-gray-400 text-sm ml-2">
+              Rs {sets[0].compare_at_price}
+            </span>
+          )}
+        </p>
+      ) : (
+        sets.length > 1 && (
+          <>
+            {/* Set Buttons */}
+            <div className="flex flex-wrap gap-2 mb-3">
+              {sets.map((item: any, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedSetIndex(index)}
+                  className={`border px-6 py-2 rounded-full text-sm cursor-pointer ${
+                    selectedSetIndex === index
+                      ? "bg-black text-white"
+                      : "text-gray-800"
+                  }`}
+                >
+                  {item.set} - {item.size}
+                </button>
+              ))}
+            </div>
+
+            {/* Price Display */}
+            <p className="text-red-500 text-lg font-semibold">
+              Rs {sets[selectedSetIndex].price}
+              {sets[selectedSetIndex].compare_at_price && (
+                <span className="line-through text-gray-400 text-sm ml-2">
+                  Rs {sets[selectedSetIndex].compare_at_price}
+                </span>
+              )}
+            </p>
+          </>
+        )
+      )}
+    </div>
         </div>
 
         <p>{data.description}</p>
@@ -72,9 +119,9 @@ const SingleProducts = ({ data }: any) => {
         <div>
           <p className="text-sm">Quantity</p>
           <div className="border-2 h-[50px] w-[120px] flex items-center justify-around cursor-pointer">
-            <button onClick={decreaseQty}>-</button>
+            <button onClick={decreaseQty} className="cursor-pointer">-</button>
             <p>{quantity}</p>
-            <button onClick={increaseQty}>+</button>
+            <button onClick={increaseQty} className="cursor-pointer">+</button>
           </div>
         </div>
 
@@ -85,7 +132,7 @@ const SingleProducts = ({ data }: any) => {
               <button
                 key={index}
                 onClick={() => setSelectedColor(color)}
-                className={`border px-3 py-1 rounded-md text-sm cursor-pointer ${
+                className={`border px-6 py-2 rounded-full text-sm cursor-pointer ${
                   selectedColor === color ? "bg-black text-white" : "text-gray-800"
                 }`}
               >

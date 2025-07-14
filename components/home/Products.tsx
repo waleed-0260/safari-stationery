@@ -45,7 +45,7 @@ const Products = ({ ProductsData }: any) => {
         >
           {ProductsData?.map((item: any) => (
             <SwiperSlide key={item._id}>
-              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[90%] group"  >
+              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[340px] group my-[10px]"  >
                 <Link className="relative w-full h-64 overflow-hidden" href={`/products/${item._id}`}>
                   {/* Primary Image */}
                   <Image
@@ -89,11 +89,14 @@ const Products = ({ ProductsData }: any) => {
 
                 <div className="p-4 flex flex-col gap-1">
                   <p className="text-base font-semibold heading">{item.title}</p>
+                  {item.sets[0].compare_at_price ?
                   <p className="line-through text-sm text-gray-500">
                     Rs {item.compare_at_price} PKR
                   </p>
+                  : null}
+                  
                   <p className="text-red-600 font-semibold">
-                    Rs {item.price} PKR
+                    Rs {item.sets[0].price} PKR
                   </p>
                 </div>
               </div>

@@ -1,59 +1,119 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { CreditCard, Lock, Package, Truck } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Checkbox } from "@/components/ui/checkbox"
+import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { CreditCard, Lock, Package, Truck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { getGuestId } from "@/hooks/getGuestId";
+import * as Yup from "yup"
+import { GetCartById } from "@/lib/GetProducts";
+import { useMemo } from "react";
 
 export default function CheckOut() {
-  const [paymentMethod, setPaymentMethod] = useState("card")
-  const [sameAsShipping, setSameAsShipping] = useState(true)
+  const guestId = getGuestId();
+  // console.log("id", guestId)
+  const [cartItems, setCartItems] = useState<any[]>([]);
 
-  const cartItems = [
-    {
-      id: 1,
-      name: "Wireless Bluetooth Headphones",
-      price: 79.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=80&width=80",
-    },
-    {
-      id: 2,
-      name: "USB-C Charging Cable",
-      price: 19.99,
-      quantity: 2,
-      image: "/placeholder.svg?height=80&width=80",
-    },
-    {
-      id: 3,
-      name: "Phone Case",
-      price: 24.99,
-      quantity: 1,
-      image: "/placeholder.svg?height=80&width=80",
-    },
-  ]
+  useEffect(() => {
+    const fetchCart = async () => {
+      const res = await GetCartById(guestId);
+      // const data = await res.json();
+      // console.log("data", res)
+      setCartItems(res.items || []);
+    };
+    fetchCart();
+  }, []);
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-  const shipping = 9.99
-  const tax = subtotal * 0.08
-  const total = subtotal + shipping + tax
+  // const subtotal = cartItems.reduce((sum, item) => sum + item?.sets[0]?.price * item?.quantity, 0);
+      const totalAmount = useMemo(() => {
+      return cartItems.reduce((total, item) => {
+        const price = item.sets?.[0]?.price || 0; // fallback if sets or price is missing
+        return total + price * item.quantity;
+      }, 0);
+    }, [cartItems]);
+  // const shipping = 9.99;
+  // const tax = subtotal * 0.08;
+  // const totalAmount = subtotal + shipping + tax;
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      address: "",
+      apartment: "",
+      city: "",
+      state: "",
+      zip: "",
+      paymentMethod: "card",
+    },
+//     validationSchema: Yup.object({
+//   firstName: Yup.string().required("First name is required"),
+//   lastName: Yup.string().required("Last name is required"),
+//   email: Yup.string().email("Invalid email").required("Email is required"),
+//   phone: Yup.string()
+//     .matches(/^\+?[0-9]{10,15}$/, "Phone number is not valid")
+//     .required("Phone number is required"),
+//   address: Yup.string().required("Address is required"),
+//   city: Yup.string().required("City is required"),
+//   state: Yup.string().required("State is required"),
+//   zip: Yup.string()
+//     .matches(/^\d{4,6}$/, "ZIP must be 4 to 6 digits")
+//     .required("ZIP is required"),
+// }),
+    onSubmit: async (values) => {
+      const shippingDetails = {
+        name: values.firstName + " " + values.lastName,
+        email: values.email,
+        phone: values.phone,
+        address: `${values.address}, ${values.apartment}`,
+        city: values.city,
+        state: values.state,
+        zip: values.zip,
+      };
+
+      console.log("cklsldcn")
+
+      const orderPayload = {
+        userId: guestId,
+        items: cartItems,
+        totalAmount,
+        shippingDetails,
+      };
+
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+
+      const json = await res.json();
+
+      if (json.success) {
+        alert("✅ Order placed successfully!");
+      } else {
+        alert("❌ Failed to place order.");
+        console.error(json.error);
+      }
+    },
+  });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <form onSubmit={formik.handleSubmit} className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column - Forms */}
+            {/* Left: Form Section */}
             <div className="space-y-6">
-              {/* Contact Information */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -64,26 +124,25 @@ export default function CheckOut() {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="John" />
+                      <Label>First Name</Label>
+                      <Input name="firstName" onChange={formik.handleChange} value={formik.values.firstName} />
                     </div>
                     <div>
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Doe" />
+                      <Label>Last Name</Label>
+                      <Input name="lastName" onChange={formik.handleChange} value={formik.values.lastName} />
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="john.doe@example.com" />
+                    <Label>Email</Label>
+                    <Input type="email" name="email" onChange={formik.handleChange} value={formik.values.email} />
                   </div>
                   <div>
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" />
+                    <Label>Phone</Label>
+                    <Input name="phone" onChange={formik.handleChange} value={formik.values.phone} />
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Shipping Address */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -93,213 +152,105 @@ export default function CheckOut() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <Label htmlFor="address">Street Address</Label>
-                    <Input id="address" placeholder="123 Main Street" />
+                    <Label>Street Address</Label>
+                    <Input name="address" onChange={formik.handleChange} value={formik.values.address} />
                   </div>
                   <div>
-                    <Label htmlFor="apartment">Apartment, suite, etc. (optional)</Label>
-                    <Input id="apartment" placeholder="Apt 4B" />
+                    <Label>Apartment</Label>
+                    <Input name="apartment" onChange={formik.handleChange} value={formik.values.apartment} />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <Label htmlFor="city">City</Label>
-                      <Input id="city" placeholder="New York" />
+                      <Label>City</Label>
+                      <Input name="city" onChange={formik.handleChange} value={formik.values.city} />
                     </div>
                     <div>
-                      <Label htmlFor="state">State</Label>
-                      <Select>
+                      <Label>State</Label>
+                      <Select onValueChange={(value) => formik.setFieldValue("state", value)}>
                         <SelectTrigger>
                           <SelectValue placeholder="Select state" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="ny">New York</SelectItem>
-                          <SelectItem value="ca">California</SelectItem>
-                          <SelectItem value="tx">Texas</SelectItem>
-                          <SelectItem value="fl">Florida</SelectItem>
+                          <SelectItem value="NY">New York</SelectItem>
+                          <SelectItem value="CA">California</SelectItem>
+                          <SelectItem value="TX">Texas</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                     <div>
-                      <Label htmlFor="zip">ZIP Code</Label>
-                      <Input id="zip" placeholder="10001" />
+                      <Label>ZIP</Label>
+                      <Input name="zip" onChange={formik.handleChange} value={formik.values.zip} />
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Payment Method */}
+              {/* Payment method */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <CreditCard className="h-5 w-5" />
-                    Payment Method
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
-                    <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                      <RadioGroupItem value="card" id="card" />
-                      <Label htmlFor="card" className="flex-1 cursor-pointer">
-                        Credit or Debit Card
-                      </Label>
-                      <div className="flex gap-1">
-                        <div className="w-8 h-5 bg-blue-600 rounded text-white text-xs flex items-center justify-center font-bold">
-                          VISA
-                        </div>
-                        <div className="w-8 h-5 bg-red-600 rounded text-white text-xs flex items-center justify-center font-bold">
-                          MC
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                      <RadioGroupItem value="paypal" id="paypal" />
-                      <Label htmlFor="paypal" className="flex-1 cursor-pointer">
-                        PayPal
-                      </Label>
-                    </div>
-                    <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                      <RadioGroupItem value="apple" id="apple" />
-                      <Label htmlFor="apple" className="flex-1 cursor-pointer">
-                        Apple Pay
-                      </Label>
-                    </div>
-                  </RadioGroup>
-
-                  {paymentMethod === "card" && (
-                    <div className="space-y-4 pt-4">
-                      <div>
-                        <Label htmlFor="cardNumber">Card Number</Label>
-                        <Input id="cardNumber" placeholder="1234 5678 9012 3456" />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="expiry">Expiry Date</Label>
-                          <Input id="expiry" placeholder="MM/YY" />
-                        </div>
-                        <div>
-                          <Label htmlFor="cvv">CVV</Label>
-                          <Input id="cvv" placeholder="123" />
-                        </div>
-                      </div>
-                      <div>
-                        <Label htmlFor="cardName">Name on Card</Label>
-                        <Input id="cardName" placeholder="John Doe" />
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              {/* Billing Address */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Billing Address</CardTitle>
+                  <CardTitle>Payment Method</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center space-x-2 mb-4">
-                    {/* <Checkbox id="sameAsShipping" checked={sameAsShipping} onCheckedChange={setSameAsShipping} /> */}
-                    <Label htmlFor="sameAsShipping">Same as shipping address</Label>
-                  </div>
-
-                  {!sameAsShipping && (
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="billingAddress">Street Address</Label>
-                        <Input id="billingAddress" placeholder="123 Main Street" />
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                          <Label htmlFor="billingCity">City</Label>
-                          <Input id="billingCity" placeholder="New York" />
-                        </div>
-                        <div>
-                          <Label htmlFor="billingState">State</Label>
-                          <Select>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select state" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="ny">New York</SelectItem>
-                              <SelectItem value="ca">California</SelectItem>
-                              <SelectItem value="tx">Texas</SelectItem>
-                              <SelectItem value="fl">Florida</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="billingZip">ZIP Code</Label>
-                          <Input id="billingZip" placeholder="10001" />
-                        </div>
-                      </div>
+                  <RadioGroup
+                    value={formik.values.paymentMethod}
+                    onValueChange={(val) => formik.setFieldValue("paymentMethod", val)}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="card" id="card" />
+                      <Label htmlFor="card">Credit / Debit Card</Label>
                     </div>
-                  )}
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="paypal" id="paypal" />
+                      <Label htmlFor="paypal">PayPal</Label>
+                    </div>
+                  </RadioGroup>
                 </CardContent>
               </Card>
+
+              <Button type="submit" className="w-full cursor-pointer">
+                <Lock className="w-4 h-4 mr-2" />
+                Place Order
+              </Button>
             </div>
 
-            {/* Right Column - Order Summary */}
+            {/* Right: Summary */}
             <div>
               <Card className="sticky top-8">
                 <CardHeader>
                   <CardTitle>Order Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Cart Items */}
-                  <div className="space-y-4">
-                    {cartItems.map((item) => (
-                      <div key={item.id} className="flex items-center space-x-4">
-                        <img
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.name}
-                          className="w-16 h-16 object-cover rounded-md border"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-sm font-medium text-gray-900 truncate">{item.name}</h3>
-                          <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
-                        </div>
-                        <div className="text-sm font-medium text-gray-900">
-                          ${(item.price * item.quantity).toFixed(2)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  {cartItems.map((item, i) => (
+                    <div key={i} className="flex justify-between items-center">
+                      <p>{item.title} (x{item.quantity})</p>
+                      <p>Rs {item?.sets[0]?.price * item.quantity}</p>
+                    </div>
+                  ))}
 
                   <Separator />
-
-                  {/* Order Totals */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Subtotal</span>
-                      <span>${subtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Shipping</span>
-                      <span>${shipping.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Tax</span>
-                      <span>${tax.toFixed(2)}</span>
-                    </div>
-                    <Separator />
-                    <div className="flex justify-between text-lg font-semibold">
-                      <span>Total</span>
-                      <span>${total.toFixed(2)}</span>
-                    </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal</span>
+                    <span>Rs {totalAmount.toFixed(0)}</span>
                   </div>
-
-                  {/* Place Order Button */}
-                  <Button className="w-full" size="lg">
-                    <Lock className="w-4 h-4 mr-2" />
-                    Place Order
-                  </Button>
-
-                  <p className="text-xs text-gray-500 text-center">Your payment information is secure and encrypted</p>
+                  {/* <div className="flex justify-between text-sm">
+                    <span>Shipping</span>
+                    <span>Rs {shipping}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tax</span>
+                    <span>Rs {tax.toFixed(0)}</span>
+                  </div> */}
+                  <Separator />
+                  <div className="flex justify-between text-lg font-semibold">
+                    <span>Total</span>
+                    <span>Rs {totalAmount.toFixed(0)}</span>
+                  </div>
                 </CardContent>
               </Card>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  )
+    </form>
+  );
 }

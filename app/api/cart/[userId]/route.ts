@@ -13,7 +13,6 @@ export async function GET(req: NextRequest, {
 
   try {
     const cart = await Cart.findOne({ userId });
-    console.log("cart", cart)
     return NextResponse.json({ success: true, data: cart || { items: [] } });
   } catch (error) {
     return NextResponse.json({ success: false, message: "Failed to get cart" }, { status: 500 });

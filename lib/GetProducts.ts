@@ -140,7 +140,7 @@ export async function UpdateProductById(id: string, payload: any) {
   }
 }
 
-export async function GetCartById(id: string) {
+export async function GetCartById(id: any) {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/cart/${id}`, {
       method: "GET",

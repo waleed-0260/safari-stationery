@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');@custom-variant dark (&:is(.dark *));
 
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Pacifico&display=swap');
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -141,4 +142,9 @@
 .text{
     font-family: "Roboto Flex", sans-serif;
     font-weight: 700;
+}
+
+.head{
+  font-family: "Pacifico", cursive;
+  color: #c71616;
 }

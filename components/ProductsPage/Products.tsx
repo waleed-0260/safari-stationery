@@ -22,7 +22,7 @@ const Products = ({ProductsData}:any) => {
     const [gridCols, setGridCols] = useState(1);
   return (
     <div className="container">
-      <h2 className="text-center text-2xl font-bold mb-6">Trending Products</h2>
+      <h2 className="text-center text-4xl font-bold mb-6 heading">Trending Products</h2>
       <div className='flex flex-row items-center justify-center gap-4'>
         <Rows3
           onClick={() => setGridCols(1)}
@@ -121,11 +121,13 @@ const Products = ({ProductsData}:any) => {
 
         <div className="p-4 flex flex-col gap-1 w-[80%]">
           <p className="text-base font-medium">{item.title}</p>
+          {item.sets[0].compare_at_price ? 
           <p className="line-through text-sm text-gray-500">
             Rs {item.compare_at_price} PKR
           </p>
+          :null}
           {/* <p>{item.description}</p> */}
-          <p className="text-red-600 font-semibold">Rs {item.price} PKR</p>
+          <p className="text-red-600 font-semibold">Rs {item.sets[0].price} PKR</p>
         </div>
 
           <div className={`${gridCols === 1 ? "flex  p-4 flex-col items-end justify-end gap-3": "hidden"}`}>
@@ -140,14 +142,14 @@ const Products = ({ProductsData}:any) => {
 </div>
 
 
-      <div className="flex justify-center mt-8">
+      {/* <div className="flex justify-center mt-8">
         <Button
           variant={"outline"}
           className="p-4 hover:bg-black hover:text-white cursor-pointer"
         >
           View More
         </Button>
-      </div>
+      </div> */}
     </div>  )
 }
 
