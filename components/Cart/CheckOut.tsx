@@ -48,38 +48,38 @@ export default function CheckOut() {
       email: "",
       phone: "",
       address: "",
-      apartment: "",
+      // apartment: "",
       city: "",
       state: "",
       zip: "",
       paymentMethod: "card",
     },
-//     validationSchema: Yup.object({
-//   firstName: Yup.string().required("First name is required"),
-//   lastName: Yup.string().required("Last name is required"),
-//   email: Yup.string().email("Invalid email").required("Email is required"),
-//   phone: Yup.string()
-//     .matches(/^\+?[0-9]{10,15}$/, "Phone number is not valid")
-//     .required("Phone number is required"),
-//   address: Yup.string().required("Address is required"),
-//   city: Yup.string().required("City is required"),
-//   state: Yup.string().required("State is required"),
-//   zip: Yup.string()
-//     .matches(/^\d{4,6}$/, "ZIP must be 4 to 6 digits")
-//     .required("ZIP is required"),
-// }),
+    validationSchema: Yup.object({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  phone: Yup.string()
+    .matches(/^\+?[0-9]{10,15}$/, "Phone number is not valid")
+    .required("Phone number is required"),
+  address: Yup.string().required("Address is required"),
+  city: Yup.string().required("City is required"),
+  state: Yup.string().required("State is required"),
+  zip: Yup.string()
+    .matches(/^\d{4,6}$/, "ZIP must be 4 to 6 digits")
+    .required("ZIP is required"),
+}),
     onSubmit: async (values) => {
       const shippingDetails = {
         name: values.firstName + " " + values.lastName,
         email: values.email,
         phone: values.phone,
-        address: `${values.address}, ${values.apartment}`,
+        address: `${values.address}, ${values.city}`,
         city: values.city,
         state: values.state,
         zip: values.zip,
       };
 
-      console.log("cklsldcn")
+      // console.log("cklsldcn")
 
       const orderPayload = {
         userId: guestId,
@@ -97,8 +97,15 @@ export default function CheckOut() {
       const json = await res.json();
 
       if (json.success) {
-        alert("✅ Order placed successfully!");
-      } else {
+    // ✅ Clear cart and checkout data from DB
+    await fetch(`/api/cart/${guestId}`, { method: "DELETE" });
+    await fetch(`/api/checkout/${guestId}`, { method: "DELETE" });
+
+    // ✅ Refresh page
+    window.location.reload();
+    alert("your order has been placed")
+  }
+   else {
         alert("❌ Failed to place order.");
         console.error(json.error);
       }
@@ -126,19 +133,31 @@ export default function CheckOut() {
                     <div>
                       <Label>First Name</Label>
                       <Input name="firstName" onChange={formik.handleChange} value={formik.values.firstName} />
+                      {formik.touched.firstName && formik.errors.firstName && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.firstName}</p>
+  )}
                     </div>
                     <div>
                       <Label>Last Name</Label>
                       <Input name="lastName" onChange={formik.handleChange} value={formik.values.lastName} />
+                      {formik.touched.lastName && formik.errors.lastName && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.lastName}</p>
+  )}
                     </div>
                   </div>
                   <div>
                     <Label>Email</Label>
                     <Input type="email" name="email" onChange={formik.handleChange} value={formik.values.email} />
+                    {formik.touched.email && formik.errors.email && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.email}</p>
+  )}
                   </div>
                   <div>
                     <Label>Phone</Label>
                     <Input name="phone" onChange={formik.handleChange} value={formik.values.phone} />
+                    {formik.touched.phone && formik.errors.phone && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.phone}</p>
+  )}
                   </div>
                 </CardContent>
               </Card>
@@ -154,28 +173,24 @@ export default function CheckOut() {
                   <div>
                     <Label>Street Address</Label>
                     <Input name="address" onChange={formik.handleChange} value={formik.values.address} />
-                  </div>
-                  <div>
-                    <Label>Apartment</Label>
-                    <Input name="apartment" onChange={formik.handleChange} value={formik.values.apartment} />
+                    {formik.touched.address && formik.errors.address && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.address}</p>
+  )}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <Label>City</Label>
                       <Input name="city" onChange={formik.handleChange} value={formik.values.city} />
+                      {formik.touched.city && formik.errors.city && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.city}</p>
+  )}
                     </div>
                     <div>
                       <Label>State</Label>
-                      <Select onValueChange={(value) => formik.setFieldValue("state", value)}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select state" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="NY">New York</SelectItem>
-                          <SelectItem value="CA">California</SelectItem>
-                          <SelectItem value="TX">Texas</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input name="state" onChange={formik.handleChange} value={formik.values.state} />
+                      {formik.touched.state && formik.errors.state && (
+    <p className="text-red-500 text-sm mt-1">{formik.errors.state}</p>
+  )}
                     </div>
                     <div>
                       <Label>ZIP</Label>
@@ -186,7 +201,7 @@ export default function CheckOut() {
               </Card>
 
               {/* Payment method */}
-              <Card>
+              {/* <Card>
                 <CardHeader>
                   <CardTitle>Payment Method</CardTitle>
                 </CardHeader>
@@ -205,7 +220,7 @@ export default function CheckOut() {
                     </div>
                   </RadioGroup>
                 </CardContent>
-              </Card>
+              </Card> */}
 
               <Button type="submit" className="w-full cursor-pointer">
                 <Lock className="w-4 h-4 mr-2" />

@@ -1,5 +1,5 @@
 // /app/api/checkout/route.ts
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 // import  from '@/lib/Mongodb';
 import { connectDB } from '@/lib/Mongodb';
 import Order from '@/models/Order';
@@ -25,5 +25,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, order });
   } catch (error) {
     return NextResponse.json({ success: false, message: "Order failed", error }, { status: 500 });
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    await connectDB();
+    const products = await Order.find(); // or with filters
+    return NextResponse.json({ success: true, data: products });
+  } catch (error) {
+    console.error("Products fetch error:", error);
+    return NextResponse.json({ success: false, message: "Failed to fetch products" }, { status: 500 });
   }
 }

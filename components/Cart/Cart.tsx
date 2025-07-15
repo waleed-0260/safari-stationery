@@ -11,6 +11,7 @@ import { getGuestId } from "@/hooks/getGuestId"
 import { useCartStore } from "@/hooks/useCartStore"
 import { useMemo } from "react"
 import Link from "next/link"
+import { UpdateCartItemByUserId } from "@/lib/GetProducts"
 interface CartItem {
   id: string
   name: string
@@ -34,10 +35,33 @@ export default function Cart({allCartData}:any) {
 //   setCartItems(userCart?.items || [])
 // }, [allCartData])
 
-  const updateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity < 1) return
-    setCartItems((items) => items.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)))
-  }
+const guestId = getGuestId();
+// console.log("guesitd",guestId)
+const updateQuantity = async (productId: string, quantity: number) => {
+  if (!guestId) return;
+
+  // Prevent quantity from going below 1
+  const safeQuantity = Math.max(quantity, 1);
+  setCartItems((prevItems) =>
+    prevItems.map((item) =>
+      item.productId === productId
+        ? { ...item, quantity: safeQuantity }
+        : item
+    )
+  );
+   await UpdateCartItemByUserId(guestId, {
+    productId,
+    quantity: safeQuantity,
+  });
+
+  // if (res?.success) {
+  //   // Optionally: Refetch cart or update state manually
+  //   console.log("✅ Quantity updated");
+  // } else {
+  //   console.error("❌ Failed to update quantity");
+  // }
+};
+
 
   const removeItem = (id: string) => {
     setCartItems((items) => items.filter((item) => item.id !== id))
@@ -149,7 +173,7 @@ export default function Cart({allCartData}:any) {
                             variant="outline"
                             size="icon"
                             className="w-8 h-8 bg-transparent"
-                            onClick={() => updateQuantity(item._id, item.quantity - 1)}
+                            onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                             disabled={item.quantity <= 1 || !item.stock}
                           >
                             <Minus className="w-3 h-3" />
@@ -157,7 +181,12 @@ export default function Cart({allCartData}:any) {
                           <Input
                             type="number"
                             value={item.quantity}
-                            onChange={(e) => updateQuantity(item._id, Number.parseInt(e.target.value) || 1)}
+                            // onChange={(e) => updateQuantity(item., Nmber.parseInt(e.target.value) || 1)}
+                           onChange={(e) => {
+  const value = parseInt(e.target.value, 10);
+  updateQuantity(item.productId, isNaN(value) || value < 1 ? 1 : value);
+}}
+
                             className="w-16 text-center"
                             min="1"
                             disabled={!item.stock}
@@ -166,7 +195,7 @@ export default function Cart({allCartData}:any) {
                             variant="outline"
                             size="icon"
                             className="w-8 h-8 bg-transparent"
-                            onClick={() => updateQuantity(item._id, item.quantity + 1)}
+                            onClick={() => updateQuantity(item.productId, item.quantity+ 1)}
                             disabled={!item.stock}
                           >
                             <Plus className="w-3 h-3" />

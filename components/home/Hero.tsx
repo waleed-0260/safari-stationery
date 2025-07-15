@@ -1,29 +1,37 @@
-import React from 'react';
-import { Button } from '../ui/button';
-import Link from 'next/link';
-import HeroImg from "@/public/images/HeroImg.jpeg";
-
-const Hero = () => {
+import Image from "next/image"
+import Link from "next/link"
+import HeroImg from "@/public/images/HeroImg.jpg"
+export default function Hero() {
   return (
-    <div
-      className="w-full h-[20rem] md:h-[30rem] bg-no-repeat bg-center bg-cover flex items-center justify-center text-white"
-      style={{
-        backgroundImage: `url(/images/HeroImg.jpeg)`,
-      }}
-    >
-      {/* Optional dark overlay for better contrast */}
-      {/* <div className="absolute inset-0 bg-black/40 z-0" /> */}
+    <section className="relative w-full h-screen lg:h-[41rem] xl:h-[50rem]  flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <Image
+        src={HeroImg}
+        alt="Hero background"
+        fill
+        className="object-cover object-center"
+        priority
+        quality={100}
+      />
 
-      <div className="text-center z-10 px-4">
-        <h1 className="md:text-6xl text-4xl font-bold mb-4">
-          Stationery to create <br /> Toys to celebrate
+      {/* Overlay for better text readability */}
+      {/* <div className="absolute inset-0 bg-black/40" /> */}
+
+      {/* Content */}
+      <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          Welcome to Our Amazing Platform
         </h1>
-        <Link href={"/products"}>
-          <Button className='cursor-pointer py-5 px-6'>View Products</Button>
+        <p className="text-lg md:text-xl lg:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto">
+          Discover endless possibilities and transform your ideas into reality with our cutting-edge solutions.
+        </p>
+        <Link
+          href="#"
+          className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+        >
+          Get Started
         </Link>
       </div>
-    </div>
-  );
-};
-
-export default Hero;
+    </section>
+  )
+}

@@ -159,3 +159,25 @@ export async function GetCartById(id: any) {
     return null;
   }
 }
+
+export async function UpdateCartItemByUserId(userId: string, payload: { productId: string; quantity: number }) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/cart/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    console.log("res", res)
+    
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || 'Failed to update cart item');
+
+    return json; // return whole response if you want message etc.
+  } catch (err) {
+    console.error(`❌ Error updating cart item (userId: ${userId}):`, err);
+    return null;
+  }
+}

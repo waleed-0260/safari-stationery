@@ -23,7 +23,11 @@ const OrderSchema = new mongoose.Schema(
     shippingDetails: {
       name: String,
       email: String,
+      phone:String,
       address: String,
+      city: String,
+      state: String,
+      zip: String,
     },
     status: { type: String, default: "pending" },
   },
