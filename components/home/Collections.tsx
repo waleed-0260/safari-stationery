@@ -42,10 +42,10 @@ const Collections = () => {
   return (
     <div className='flex flex-col items-center py-6 container' data-aos="fade-up">
         <p className='text-2xl font-bold heading'>Our Collections</p>
-        <div className='grid grid-cols-5 gap-4'>
+        <div className='grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2 grid-cols-1  gap-4 mt-[20px]'>
             {collectionData.map((item:any, index:any)=>{
                 return(
-                    <div key={index} className='flex flex-col w-[200px] h-[220px]'>
+                    <div key={index} className='flex flex-col w-auto h-auto'>
                         <img src={item.image} alt="" />
                         <p>{item.name}</p>
                     </div>

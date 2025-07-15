@@ -17,7 +17,7 @@ export default async function Home() {
       {/* <div className="w-full"> */}
       <AOSInitializer/>
     <Hero/>
-    <Boxes/>
+    {/* <Boxes/> */}
     <Products ProductsData={allProducts}/>
     <Collections/>
     <SingleProduct/>

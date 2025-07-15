@@ -34,11 +34,11 @@ const Products = ({ProductsData}:any) => {
         />
         <Columns3
           onClick={() => setGridCols(3)}
-          className={`text-2xl cursor-pointer ${gridCols === 3 ? 'text-blue-600' : 'text-gray-600'}`}
+          className={`text-2xl cursor-pointer md:flex hidden ${gridCols === 3 ? 'text-blue-600' : 'text-gray-600'}`}
         />
         <Columns4
           onClick={() => setGridCols(4)}
-          className={`text-2xl cursor-pointer ${gridCols === 4 ? 'text-blue-600' : 'text-gray-600'}`}
+          className={`text-2xl cursor-pointer md:flex hidden ${gridCols === 4 ? 'text-blue-600' : 'text-gray-600'}`}
         />
       </div>
       <div
@@ -57,7 +57,7 @@ const Products = ({ProductsData}:any) => {
       <Link
         href={`/products/${item._id}`}
         key={item._id}
-        className={`rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full bg-white p-5 ${
+        className={`rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full bg-white ${
           gridCols === 1 ? 'flex flex-row' : 'flex flex-col'
         }`}
       >

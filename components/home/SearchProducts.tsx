@@ -25,7 +25,6 @@ const SearchProducts = () => {
         setResults([]);
         return;
       }
-      console.log("query", query);
 
       setLoading(true);
       const data = await GetProductsBySearch(query);

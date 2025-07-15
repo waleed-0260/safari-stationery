@@ -8,7 +8,7 @@ import { getGuestId } from "@/hooks/getGuestId";
 
 const SingleProducts = ({ data }: any) => {
   const guestId = getGuestId();
-  console.log("guestidd", guestId)
+  // console.log("guestidd", guestId)
   const addToCart = useCartStore((state) => state.addToCart);
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
 
@@ -38,8 +38,8 @@ const SingleProducts = ({ data }: any) => {
     const sets = data.sets;
 
   return (
-    <div className="container flex flex-row justify-between items-start py-8">
-      <div className="flex flex-row w-[50%] gap-4">
+    <div className="container flex md:flex-row flex-col justify-between items-start py-8" data-aos="fade-up">
+      <div className="flex flex-row md:w-[50%] gap-4">
               <div className="flex flex-col gap-2 w-[15%]">
         {data.images.map((img:any, index:any) => (
           <img
@@ -58,7 +58,7 @@ const SingleProducts = ({ data }: any) => {
         </Zoom>
       </div>
 
-      <div className="flex flex-col gap-4 w-[40%]">
+      <div className="flex flex-col gap-4 md:w-[40%] w-full">
         {/* <p className="text-sm">{data.title}</p> */}
         <p className="text-4xl font-semibold">{data.title}</p>
 

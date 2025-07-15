@@ -3,11 +3,11 @@ import { Button } from '../ui/button'
 
 const SingleProduct = () => {
   return (
-    <div className=' flex flex-row justify-between items-start py-8 container' data-aos="fade-up">
-        <div className='flex w-[45%]'>
+    <div className=' flex md:flex-row flex-col justify-between items-start py-8 container' data-aos="fade-up">
+        <div className='flex md:w-[45%]'>
             <img src="https://www.thepaperworm.com/cdn/shop/files/3PcsRainbowTiePastelColoredNotebook.webp?v=1714498273&width=823" alt="" />
         </div>
-        <div className='flex flex-col gap-4 w-[45%]'>
+        <div className='flex flex-col gap-4 md:w-[45%]'>
             <p className='text-sm'>The paperworn</p>
             <p className='text-4xl font-semibold heading'>Lorem ipsum dolor sit amet.</p>
             <div className='flex flex-row gap-4'>

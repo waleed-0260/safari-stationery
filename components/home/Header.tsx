@@ -13,6 +13,16 @@ import SearchProducts from './SearchProducts';
 import { getGuestId } from '@/hooks/getGuestId';
 import { FloatingWhatsApp } from "react-floating-whatsapp";
 import Carticon from '../Cart/Carticon';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+import { FiMenu } from "react-icons/fi";
+
 
 const Header = () => {
   // const guestIdddd = getGuestId();
@@ -21,12 +31,35 @@ const Header = () => {
   
   return (
     <>
-    <div className='flex items-center justify-center bgColors w-full h-[90px]'>
+    <div className='flex items-center justify-center w-full h-[90px]' style={{
+    background: 'linear-gradient(to right, #9b7a9aff, #a2d2ff)'
+  }}>
     <div className='flex flex-row items-center justify-between w-[90%]'>
+      <div className='md:hidden flex'>
+                    <Sheet>
+  <SheetTrigger>
+    <p className='text-3xl cursor-pointer '>
+    <FiMenu/>
+    </p>
+  </SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle></SheetTitle>
+      {categoryOptions.map((item)=>{
+        return(
+          <ul key={item.value} className='py-1'>
+          <li>{item.label}</li>
+        </ul>
+        )
+      })}
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
+      </div>
         <Link href={"/"} className='h-[150px] w-[150px]'>
-            <Image src={logo} alt="" />
+            <Image src={logo} alt="" className=''/>
         </Link>
-        <div className='grid grid-cols-4'>
+        <div className='md:grid grid-cols-4 hidden'>
             {categoryOptions.map((item: any, index) => {
   const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
   
@@ -62,28 +95,8 @@ const Header = () => {
 
         </div>
 
-        <div className='flex flex-row gap-4'>
+        <div className='flex flex-row md:gap-4 gap-2'>
           <SearchProducts/>
-          {/* <Sheet>
-  <SheetTrigger>            <p className='text-3xl cursor-pointer'><IoSearch/></p>
-  </SheetTrigger>
-  <SheetContent>
-  <SheetHeader>
-  <SheetTitle><div className="relative w-full max-w-sm">
-  <input
-  type="text"
-  placeholder="Search..."
-  className="w-full border border-gray-300 rounded-full py-2 pl-4 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
-  <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-    <Search className="text-gray-500" />
-    </div>
-    </div></SheetTitle>
-    <SheetDescription>
-      </SheetDescription>
-      </SheetHeader>
-  </SheetContent>
-</Sheet> */}
             <p className='text-3xl cursor-pointer'><VscAccount/></p>
             <Carticon/>
         </div>
