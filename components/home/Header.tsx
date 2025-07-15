@@ -47,9 +47,9 @@ const Header = () => {
       <SheetTitle></SheetTitle>
       {categoryOptions.map((item)=>{
         return(
-          <ul key={item.value} className='py-1'>
+          <Link href={`${item.value}`} key={item.value} className='py-1'>
           <li>{item.label}</li>
-        </ul>
+        </Link>
         )
       })}
     </SheetHeader>

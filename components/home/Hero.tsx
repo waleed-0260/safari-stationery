@@ -3,7 +3,7 @@ import Link from "next/link"
 import HeroImg from "@/public/images/HeroImg.jpg"
 export default function Hero() {
   return (
-    <section className="relative w-full h-screen lg:h-[41rem] xl:h-[50rem]  flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[21rem] lg:h-[41rem] xl:h-[50rem]  flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <Image
         src={HeroImg}
