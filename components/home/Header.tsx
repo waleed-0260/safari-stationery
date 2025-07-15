@@ -47,8 +47,8 @@ const Header = () => {
       <SheetTitle></SheetTitle>
       {categoryOptions.map((item)=>{
         return(
-          <Link href={`${item.value}`} key={item.value} className='py-1'>
-          <li>{item.label}</li>
+          <Link href={`/products/categories/${item.value}`} key={item.value} className='py-1'>
+          <p>{item.label}</p>
         </Link>
         )
       })}
