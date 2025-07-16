@@ -11,7 +11,7 @@ const page = async({
     const productData = await GetProductsById(id);
   return (
     <div>
-        <UpdateProducts data={productData}/>
+        <UpdateProducts data={productData} id={id}/>
     </div>
   )
 }

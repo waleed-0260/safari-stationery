@@ -33,6 +33,8 @@
     "mongoose": "^8.16.1",
     "multer": "^2.0.1",
     "next": "15.3.5",
+    "primereact": "^10.9.6",
+    "quill": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-floating-whatsapp": "^5.0.8",

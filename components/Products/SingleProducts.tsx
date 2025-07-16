@@ -39,8 +39,8 @@ const SingleProducts = ({ data }: any) => {
 
   return (
     <div className="container flex md:flex-row flex-col justify-between items-start py-8">
-      <div className="flex md:flex-row flex-col md:w-[50%] gap-4" data-aos="fade-left">
-              <div className="flex flex-col gap-2 w-[15%]">
+      <div className="flex md:flex-row flex-col-reverse md:w-[50%] gap-4" data-aos="fade-left">
+              <div className="flex md:flex-col flex-row gap-2 md:w-[15%]">
         {data.images.map((img:any, index:any) => (
           <img
             key={index}

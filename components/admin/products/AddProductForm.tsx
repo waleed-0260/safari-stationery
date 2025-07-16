@@ -6,9 +6,9 @@ import Select from 'react-select';
 import { Button } from "@/components/ui/button";
 // import ReactQuill from "react-quill";
 // import "react-quill/dist/quill.snow.css";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-
+// import { useEditor, EditorContent } from "@tiptap/react";
+// import StarterKit from "@tiptap/starter-kit";
+import { Editor } from 'primereact/editor';
 
 type CategoryOption = {
   value: string;
@@ -33,17 +33,6 @@ const AddProductForm = () => {
 
   const [loading, setLoading] = useState(false);
 
-const editorConfig = {
-  namespace: "MyEditor",
-  theme: {
-    // Custom minimal styling
-    paragraph: "mb-2",
-  },
-  onError: (error: any) => {
-    throw error;
-  },
-  nodes: [],
-};
 
   const categoryOptions = [
     { value: 'Sale', label: 'Sale' },
@@ -191,24 +180,7 @@ const subCategoryOptions =
         subCategoryMap[cat as keyof typeof subCategoryMap] || []
       )
     : [];
-    // console.log("loas", loading)
-
-
-      const editor = useEditor({
-    extensions: [StarterKit],
-    content: formik.values.description,
-    onUpdate({ editor }) {
-      const html = editor.getHTML();
-      formik.setFieldValue("description", html);
-    },
-    editorProps: {
-      attributes: {
-        class:
-          "min-h-[150px] border p-3 rounded bg-white prose max-w-none focus:outline-none",
-      },
-    },
-    immediatelyRender: false
-  });
+    
 
 
   return (
@@ -448,7 +420,14 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
         {/* Description */}
         <div>
           <label className="block mb-1 font-medium text-gray-700">Description</label>
-          <EditorContent editor={editor} />
+          {/* <EditorContent editor={editor} /> */}
+          <Editor value={formik.values.description}
+        onTextChange={(e: any) =>
+          formik.setFieldValue("description", e.htmlValue)
+        }
+        onBlur={() => formik.setFieldTouched("description", true)}
+        style={{ height: "200px" }}/>
+
           {formik.touched.description && formik.errors.description && (
             <p className="text-red-500 text-sm mt-1">{formik.errors.description}</p>
           )}

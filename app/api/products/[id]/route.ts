@@ -33,12 +33,32 @@ export async function PATCH(req: NextRequest, {
   try {
     const {id} = await params;
     await connectDB();
-    const body = await req.json();
+    const formData = await req.formData();
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, body, {
-      new: true,
-      runValidators: true,
-    });
+    const title = formData.get("title")?.toString();
+    const description = formData.get("description")?.toString();
+    const stock = Number(formData.get("stock"));
+    const isFeatured = formData.get("isFeatured") === "true";
+
+    const category = JSON.parse(formData.get("category") as string);
+    const sub_category = JSON.parse(formData.get("sub_category") as string);
+    const colors = JSON.parse(formData.get("colors") as string);
+    const sets = JSON.parse(formData.get("sets") as string);
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        stock,
+        isFeatured,
+        category,
+        sub_category,
+        colors,
+        sets,
+      },
+      { new: true, runValidators: true }
+    );
 
     if (!updatedProduct) {
       return NextResponse.json({ success: false, message: 'Product not found' }, { status: 404 });

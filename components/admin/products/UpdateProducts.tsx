@@ -4,6 +4,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Select from 'react-select';
 import { Button } from "@/components/ui/button";
+import { Editor } from 'primereact/editor';
+
+
+
 type CategoryOption = {
   value: string;
   label: string;
@@ -22,7 +26,7 @@ interface FormValues {
   colors: string[];
     sets: { set: string; price: number; compare_at_price: number, size: string }[];
 }
-const UpdateProducts = ({data}:any) => {
+const UpdateProducts = ({data, id}:any) => {
 
 
       const [loading, setLoading] = useState(false);
@@ -109,8 +113,8 @@ const UpdateProducts = ({data}:any) => {
         validationSchema: Yup.object({
           title: Yup.string().required("Title is required"),
           description: Yup.string().required("Description is required"),
-          price: Yup.number().required("Price is required"),
-          compare_at_price: Yup.number(),
+          // price: Yup.number().required("Price is required"),
+          // compare_at_price: Yup.number(),
           category: Yup.array().min(1, "Select at least one category"),
           sub_category: Yup.array().min(1, "Select at least one sub category"),
           stock: Yup.number().required("Stock is required"),
@@ -126,17 +130,18 @@ const UpdateProducts = ({data}:any) => {
   ),
           images: Yup.array()
           .min(2, "Please upload 2 images")
-            .max(4, "Only 4 images are allowed"),
+            .max(6, "Only 6 images are allowed"),
           }),
           onSubmit: async (values) => {
+            console.log("kjsnfk")
           setLoading(true);
           try {
             const formData = new FormData();
     
-            formData.append("title", values.title);
-            formData.append("description", values.description);
             // formData.append("price", values.price);
             // formData.append("compare_at_price", values.compare_at_price);
+            formData.append("title", values.title);
+            formData.append("description", values.description);
             formData.append("stock", values.stock);
             formData.append("isFeatured", values.isFeatured);
             formData.append("category", JSON.stringify(values.category));
@@ -149,14 +154,14 @@ const UpdateProducts = ({data}:any) => {
               formData.append("images", file);
             });
     
-            const res = await fetch("/api/products", {
+            const res = await fetch(`/api/products/${id}`, {
               method: "PATCH",
               body: formData,
             });
     
             const data = await res.json();
             if (data.success) {
-              alert("Product added successfully!");
+              alert("Product Updated  successfully!");
               formik.resetForm();
               setLoading(false);
             } else {
@@ -384,15 +389,13 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
         {/* Description */}
         <div>
           <label className="block mb-1 font-medium text-gray-700">Description</label>
-          <textarea
-            name="description"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.description}
-            rows={4}
-            placeholder="Write product description..."
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          ></textarea>
+          
+          <Editor value={formik.values.description}
+                  onTextChange={(e: any) =>
+                    formik.setFieldValue("description", e.htmlValue)
+                  }
+                  onBlur={() => formik.setFieldTouched("description", true)}
+                  style={{ height: "200px" }}/>
           {formik.touched.description && formik.errors.description && (
             <p className="text-red-500 text-sm mt-1">{formik.errors.description}</p>
           )}
@@ -490,7 +493,7 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
           disabled={loading}
         >
           {/* Submit */}
-          {loading ? "adding product please wait...": "Submit"}
+          {loading ? "Updatig product please wait...": "Submit"}
         </button>
       </form>
     </div>
