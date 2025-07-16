@@ -4,6 +4,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Select from 'react-select';
 import { Button } from "@/components/ui/button";
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
 
 type CategoryOption = {
@@ -29,6 +33,18 @@ const AddProductForm = () => {
 
   const [loading, setLoading] = useState(false);
 
+const editorConfig = {
+  namespace: "MyEditor",
+  theme: {
+    // Custom minimal styling
+    paragraph: "mb-2",
+  },
+  onError: (error: any) => {
+    throw error;
+  },
+  nodes: [],
+};
+
   const categoryOptions = [
     { value: 'Sale', label: 'Sale' },
     { value: 'Deals', label: 'Deals' },
@@ -39,6 +55,7 @@ const AddProductForm = () => {
     { value: 'Toys', label: 'Toys' },
     { value: 'Trending', label: 'Trending' },
   ];
+
 
   const subCategoryMap = {
   "Study Essentials": [
@@ -175,6 +192,24 @@ const subCategoryOptions =
       )
     : [];
     // console.log("loas", loading)
+
+
+      const editor = useEditor({
+    extensions: [StarterKit],
+    content: formik.values.description,
+    onUpdate({ editor }) {
+      const html = editor.getHTML();
+      formik.setFieldValue("description", html);
+    },
+    editorProps: {
+      attributes: {
+        class:
+          "min-h-[150px] border p-3 rounded bg-white prose max-w-none focus:outline-none",
+      },
+    },
+    immediatelyRender: false
+  });
+
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -413,15 +448,7 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
         {/* Description */}
         <div>
           <label className="block mb-1 font-medium text-gray-700">Description</label>
-          <textarea
-            name="description"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.description}
-            rows={4}
-            placeholder="Write product description..."
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          ></textarea>
+          <EditorContent editor={editor} />
           {formik.touched.description && formik.errors.description && (
             <p className="text-red-500 text-sm mt-1">{formik.errors.description}</p>
           )}

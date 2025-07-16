@@ -32,7 +32,7 @@ const Header = () => {
   return (
     <>
     <div className='flex items-center justify-center w-full h-[90px]' style={{
-    background: 'linear-gradient(to right, #9b7a9aff, #a2d2ff)'
+    background: 'linear-gradient(to right, #F191ED, #a2d2ff)'
   }}>
     <div className='flex flex-row items-center justify-between w-[90%]'>
       <div className='md:hidden flex'>
@@ -97,7 +97,7 @@ const Header = () => {
 
         <div className='flex flex-row md:gap-4 gap-2'>
           <SearchProducts/>
-            <p className='text-3xl cursor-pointer'><VscAccount/></p>
+             <p className='text-3xl cursor-pointer md:block hidden'><VscAccount/></p>
             <Carticon/>
         </div>
 

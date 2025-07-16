@@ -38,8 +38,8 @@ const SingleProducts = ({ data }: any) => {
     const sets = data.sets;
 
   return (
-    <div className="container flex md:flex-row flex-col justify-between items-start py-8" data-aos="fade-up">
-      <div className="flex flex-row md:w-[50%] gap-4">
+    <div className="container flex md:flex-row flex-col justify-between items-start py-8">
+      <div className="flex md:flex-row flex-col md:w-[50%] gap-4" data-aos="fade-left">
               <div className="flex flex-col gap-2 w-[15%]">
         {data.images.map((img:any, index:any) => (
           <img
@@ -54,11 +54,11 @@ const SingleProducts = ({ data }: any) => {
         ))}
       </div>
         <Zoom>
-          <img alt="Product" src={selectedImage} width="500" />
+          <img alt="Product" src={selectedImage}/>
         </Zoom>
       </div>
 
-      <div className="flex flex-col gap-4 md:w-[40%] w-full">
+      <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" data-aos="fade-right">
         {/* <p className="text-sm">{data.title}</p> */}
         <p className="text-4xl font-semibold">{data.title}</p>
 
@@ -118,7 +118,7 @@ const SingleProducts = ({ data }: any) => {
         {/* Quantity Selector */}
         <div>
           <p className="text-sm">Quantity</p>
-          <div className="border-2 h-[50px] w-[120px] flex items-center justify-around cursor-pointer">
+          <div className="border-2 border-black rounded-full h-[40px] w-[100px] flex items-center justify-around cursor-pointer">
             <button onClick={decreaseQty} className="cursor-pointer">-</button>
             <p>{quantity}</p>
             <button onClick={increaseQty} className="cursor-pointer">+</button>

@@ -46,30 +46,34 @@ const Products = ({ ProductsData }: any) => {
           {ProductsData?.map((item: any) => (
             <SwiperSlide key={item._id}>
               <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[340px] group my-[10px]"  >
-                <Link className="relative w-full h-64 overflow-hidden" href={`/products/${item._id}`}>
-                  {/* Primary Image */}
-                  <Image
-                    src={item.images[0]}
-                    alt="Product"
-                    className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
-                    width={500}
-                    height={500}
-                  />
+              <Link 
+  className="relative w-full h-64 overflow-hidden group" 
+  href={`/products/${item._id}`}
+>  
+  {/* Primary Image */}
+  <Image
+    src={item.images[0]}
+    alt="Product"
+    className="w-full h-full object-cover absolute inset-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
+    width={700}
+    height={700}
+  />
 
-                  {/* Hover Image */}
-                  <Image
-                    src={item.images[1]}
-                    alt="Product Hover"
-                    className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
-                    width={500}
-                    height={500}
-                  />
+  {/* Hover Image */}
+  <Image
+    src={item.images[1]}
+    alt="Product Hover"
+    className="w-full h-full object-cover absolute inset-0 transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
+    width={700}
+    height={700}
+  />
 
-                  <p className="absolute bg-black text-white py-1 px-3 rounded-full bottom-5 left-4 text-sm">
-                    Sale
-                  </p>
+  {/* Sale Badge */}
+  <p className="absolute bg-black text-white py-1 px-3 rounded-full bottom-5 left-4 text-sm z-10">
+    Sale
+  </p>
+</Link>
 
-                </Link>
                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex flex-col gap-4">
                     <Dialog>
@@ -89,14 +93,14 @@ const Products = ({ ProductsData }: any) => {
 
                 <div className="p-4 flex flex-col gap-1">
                   <p className="text-base font-semibold heading">{item.title}</p>
-                  {item.sets[0].compare_at_price ?
+                  {item?.sets[0]?.compare_at_price ?
                   <p className="line-through text-sm text-gray-500">
                     Rs {item.compare_at_price} PKR
                   </p>
                   : null}
                   
                   <p className="text-red-600 font-semibold">
-                    Rs {item.sets[0].price} PKR
+                    Rs {item?.sets[0]?.price} PKR
                   </p>
                 </div>
               </div>

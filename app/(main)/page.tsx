@@ -8,6 +8,7 @@ import SingleProduct from "@/components/home/SingleProduct";
 import Image from "next/image";
 import { GetProducts } from "@/lib/GetProducts";
 import AOSInitializer from "@/components/AOSInitializer";
+import Updates from "@/components/home/Updates";
 
 export default async function Home() {
   const allProducts = await GetProducts();
@@ -21,6 +22,7 @@ export default async function Home() {
     <Products ProductsData={allProducts}/>
     <Collections/>
     <SingleProduct/>
+    <Updates/>
     <Faq/>
     <CallToEmail/>
       </div>
