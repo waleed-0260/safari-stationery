@@ -5,14 +5,19 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useCartStore } from "@/hooks/useCartStore";
 import { getGuestId } from "@/hooks/getGuestId";
+import parse from "html-react-parser"
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Router } from "lucide-react";
 
 const SingleProducts = ({ data }: any) => {
+  // console.log("seskao;fkdf", data)
   const guestId = getGuestId();
   // console.log("guestidd", guestId)
   const addToCart = useCartStore((state) => state.addToCart);
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
 
-  const [selectedColor, setSelectedColor] = useState<string>(data.colors?.[0] || "");
+  const [selectedColor, setSelectedColor] = useState<string>(data?.colors?.[0] || "");
   const [quantity, setQuantity] = useState<number>(1);
 
   const increaseQty = () => setQuantity((prev) => prev + 1);
@@ -20,28 +25,29 @@ const SingleProducts = ({ data }: any) => {
 
   const handleAddToCart = () => {
     addToCart({
-      productId: data._id,
-      title: data.title,
-      // price: data.price,
+      productId: data?._id,
+      title: data?.title,
+      // price: data?.price,
       quantity,
       color: selectedColor,
-      stock: data.stock,
-      image: data.images[0],
-      sets: data.sets
+      stock: data?.stock,
+      image: data?.images[0],
+      sets: data?.sets
     });
 
     saveCartToBackend(); // Optional: sync with backend
+    toast.success(`product added to cart!`);
   };
 
-    const [selectedImage, setSelectedImage] = useState(data.images[0])
+    const [selectedImage, setSelectedImage] = useState(data?.images[0])
   const [selectedSetIndex, setSelectedSetIndex] = useState(0);
-    const sets = data.sets;
+    const sets = data?.sets;
 
   return (
     <div className="container flex md:flex-row flex-col justify-between items-start py-8">
-      <div className="flex md:flex-row flex-col-reverse md:w-[50%] gap-4" data-aos="fade-left">
-              <div className="flex md:flex-col flex-row gap-2 md:w-[15%]">
-        {data.images.map((img:any, index:any) => (
+      <div className="flex flex-col-reverse md:w-[50%] gap-4" data-aos="fade-left">
+              <div className="flex flex-row gap-2 md:w-[15%]">
+        {data?.images.map((img:any, index:any) => (
           <img
             key={index}
             src={img}
@@ -59,31 +65,31 @@ const SingleProducts = ({ data }: any) => {
       </div>
 
       <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" data-aos="fade-right">
-        {/* <p className="text-sm">{data.title}</p> */}
-        <p className="text-4xl font-semibold">{data.title}</p>
+        {/* <p className="text-sm">{data?.title}</p> */}
+        <p className="text-4xl font-semibold">{data?.title}</p>
 
         <div className="flex flex-row gap-4">
-          {/* {data.sets[0].compare_at_price ?
-          <p className="line-through text-gray-500">Rs {data.compare_at_price}</p>
+          {/* {data?.sets[0].compare_at_price ?
+          <p className="line-through text-gray-500">Rs {data?.compare_at_price}</p>
           :null}
-          <p className="text-red-500">Rs {data.sets}</p> */}
+          <p className="text-red-500">Rs {data?.sets}</p> */}
               <div className="mt-4">
       {/* If only 1 set */}
-      {sets.length === 1 ? (
+      {sets?.length === 1 ? (
         <p className="text-red-500 text-lg font-semibold">
-          Rs {sets[0].price}
-          {sets[0].compare_at_price && (
+          Rs {sets[0]?.price} <br />
+          {sets[0].compare_at_price === 1  && (
             <span className="line-through text-gray-400 text-sm ml-2">
               Rs {sets[0].compare_at_price}
             </span>
           )}
         </p>
       ) : (
-        sets.length > 1 && (
+        sets?.length > 1 && (
           <>
             {/* Set Buttons */}
             <div className="flex flex-wrap gap-2 mb-3">
-              {sets.map((item: any, index: number) => (
+              {sets?.map((item: any, index: number) => (
                 <button
                   key={index}
                   onClick={() => setSelectedSetIndex(index)}
@@ -113,9 +119,7 @@ const SingleProducts = ({ data }: any) => {
     </div>
         </div>
 
-        <p>{data.description}</p>
-
-        {/* Quantity Selector */}
+                {/* Quantity Selector */}
         <div>
           <p className="text-sm">Quantity</p>
           <div className="border-2 border-black rounded-full h-[40px] w-[100px] flex items-center justify-around cursor-pointer">
@@ -126,9 +130,9 @@ const SingleProducts = ({ data }: any) => {
         </div>
 
         {/* Color Selector */}
-        {data.colors && data.colors.length > 0 && (
+        {data?.colors && data?.colors.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-2">
-            {data.colors.map((color: string, index: number) => (
+            {data?.colors.map((color: string, index: number) => (
               <button
                 key={index}
                 onClick={() => setSelectedColor(color)}
@@ -146,8 +150,21 @@ const SingleProducts = ({ data }: any) => {
         <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer">
           Add To Cart
         </Button>
-        <Button variant="default" className="cursor-pointer">Buy Now</Button>
+
+        <div>{parse(data?.description)}</div>
+
+
       </div>
+       <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              theme="colored"
+            />
     </div>
   );
 };

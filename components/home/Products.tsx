@@ -20,11 +20,11 @@ import Link from "next/link";
 import SingleProduct from "./SingleProduct";
 import ProductPopup from "./ProductPopup";
 
-const Products = ({ ProductsData }: any) => {
+const Products = ({ ProductsData, heading }: any) => {
 
   return (
     <div className="w-full py-8 container" data-aos='fade-up'>
-      <h2 className="text-center text-2xl heading font-bold mb-6">Trending Products</h2>
+      <h2 className="text-center text-2xl heading font-bold mb-6">{heading}</h2>
 
       <div className="relative">
         <Swiper
@@ -55,8 +55,8 @@ const Products = ({ ProductsData }: any) => {
     src={item.images[0]}
     alt="Product"
     className="w-full h-full object-cover absolute inset-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
-    width={700}
-    height={700}
+    width={500}
+    height={500}
   />
 
   {/* Hover Image */}
@@ -64,8 +64,8 @@ const Products = ({ ProductsData }: any) => {
     src={item.images[1]}
     alt="Product Hover"
     className="w-full h-full object-cover absolute inset-0 transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
-    width={700}
-    height={700}
+    width={500}
+    height={500}
   />
 
   {/* Sale Badge */}
@@ -112,7 +112,7 @@ const Products = ({ ProductsData }: any) => {
       <div className="flex justify-center mt-8">
         <Link
           // variant={"outline"}
-          className="p-2 px-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer rounded-xl"
+          className="p-2 px-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer rounded-full"
           href={"/products"}
         >
           View More

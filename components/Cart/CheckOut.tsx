@@ -19,7 +19,7 @@ export default function CheckOut() {
   const guestId = getGuestId();
   // console.log("id", guestId)
   const [cartItems, setCartItems] = useState<any[]>([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchCart = async () => {
       const res = await GetCartById(guestId);
@@ -69,6 +69,7 @@ export default function CheckOut() {
     .required("ZIP is required"),
 }),
     onSubmit: async (values) => {
+      setLoading(true)
       const shippingDetails = {
         name: values.firstName + " " + values.lastName,
         email: values.email,
@@ -99,7 +100,7 @@ export default function CheckOut() {
       if (json.success) {
     // ✅ Clear cart and checkout data from DB
     await fetch(`/api/cart/${guestId}`, { method: "DELETE" });
-    await fetch(`/api/checkout/${guestId}`, { method: "DELETE" });
+    // await fetch(`/api/checkout/${guestId}`, { method: "DELETE" });
 
     // ✅ Refresh page
     window.location.reload();
@@ -222,8 +223,9 @@ export default function CheckOut() {
                 </CardContent>
               </Card> */}
 
-              <Button type="submit" className="w-full cursor-pointer">
+              <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
                 <Lock className="w-4 h-4 mr-2" />
+                {loading ? "placing your order": "Place Order"}
                 Place Order
               </Button>
             </div>

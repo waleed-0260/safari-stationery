@@ -61,3 +61,24 @@ export async function PATCH(
     );
   }
 }
+
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ userId: string }> }
+) {
+  await connectDB();
+  const { userId } = await params;
+
+  try {
+    const result = await Cart.findOneAndDelete({ userId });
+
+    if (!result) {
+      return NextResponse.json({ success: false, message: "Cart not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, message: "Cart deleted successfully" });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Failed to delete cart" }, { status: 500 });
+  }
+}

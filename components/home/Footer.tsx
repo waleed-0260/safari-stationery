@@ -1,6 +1,8 @@
+"use client"
 import React from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import Link from "next/link";
+import { FloatingWhatsApp } from "react-floating-whatsapp";
 
 const Footer = () => {
   return (
@@ -54,6 +56,15 @@ const Footer = () => {
       <div className="mt-10 text-center text-sm text-gray-400">
         © {new Date().getFullYear()} Your Shop Name. All rights reserved.
       </div>
+       <FloatingWhatsApp
+                phoneNumber="+923342987718"
+                accountName="Paper N Play"
+                statusMessage="Replies within 15 minutes"
+                chatMessage="Hello there! How can I help you ?"
+                avatar="/images/logo.jpeg"
+                chatboxHeight={350}
+                buttonClassName="floating-whatsapp-button"
+              />
     </footer>
   );
 };

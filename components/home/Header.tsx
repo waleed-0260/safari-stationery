@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {categoryOptions, subCategoryMap} from "@/lib/Categories"
 // import { IoSearch } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
@@ -11,7 +11,6 @@ import Link from 'next/link';
 import SearchProducts from './SearchProducts';
 // import { GetCartProducts } from '@/lib/GetProducts';
 import { getGuestId } from '@/hooks/getGuestId';
-import { FloatingWhatsApp } from "react-floating-whatsapp";
 import Carticon from '../Cart/Carticon';
 import {
   Sheet,
@@ -28,10 +27,30 @@ const Header = () => {
   // const guestIdddd = getGuestId();
   // console.log("header is gusee fi", guestIdddd)
   // const cartLength = await GetCartProducts();
+
+    const messages = [
+    "Free shipping for orders worth Rs 3000",
+    "Cash on delivery available across Pakistan",
+    "Get 10% off on your first order!",
+    "New arrivals are live now – check them out!",
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
+    }, 4000); // change every 4 seconds
+
+    return () => clearInterval(interval); // cleanup
+  }, []);
   
   return (
     <>
-    <div className='flex items-center justify-center w-full h-[90px]' style={{
+    <div className='bg-blue-800 w-full py-[8px] text-white text-center text-sm'>
+      <p>{messages[currentIndex]}</p>
+    </div>
+    <div className='flex items-center justify-center w-full md:h-[120px] h-[90px]' style={{
     background: 'linear-gradient(to right, #F191ED, #a2d2ff)'
   }}>
     <div className='flex flex-row items-center justify-between w-[90%]'>
@@ -65,7 +84,7 @@ const Header = () => {
   
   return (
     <div key={index} className="relative group cursor-pointer">
-      <Link className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200 ml-3 mt-1 heading font-semibold" href={`/products/categories/${item.value}`}>
+      <Link className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200 ml-3 mt-3 heading font-semibold" href={`/products/categories/${item.value}`}>
         {item.icon} {item.label} 
       </Link>
 
@@ -103,15 +122,6 @@ const Header = () => {
 
     </div>
     </div>
-       <FloatingWhatsApp
-          phoneNumber="+923342987718"
-          accountName="Paper N Play"
-          statusMessage="Replies within 15 minutes"
-          chatMessage="Hello there! How can I help you ?"
-          avatar="/images/logo.jpeg"
-          chatboxHeight={350}
-          buttonClassName="floating-whatsapp-button"
-        />
       </>
   )
 }

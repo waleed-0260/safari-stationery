@@ -10,16 +10,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useCartStore } from '@/hooks/useCartStore';
 import { Button } from '../ui/button';
 import { Columns2 } from 'lucide-react';
 import { Columns3 } from 'lucide-react';
 import { Columns4 } from 'lucide-react';
 import { Rows3 } from 'lucide-react';
 import { useState } from 'react';
-
+// import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Products = ({ProductsData}:any) => {
     const [gridCols, setGridCols] = useState(1);
+      const addToCart = useCartStore((state) => state.addToCart);
+      const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
+    
   return (
     <div className="container">
       <h2 className="text-center text-4xl font-bold mb-6 heading">Trending Products</h2>
@@ -54,9 +60,8 @@ const Products = ({ProductsData}:any) => {
 >
   {ProductsData ? (
     ProductsData.map((item: any) => (
-      <Link
-        href={`/products/${item._id}`}
-        key={item._id}
+      <div
+        key={item?._id}
         className={`rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full bg-white ${
           gridCols === 1 ? 'flex flex-row' : 'flex flex-col'
         }`}
@@ -68,7 +73,7 @@ const Products = ({ProductsData}:any) => {
         >
           {/* Primary Image */}
           <Image
-            src={item.images[0]}
+            src={item?.images[0]}
             alt="Product"
             className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
             width={500}
@@ -77,7 +82,7 @@ const Products = ({ProductsData}:any) => {
 
           {/* Hover Image */}
           <Image
-            src={item.images[1]}
+            src={item?.images[1]}
             alt="Product Hover"
             className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
             width={500}
@@ -120,21 +125,31 @@ const Products = ({ProductsData}:any) => {
         </div>
 
         <div className="p-4 flex flex-col gap-1 w-[80%]">
-          <p className="text-base font-medium">{item.title}</p>
-          {item.sets[0].compare_at_price ? 
+          <p className="text-base font-medium">{item?.title}</p>
+          {item?.sets[0]?.compare_at_price > 0 ? 
           <p className="line-through text-sm text-gray-500">
-            Rs {item.compare_at_price} PKR
+            Rs {item?.compare_at_price} PKR
           </p>
           :null}
-          {/* <p>{item.description}</p> */}
-          <p className="text-red-600 font-semibold">Rs {item.sets[0].price} PKR</p>
+          <p className="text-red-600 font-semibold">Rs {item?.sets[0]?.price} PKR</p>
         </div>
 
           <div className={`${gridCols === 1 ? "flex  p-4 flex-col items-end justify-end gap-3": "hidden"}`}>
           <Button>Quick view</Button>
-          <Button>AddTo Cart</Button>
+          <Button   onClick={() => {
+    addToCart({
+      productId: item._id,
+      title: item.title,
+      quantity: 1,
+      stock: item.stock,
+      image: item.images[0],
+      sets: item.sets,
+    });
+    saveCartToBackend()
+    toast.success(`${item.title} added to cart!`);
+  }} className='cursor-pointer'>AddTo Cart</Button>
         </div>
-      </Link>
+      </div>
     ))
   ) : (
     "no products found for this category"
@@ -150,7 +165,18 @@ const Products = ({ProductsData}:any) => {
           View More
         </Button>
       </div> */}
-    </div>  )
+    
+          <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      /></div>  
+    )
 }
 
 export default Products

@@ -42,7 +42,7 @@ const page = async({
 
         <SingleProducts data={data}/>
         {relatedProducts.length > 0  ? 
-        <Products ProductsData={relatedProducts}/> :
+        <Products ProductsData={relatedProducts} heading="You may also like it"/> :
         null  
       }
     </div>
