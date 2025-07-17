@@ -130,7 +130,7 @@ const colorsOptions = [
   ),
       images: Yup.array()
       .min(2, "Please upload 2 images")
-        .max(4, "Only 2 images are allowed"),
+        .max(6, "Only 6 images are allowed"),
       }),
       onSubmit: async (values) => {
       setLoading(true);
