@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import { ChevronLeft, ChevronRight } from "lucide-react"; // Optional: for nicer arrows
+// import { ChevronLeft, ChevronRight } from "lucide-react"; // Optional: for nicer arrows
 import {
   Dialog,
   DialogContent,
@@ -19,12 +19,17 @@ import {
 import Link from "next/link";
 import SingleProduct from "./SingleProduct";
 import ProductPopup from "./ProductPopup";
+import { useCartStore } from "@/hooks/useCartStore";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Products = ({ ProductsData, heading }: any) => {
+      const addToCart = useCartStore((state) => state.addToCart);
+      const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
 
   return (
     <div className="w-full py-8 container" data-aos='fade-up'>
-      <h2 className="text-center text-2xl heading font-bold mb-6">{heading}</h2>
+      <h2 className="text-center heading mb-6">{heading}</h2>
 
       <div className="relative">
         <Swiper
@@ -45,9 +50,9 @@ const Products = ({ ProductsData, heading }: any) => {
         >
           {ProductsData?.map((item: any) => (
             <SwiperSlide key={item._id}>
-              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[340px] group my-[10px]"  >
+              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[500px] group my-[10px]"  >
               <Link 
-  className="relative w-full h-64 overflow-hidden group" 
+  className="relative w-full h-[400px] overflow-hidden group" 
   href={`/products/${item._id}`}
 >  
   {/* Primary Image */}
@@ -74,7 +79,7 @@ const Products = ({ ProductsData, heading }: any) => {
   </p>
 </Link>
 
-               <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+               <div className="absolute left-1/2 top-3/2 transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex flex-col gap-4">
                     <Dialog>
                       <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm cursor-pointer">
@@ -92,10 +97,10 @@ const Products = ({ ProductsData, heading }: any) => {
                   </div>
 
                 <div className="p-4 flex flex-col gap-1">
-                  <p className="text-base font-semibold heading">{item.title}</p>
-                  {item?.sets[0]?.compare_at_price ?
+                  <p className="heading text-md w-[80%]">{item.title}</p>
+                  {item?.sets[0]?.compare_at_price > 0 ?
                   <p className="line-through text-sm text-gray-500">
-                    Rs {item.compare_at_price} PKR
+                    Rs {item.sets[0].compare_at_price} PKR
                   </p>
                   : null}
                   
@@ -103,6 +108,20 @@ const Products = ({ ProductsData, heading }: any) => {
                     Rs {item?.sets[0]?.price} PKR
                   </p>
                 </div>
+                <Button   onClick={() => {
+                    addToCart({
+                      productId: item._id,
+                      title: item.title,
+                      quantity: 1,
+                      stock: item.stock,
+                      image: item.images[0],
+                      sets: item.sets,
+                    });
+                    saveCartToBackend()
+                    toast.success(`${item.title} added to cart!`);
+                  }} className="cursor-pointer mx-2 my-2 bg-black text-white">
+                          Add To Cart
+                  </Button>
               </div>
             </SwiperSlide>
           ))}
@@ -112,12 +131,22 @@ const Products = ({ ProductsData, heading }: any) => {
       <div className="flex justify-center mt-8">
         <Link
           // variant={"outline"}
-          className="p-2 px-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer rounded-full"
+          className="p-2 px-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer rounded-full transition-md"
           href={"/products"}
         >
           View More
         </Link>
       </div>
+      <ToastContainer
+              position="top-right"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              theme="colored"
+            />
     </div>
   );
 };

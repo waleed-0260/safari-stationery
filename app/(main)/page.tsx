@@ -10,6 +10,8 @@ import { GetProducts } from "@/lib/GetProducts";
 import AOSInitializer from "@/components/AOSInitializer";
 import Updates from "@/components/home/Updates";
 import SingleProducts from "@/components/Products/SingleProducts";
+import NewProducts from "@/components/home/NewProducts";
+import Contact from "@/components/home/Contact";
 
 function getRandomItem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -19,6 +21,16 @@ export default async function Home() {
   const allProducts = await GetProducts();
   const randomProduct = getRandomItem(allProducts); // ✅ Just one random product
   // console.log("Random Product:", randomProduct);
+    const discountedProducts = allProducts.filter(
+    (product: any) =>
+      product.sets &&
+      product.sets.length > 0 &&
+      product.sets[0].compare_at_price
+  );
+
+   const latestProducts = [...allProducts]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 8); 
 
   return (
     <div className="flex items-center justify-center flex-col w-full">
@@ -30,9 +42,12 @@ export default async function Home() {
       {/* ✅ Pass a single random product */}
       {/* <SingleProduct product={randomProduct} /> */}
       <SingleProducts data={randomProduct}/>
-      <Updates />
-      {/* <Faq /> */}
-      <CallToEmail />
+      <NewProducts data={latestProducts} heading="New Arrivals"/>
+      <NewProducts data={discountedProducts} heading="Discounted Products -- 15% off"/>
+      <Contact/>
+      {/* <Updates /> */}
+      <Faq />
+      {/* <CallToEmail /> */}
     </div>
   );
 }

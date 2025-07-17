@@ -4,7 +4,7 @@ import HeroImg from "@/public/images/HeroImg.jpg"
 import { Button } from "../ui/button"
 export default function Hero() {
   return (
-    <section className="relative w-full h-[15rem] sm:h-[20rem] md:h-[35rem] xl:h-[54rem]  flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[15rem] sm:h-[20rem] md:h-[35rem] xl:h-[54rem] 2xl:h-[60rem] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <Image
         src={HeroImg}

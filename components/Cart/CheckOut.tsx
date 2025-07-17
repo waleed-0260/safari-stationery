@@ -23,20 +23,21 @@ export default function CheckOut() {
   useEffect(() => {
     const fetchCart = async () => {
       const res = await GetCartById(guestId);
-      // const data = await res.json();
-      // console.log("data", res)
       setCartItems(res.items || []);
     };
     fetchCart();
   }, []);
 
   // const subtotal = cartItems.reduce((sum, item) => sum + item?.sets[0]?.price * item?.quantity, 0);
-      const totalAmount = useMemo(() => {
-      return cartItems.reduce((total, item) => {
-        const price = item.sets?.[0]?.price || 0; // fallback if sets or price is missing
-        return total + price * item.quantity;
-      }, 0);
-    }, [cartItems]);
+const totalAmount = useMemo(() => {
+  const subtotal = cartItems.reduce((total, item) => {
+    const price = item.sets?.[0]?.price || 0;
+    return total + price * item.quantity;
+  }, 0);
+
+  // Add 100 if subtotal is less than 2000
+  return subtotal < 2000 ? subtotal + 100 : subtotal;
+}, [cartItems]);
   // const shipping = 9.99;
   // const tax = subtotal * 0.08;
   // const totalAmount = subtotal + shipping + tax;
@@ -117,7 +118,7 @@ export default function CheckOut() {
     <form onSubmit={formik.handleSubmit} className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+          <h1 className="heading mb-8">Checkout</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left: Form Section */}

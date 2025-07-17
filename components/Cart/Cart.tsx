@@ -27,13 +27,6 @@ interface CartItem {
 export default function Cart({allCartData}:any) {
   // console.log("allcartdata", allCartData)
   const [cartItems, setCartItems] = useState<any[]>(allCartData.items)
-//   const cart = useCartStore((state)=> state.cart)
-//   console.log("cart", cart)
-//   useEffect(() => {
-//   const guestId = getGuestId()
-//   const userCart = allCartData.find(cart => cart.userId === guestId)
-//   setCartItems(userCart?.items || [])
-// }, [allCartData])
 
 const guestId = getGuestId();
 // console.log("guesitd",guestId)
@@ -53,13 +46,6 @@ const updateQuantity = async (productId: string, quantity: number) => {
     productId,
     quantity: safeQuantity,
   });
-
-  // if (res?.success) {
-  //   // Optionally: Refetch cart or update state manually
-  //   console.log("✅ Quantity updated");
-  // } else {
-  //   console.error("❌ Failed to update quantity");
-  // }
 };
 
 
@@ -73,9 +59,9 @@ const updateQuantity = async (productId: string, quantity: number) => {
       return total + price * item.quantity;
     }, 0);
   }, [cartItems]);
-  const shipping = subtotal > 50 ? 0 : 9.99
-  const tax = subtotal * 0.08
-  const total = subtotal + shipping + tax
+  const shipping = subtotal > 2000 ? 0 : 100
+  // const tax = subtotal * 0.08
+  const total = subtotal + shipping;
 
   if (cartItems.length === 0) {
     return (
@@ -101,7 +87,7 @@ const updateQuantity = async (productId: string, quantity: number) => {
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Shopping Cart</h1>
+            <h1 className="heading">Shopping Cart</h1>
             <p className="text-gray-600">
               {cartItems.length} {cartItems.length === 1 ? "item" : "items"} in your cart
             </p>
@@ -164,7 +150,7 @@ const updateQuantity = async (productId: string, quantity: number) => {
                         <div className="flex items-center gap-2">
                           <span className="font-semibold text-lg">{item?.sets[0]?.price?.toFixed(2)} PKR</span>
                           {item.originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">${item.originalPrice.toFixed(2)}</span>
+                            <span className="text-sm text-gray-500 line-through">{item.originalPrice.toFixed(2)}</span>
                           )}
                         </div>
 
@@ -218,28 +204,28 @@ const updateQuantity = async (productId: string, quantity: number) => {
                 <div className="space-y-3 mb-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Shipping</span>
                     <span className={shipping === 0 ? "text-green-600" : ""}>
-                      {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                      {shipping === 0 ? "FREE" : `${shipping.toFixed(2)}`}
                     </span>
                   </div>
-                  <div className="flex justify-between">
+                  {/* <div className="flex justify-between">
                     <span className="text-gray-600">Tax</span>
-                    <span>${tax.toFixed(2)}</span>
-                  </div>
+                    <span>{tax.toFixed(2)}</span>
+                  </div> */}
                   <Separator />
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>{total.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {shipping > 0 && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-                    <p className="text-sm text-blue-800">Add ${(50 - subtotal).toFixed(2)} more for free shipping!</p>
+                    <p className="text-sm text-blue-800">Add {(50 - subtotal).toFixed(2)} more for free shipping!</p>
                   </div>
                 )}
 

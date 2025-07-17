@@ -66,7 +66,7 @@ const SingleProducts = ({ data }: any) => {
 
       <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" data-aos="fade-right">
         {/* <p className="text-sm">{data?.title}</p> */}
-        <p className="text-4xl font-semibold">{data?.title}</p>
+        <p className="text-4xl font-semibold heading">{data?.title}</p>
 
         <div className="flex flex-row gap-4">
           {/* {data?.sets[0].compare_at_price ?

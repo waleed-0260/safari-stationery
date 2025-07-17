@@ -29,10 +29,10 @@ const Header = () => {
   // const cartLength = await GetCartProducts();
 
     const messages = [
-    "Free shipping for orders worth Rs 3000",
-    "Cash on delivery available across Pakistan",
-    "Get 10% off on your first order!",
-    "New arrivals are live now – check them out!",
+    "Free Delivery for orders within Bahria town",
+    "Minimum order limit Rs 500",
+    "Delivery Charges Rs 200",
+    "Free Delivery above Rs 2000",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -84,7 +84,7 @@ const Header = () => {
   
   return (
     <div key={index} className="relative group cursor-pointer">
-      <Link className="flex flex-row items-center gap-1 font-medium hover:text-primary transition duration-200 ml-3 mt-3 heading font-semibold" href={`/products/categories/${item.value}`}>
+      <Link className="flex flex-row items-center gap-1 hover:text-primary transition duration-200 ml-3 mt-3 head font-semebold text-md" href={`/products/categories/${item.value}`}>
         {item.icon} {item.label} 
       </Link>
 
