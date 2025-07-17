@@ -119,7 +119,7 @@ const UpdateProducts = ({data, id}:any) => {
           sub_category: Yup.array().min(1, "Select at least one sub category"),
           stock: Yup.number().required("Stock is required"),
           isFeatured: Yup.string().required("Please choose an option"),
-          colors: Yup.array().min(1, "select atleast"),
+          colors: Yup.array(),
             sets: Yup.array().of(
     Yup.object().shape({
       set: Yup.string(),
