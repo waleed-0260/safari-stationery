@@ -22,7 +22,7 @@ const NewProducts = ({data, heading}:any) => {
   return (
     <div className='w-full my-4 container'>
       <p className='text-4xl font-bold mb-4 heading text-center'>{heading}</p>
-      <div className="grid md:grid-cols-4 grid-cols-2 gap-3 relative" data-aos="fade-up">
+      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3 relative" data-aos="fade-up">
         {data ? data.map((item: any) => (
           <div key={item._id} className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[500px] group my-[10px] relative">
             <Link
