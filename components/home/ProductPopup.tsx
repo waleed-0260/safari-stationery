@@ -28,7 +28,7 @@ const ProductPopup = ({ id }: { id: string }) => {
   if (error || !product) return <p className="p-4 text-red-500">{error || "Product not found"}</p>
 
   return (
-    <div className="flex h-full">
+    <div className="flex md:flex-row flex-col h-full">
       {/* Left Image Section */}
       <div className="flex-none w-1/2 h-full relative">
         <Image
