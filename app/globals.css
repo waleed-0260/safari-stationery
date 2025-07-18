@@ -138,8 +138,8 @@
 }
 
 .heading{
-  font-family: "Pacifico", cursive;
-    /* font-family: "PT Serif", serif; */
+  /* font-family: "Pacifico", cursive;*/
+   font-family: "PT Serif", serif;
   font-weight: bold;
   font-size: x-large;
 }
