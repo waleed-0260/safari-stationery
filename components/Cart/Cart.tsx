@@ -223,11 +223,11 @@ const updateQuantity = async (productId: string, quantity: number) => {
                   </div>
                 </div>
 
-                {shipping > 0 && (
+                {/* {shipping > 0 && (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
                     <p className="text-sm text-blue-800">Add {(50 - subtotal).toFixed(2)} more for free shipping!</p>
                   </div>
-                )}
+                )} */}
 
                 <div className="space-y-3">
                   <Link href={"/checkout"}>
@@ -236,7 +236,7 @@ const updateQuantity = async (productId: string, quantity: number) => {
                   </Button>
                   </Link>
                   <Link href={"/products"}>
-                  <Button variant="outline" className="w-full bg-transparent cursor-pointer">
+                  <Button variant="outline" className="w-full bg-transparent cursor-pointer mt-1">
                     Continue Shopping
                   </Button>
                   </Link>

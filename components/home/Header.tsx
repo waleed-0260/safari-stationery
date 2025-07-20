@@ -47,9 +47,20 @@ const Header = () => {
   
   return (
     <>
-    <div className='bg-blue-800 w-full py-[8px] text-white text-center text-sm'>
-      <p>{messages[currentIndex]}</p>
-    </div>
+ <div className="bg-blue-800 w-full py-[8px] text-white text-sm overflow-hidden whitespace-nowrap">
+  <div className="animate-marquee inline-block min-w-full">
+    <span className="mx-8">Free Delivery for orders within Bahria town</span>
+    <span className="mx-8">Minimum order limit Rs 500</span>
+    <span className="mx-8">Delivery Charges Rs 100</span>
+    <span className="mx-8">Free Delivery above Rs 2000</span>
+    {/* duplicate content for seamless loop */}
+    <span className="mx-8">Free Delivery for orders within Bahria town</span>
+    <span className="mx-8">Minimum order limit Rs 500</span>
+    <span className="mx-8">Delivery Charges Rs 100</span>
+    <span className="mx-8">Free Delivery above Rs 2000</span>
+  </div>
+</div>
+
     <div className='flex items-center justify-center w-full md:h-[120px] h-[90px]' style={{
     background: 'linear-gradient(to right, #F191ED, #a2d2ff)'
   }}>

@@ -147,7 +147,7 @@ const SingleProducts = ({ data }: any) => {
         )}
 
         {/* Buttons */}
-        <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer">
+        <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer bg-black text-white ">
           Add To Cart
         </Button>
 

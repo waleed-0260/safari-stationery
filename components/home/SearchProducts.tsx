@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -13,11 +12,16 @@ import { Search } from "lucide-react";
 import { IoSearch } from "react-icons/io5";
 import { GetProductsBySearch } from "@/lib/GetProducts";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SearchProducts = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     const delayDebounce = setTimeout(async () => {
@@ -29,15 +33,19 @@ const SearchProducts = () => {
       setLoading(true);
       const data = await GetProductsBySearch(query);
       setResults(data);
-      console.log("data search products", data);
       setLoading(false);
-    }, 500); // debounce
+    }, 500);
 
     return () => clearTimeout(delayDebounce);
   }, [query]);
 
+  const handleProductClick = (id: string) => {
+    setOpen(false); // Close the sheet
+    router.push(`/products/${id}`); // Navigate to product page
+  };
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <p className="text-3xl cursor-pointer">
           <IoSearch />
@@ -69,11 +77,26 @@ const SearchProducts = () => {
                 </div>
               </div>
             ) : (
-              <ul className="mt-4 space-y-2">
+              <ul className="mt-4 space-y-2 overflow-y-scroll">
                 {results.map((product) => (
-                  <li key={product._id} className="border-b pb-2">
-                    <p className="font-semibold">{product.title}</p>
-                    <p className="text-sm text-gray-600">{product.category}</p>
+                  <li
+                    key={product._id}
+                    onClick={() => handleProductClick(product._id)}
+                    className="border-b pb-2 flex flex-row gap-3 cursor-pointer"
+                  >
+                    <div>
+                      <img
+                        src={product.images[0]}
+                        alt=""
+                        className="rounded-full h-[50px] w-[50px]"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{product.title}</p>
+                      <p className="text-sm text-gray-600">
+                        {product.category}
+                      </p>
+                    </div>
                   </li>
                 ))}
               </ul>

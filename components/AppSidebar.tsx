@@ -15,7 +15,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/admin",
     icon: Home,
   },
   {
@@ -30,7 +30,7 @@ const items = [
   },
   {
     title: "Orders",
-    url: "#",
+    url: "/admin/orders",
     icon: Search,
   },
   {

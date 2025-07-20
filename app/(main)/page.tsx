@@ -44,9 +44,9 @@ export default async function Home() {
       <SingleProducts data={randomProduct}/>
       <NewProducts data={latestProducts} heading="New Arrivals"/>
       <NewProducts data={discountedProducts} heading="Discounted Products -- 15% off"/>
-      <Contact/>
-      {/* <Updates /> */}
       <Faq />
+      <Updates />
+      <Contact/>
       {/* <CallToEmail /> */}
     </div>
   );

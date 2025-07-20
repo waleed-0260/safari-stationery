@@ -68,7 +68,7 @@ export async function GetProductsBySubCategory(SubCategory: string) {
 
 export async function GetProductsBySearch(query: string) {
     try {
-      console.log("query", query)
+      // console.log("query", query)
     const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/products/search?q=${query}`, {
       next: { revalidate: 60 },
     });
