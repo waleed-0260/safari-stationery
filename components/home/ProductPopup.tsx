@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { GetProductsById } from '@/lib/GetProducts'
+import parse from "html-react-parser"
 
 const ProductPopup = ({ id }: { id: string }) => {
   const [product, setProduct] = useState<any>(null)
@@ -27,7 +28,7 @@ const ProductPopup = ({ id }: { id: string }) => {
   if (error || !product) return <p className="p-4 text-red-500">{error || "Product not found"}</p>
 
   return (
-    <div className="flex h-full">
+    <div className="flex md:flex-row flex-col h-full">
       {/* Left Image Section */}
       <div className="flex-none w-1/2 h-full relative">
         <Image
@@ -43,7 +44,7 @@ const ProductPopup = ({ id }: { id: string }) => {
         {/* Header */}
         <div className="mb-4">
           <h2 className="text-2xl font-semibold mb-2">{product.title}</h2>
-          <p className="text-muted-foreground text-sm">{product.description}</p>
+          <p className="text-muted-foreground text-sm">{parse(product.description)}</p>
         </div>
 
         {/* Prices Row */}

@@ -20,27 +20,23 @@ const NewProducts = ({ data, heading }: any) => {
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
 
   return (
-    <div className="w-full my-4 container">
-      <p className="text-4xl font-bold mb-4 heading text-center">{heading}</p>
+    <div className='w-full my-4 container'>
+      <p className='text-4xl font-bold mb-4 heading text-center'>{heading}</p>
       <div className="grid grid-cols-4 gap-3 relative" data-aos="fade-up">
-        {data
-          ? data.map((item: any) => (
-              <div
-                key={item._id}
-                className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 group my-[10px] relative h-[600px]"
-              >
-                <Link
-                  className="relative w-full h-[60%] overflow-hidden group"
-                  href={`/products/${item._id}`}
-                >
-                  {/* Primary Image */}
-                  <Image
-                    src={item.images[0]}
-                    alt="Product"
-                    className="w-full h-full object-cover absolute inset-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
-                    width={500}
-                    height={500}
-                  />
+        {data ? data.map((item: any) => (
+          <div key={item._id} className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[500px] group my-[10px] relative">
+            <Link
+              className="relative w-full h-64 overflow-hidden group"
+              href={`/products/${item._id}`}
+            >
+              {/* Primary Image */}
+              <Image
+                src={item.images[0]}
+                alt="Product"
+                className="w-full h-full object-cover absolute inset-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
+                width={500}
+                height={500}
+              />
 
                   {/* Hover Image */}
                   <Image

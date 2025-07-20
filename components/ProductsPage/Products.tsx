@@ -63,7 +63,7 @@ const Products = ({ProductsData}:any) => {
       <div
         key={item?._id}
         className={`rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full bg-white ${
-          gridCols === 1 ? 'flex flex-row' : 'flex flex-col'
+          gridCols === 1 ? 'flex md:flex-row flex-col' : 'flex flex-col'
         }`}
       >
         <div
