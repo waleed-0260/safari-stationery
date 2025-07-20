@@ -1,10 +1,11 @@
-import Updates from '@/components/home/Updates'
+import AboutComponent from '@/components/about/AboutComponent'
+// import Updates from '@/components/home/Updates'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
-        <Updates/>
+      <AboutComponent/>
     </div>
   )
 }

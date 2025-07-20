@@ -11,7 +11,7 @@ import { getGuestId } from "@/hooks/getGuestId"
 import { useCartStore } from "@/hooks/useCartStore"
 import { useMemo } from "react"
 import Link from "next/link"
-import { UpdateCartItemByUserId } from "@/lib/GetProducts"
+import { UpdateCartItemByUserId, DeleteCartItemByUserId } from "@/lib/GetProducts"
 interface CartItem {
   id: string
   name: string
@@ -26,6 +26,7 @@ interface CartItem {
 
 export default function Cart({allCartData}:any) {
   // console.log("allcartdata", allCartData)
+  console.log("amksamdsamfm", allCartData.items)
   const [cartItems, setCartItems] = useState<any[]>(allCartData.items)
 
 const guestId = getGuestId();
@@ -49,9 +50,24 @@ const updateQuantity = async (productId: string, quantity: number) => {
 };
 
 
-  const removeItem = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id))
+  const removeItem = async (productId: string) => {
+    console.log("amdksam priduct is", productId)
+  if (!guestId) return;
+
+  // Optimistically remove item from UI
+  const previousCart = [...cartItems];
+  setCartItems((items) => items.filter((item) => item.productId !== productId));
+
+  // Call backend to remove item
+  const response = await DeleteCartItemByUserId(guestId, {productId});
+
+  if (!response) {
+    // Rollback if failed
+    setCartItems(previousCart);
+    console.error("❌ Failed to remove item from backend");
   }
+};
+
 
     const subtotal = useMemo(() => {
     return cartItems.reduce((total, item) => {
@@ -139,7 +155,7 @@ const updateQuantity = async (productId: string, quantity: number) => {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => removeItem(item._id)}
+                          onClick={() => removeItem(item.productId)}
                           className="text-gray-400 hover:text-red-500"
                         >
                           <Trash2 className="w-4 h-4" />

@@ -24,7 +24,7 @@ const NewProducts = ({ data, heading }: any) => {
       <p className='text-4xl font-bold mb-4 heading text-center'>{heading}</p>
       <div className="grid grid-cols-4 gap-3 relative" data-aos="fade-up">
         {data ? data.map((item: any) => (
-          <div key={item._id} className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[500px] group my-[10px] relative">
+          <div key={item._id} className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-auto group my-[10px] relative">
             <Link
               className="relative w-full h-64 overflow-hidden group"
               href={`/products/${item._id}`}

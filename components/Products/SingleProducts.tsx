@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
@@ -16,6 +16,9 @@ const SingleProducts = ({ data }: any) => {
   // console.log("guestidd", guestId)
   const addToCart = useCartStore((state) => state.addToCart);
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
+    const loadCartFromBackend = useCartStore((state) => state.loadCartFromBackend); // ✅ Load from backend
+  const cartItems = useCartStore((state) => state.cart); // ✅ get current cart items
+
 
   const [selectedColor, setSelectedColor] = useState<string>(data?.colors?.[0] || "");
   const [quantity, setQuantity] = useState<number>(1);
@@ -23,21 +26,36 @@ const SingleProducts = ({ data }: any) => {
   const increaseQty = () => setQuantity((prev) => prev + 1);
   const decreaseQty = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  const handleAddToCart = () => {
-    addToCart({
-      productId: data?._id,
-      title: data?.title,
-      // price: data?.price,
-      quantity,
-      color: selectedColor,
-      stock: data?.stock,
-      image: data?.images[0],
-      sets: data?.sets
-    });
+    useEffect(() => {
+    if (guestId) {
+      loadCartFromBackend(); // or just loadCartFromBackend() if guestId is internal
+    }
+  }, [guestId, loadCartFromBackend]);
 
-    saveCartToBackend(); // Optional: sync with backend
-    toast.success(`product added to cart!`);
-  };
+const handleAddToCart = () => {
+    const alreadyInCart = cartItems?.some(
+      (item: any) => item.productId === data?._id && item.color === selectedColor
+    );
+
+    if (alreadyInCart) {
+      toast.error("Product is already in the cart!");
+      return;
+    }
+
+  // ✅ Add if not in cart
+  addToCart({
+    productId: data?._id,
+    title: data?.title,
+    quantity,
+    color: selectedColor,
+    stock: data?.stock,
+    image: data?.images[0],
+    sets: data?.sets,
+  });
+
+  saveCartToBackend(); // Optional: sync with backend
+  toast.success("Product added to cart!");
+};
 
     const [selectedImage, setSelectedImage] = useState(data?.images[0])
   const [selectedSetIndex, setSelectedSetIndex] = useState(0);

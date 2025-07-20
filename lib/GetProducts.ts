@@ -169,7 +169,7 @@ export async function UpdateCartItemByUserId(userId: string, payload: { productI
       },
       body: JSON.stringify(payload),
     });
-    console.log("res", res)
+    // console.log("res", res)
     
     const json = await res.json();
 
@@ -179,5 +179,44 @@ export async function UpdateCartItemByUserId(userId: string, payload: { productI
   } catch (err) {
     console.error(`❌ Error updating cart item (userId: ${userId}):`, err);
     return null;
+  }
+}
+
+export async function DeleteCartItemByUserId(userId: string, payload: { productId: string }) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/cart/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const json = await res.json();
+    console.log("json", json)
+    if (!res.ok) throw new Error(json.message || 'Failed to delete cart item');
+
+    return json;
+  } catch (err) {
+    console.error(`❌ Error deleting cart item (userId: ${userId}):`, err);
+    return null;
+  }
+}
+
+
+export async function GetCheckOutProducts() {
+    try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/checkout`, {
+      next: { revalidate: 60 }, // optional: ISR caching
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) throw new Error(json.message || 'Failed to fetch');
+
+    return json.data;
+  } catch (err) {
+    console.error("❌ Error in getProducts:", err);
+    return [];
   }
 }

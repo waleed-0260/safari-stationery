@@ -1,8 +1,9 @@
 import { connectDB } from "@/lib/Mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import Cart from "@/models/Cart";
-
+import mongoose from "mongoose";
 // /api/cart/[userId]/route.ts
+
 export async function GET(req: NextRequest, {
   params,
 }: {
@@ -67,18 +68,42 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ userId: string }> }
 ) {
-  await connectDB();
-  const { userId } = await params;
+await connectDB();
+const { userId } = await params;
+const body = await req.json();
+const { productId } = body;
+console.log("productId", productId)
+const objectProductId = new mongoose.Types.ObjectId(productId); // <-- important!
 
-  try {
-    const result = await Cart.findOneAndDelete({ userId });
+try {
 
-    if (!result) {
-      return NextResponse.json({ success: false, message: "Cart not found" }, { status: 404 });
-    }
+  const cartBefore = await Cart.findOne({ userId });
+  console.log("Before update items:", cartBefore?.items);
 
-    return NextResponse.json({ success: true, message: "Cart deleted successfully" });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: "Failed to delete cart" }, { status: 500 });
-  }
+  // const result = await Cart.findOneAndUpdate(
+  //   { userId },
+  //   { $pull: { items: { productId: ProductId } } }, // try _id here if needed
+  //   { new: true }
+  // );
+
+  // console.log("After update items:", result?.items);
+//   const matched = cartBefore?.items.filter((item: any) => item.productId.toString() === productId);
+// console.log("Matched items:", matched);
+
+    const result = await Cart.findOneAndUpdate(
+      { userId },
+      { $pull: { items: { productId: objectProductId } } },
+      { new: true }
+    );
+
+  return NextResponse.json({
+    success: true,
+    message: "Product removed from cart successfully",
+    cart: result,
+  });
+} catch (error) {
+  console.error("Error in DELETE:", error);
+  return NextResponse.json({ success: false, message: "Failed to delete product from cart" }, { status: 500 });
+}
+
 }

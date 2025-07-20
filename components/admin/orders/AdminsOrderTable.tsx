@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "./StatusBadge"
 import type { Order, OrderStatus } from "./order"
-
+import React from "react"
 // Sample data based on your API structure
 const sampleOrders: Order[] = [
   {
@@ -97,8 +97,8 @@ const sampleOrders: Order[] = [
   },
 ]
 
-export default function AdminOrdersTable() {
-  const [orders, setOrders] = useState<Order[]>(sampleOrders)
+export default function AdminOrdersTable({Product}:any) {
+  const [orders, setOrders] = useState<Order[]>(Product)
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null)
 
   const updateOrderStatus = (orderId: string, newStatus: OrderStatus) => {
@@ -131,7 +131,7 @@ export default function AdminOrdersTable() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="w-full mx-auto px-4 py-8">
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Order Management</CardTitle>
@@ -153,8 +153,8 @@ export default function AdminOrdersTable() {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <>
-                    <tr key={order._id} className="border-b hover:bg-gray-50">
+                  <React.Fragment key={order._id}>
+                    <tr className="border-b hover:bg-gray-50">
                       <td className="p-4">
                         <div className="font-mono text-sm">#{order._id.slice(-8)}</div>
                       </td>
@@ -304,7 +304,7 @@ export default function AdminOrdersTable() {
                         </td>
                       </tr>
                     )}
-                  </>
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>
