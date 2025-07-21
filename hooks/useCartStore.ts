@@ -67,13 +67,16 @@ export const useCartStore = create<CartState>((set, get) => ({
   },
 
   loadCartFromBackend: async () => {
-    const userId = getGuestId();
+    const id = getGuestId();
     try {
-      const res = await fetch(`/api/cart?userId=${userId}`);
+      const res = await fetch(`/api/cart/${id}`);
       const data = await res.json();
-      if (data?.items) {
-        set({ cart: data.items });
-        console.log("✅ Cart loaded from DB");
+      // console.log("saraa", data)
+      // console.log("dataooo", data)
+      if (data?.data) {
+        // set({ cart: data.data });
+      set({ cart: [...data.data.items] });
+        // console.log("✅ Cart loaded from DB");
       }
     } catch (error) {
       console.error("❌ Error loading cart", error);

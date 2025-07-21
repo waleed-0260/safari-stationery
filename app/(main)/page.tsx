@@ -19,8 +19,9 @@ function getRandomItem<T>(arr: T[]): T {
 
 export default async function Home() {
   const allProducts = await GetProducts();
+const featuredProducts = allProducts.filter((product: any) => product.isFeatured === true);
+
   const randomProduct = getRandomItem(allProducts); // ✅ Just one random product
-  // console.log("Random Product:", randomProduct);
     const discountedProducts = allProducts.filter(
     (product: any) =>
       product.sets &&
@@ -37,14 +38,14 @@ export default async function Home() {
       <AOSInitializer />
       <Hero />
       {/* <Boxes /> */}
-      <Products ProductsData={allProducts} heading="Trending Products" />
+      <Products ProductsData={featuredProducts} heading="Trending Products" />
       <Collections />
       {/* ✅ Pass a single random product */}
       {/* <SingleProduct product={randomProduct} /> */}
       <SingleProducts data={randomProduct}/>
       <NewProducts data={latestProducts} heading="New Arrivals"/>
       <NewProducts data={discountedProducts} heading="Discounted Products -- 15% off"/>
-      <Faq />
+      {/* <Faq /> */}
       <Updates />
       <Contact/>
       {/* <CallToEmail /> */}

@@ -50,80 +50,85 @@ const Products = ({ ProductsData, heading }: any) => {
         >
           {ProductsData?.map((item: any) => (
             <SwiperSlide key={item._id}>
-              <div className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[500px] group my-[10px]"  >
-              <Link 
-  className="relative w-full h-[400px] overflow-hidden group" 
-  href={`/products/${item._id}`}
->  
-  {/* Primary Image */}
-  <Image
-    src={item.images[0]}
-    alt="Product"
-    className="w-full h-full object-cover absolute inset-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
-    width={500}
-    height={500}
-  />
+  <div
+    className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-[450px] group my-[10px] relative" // 👈 Fixed height
+  >
+    <Link href={`/products/${item._id}`} className="w-full flex-grow">
+      <div className="relative w-full h-64 overflow-hidden group">
+        <Image
+          src={item.images[0]}
+          alt="Product"
+          className="w-full h-full object-cover absolute inset-0 transition-all duration-500 group-hover:scale-110 group-hover:opacity-0"
+          width={500}
+          height={500}
+        />
+        <Image
+          src={item.images[1]}
+          alt="Product Hover"
+          className="w-full h-full object-cover absolute inset-0 transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
+          width={500}
+          height={500}
+        />
+        <p className="absolute bg-black text-white py-1 px-3 rounded-full bottom-5 left-4 text-sm z-10">
+          Sale
+        </p>
+      </div>
 
-  {/* Hover Image */}
-  <Image
-    src={item.images[1]}
-    alt="Product Hover"
-    className="w-full h-full object-cover absolute inset-0 transition-all duration-500 opacity-0 group-hover:opacity-100 group-hover:scale-110"
-    width={500}
-    height={500}
-  />
+      {/* 👇 Flexbox helps maintain consistent spacing */}
+      <div className="p-4 flex flex-col justify-between h-[120px]"> 
+        <p className="text-md font-semibold heading line-clamp-2">{item.title}</p>
+        {item?.sets[0]?.compare_at_price > 1 && (
+          <p className="line-through text-sm text-gray-500">
+            Rs {item?.sets[0]?.compare_at_price} PKR
+          </p>
+        )}
+        <p className="text-red-600 font-semibold">
+          Rs {item?.sets[0]?.price} PKR
+        </p>
+      </div>
+    </Link>
 
-  {/* Sale Badge */}
-  <p className="absolute bg-black text-white py-1 px-3 rounded-full bottom-5 left-4 text-sm z-10">
-    Sale
-  </p>
-</Link>
+    {/* Hover Buttons */}
+    <div className="absolute left-1/2 top-[40%] transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+      <div className="flex flex-col gap-4">
+        <Dialog>
+          <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm cursor-pointer">
+            Quick View
+          </DialogTrigger>
+          <DialogContent className="max-w-4xl w-full h-[80vh] p-0 overflow-hidden">
+            <DialogTitle className="bg-red-700 h-[1px]"></DialogTitle>
+            <ProductPopup id={item._id} />
+          </DialogContent>
+        </Dialog>
 
-               <div className="absolute left-1/2 top-3/2 transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex flex-col gap-4">
-                    <Dialog>
-                      <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm cursor-pointer">
-                        Quick View
-                      </DialogTrigger>
-                            <DialogContent className="max-w-4xl w-full h-[80vh] p-0 overflow-hidden">
-                              <DialogTitle className="bg-red-700 h-[1px]"></DialogTitle>
-                              <ProductPopup id={item._id}/>
-      </DialogContent>
-                    </Dialog>
-                    <button className="bg-white text-black py-2 px-4 rounded-full text-sm">
-                      Quick Shop
-                    </button>
-</div>
-                  </div>
+        <button className="bg-white text-black py-2 px-4 rounded-full text-sm">
+          Quick Shop
+        </button>
+      </div>
+    </div>
 
-                <div className="p-4 flex flex-col gap-1">
-                  <p className="heading text-md w-[80%]">{item.title}</p>
-                  {item?.sets[0]?.compare_at_price > 0 ?
-                  <p className="line-through text-sm text-gray-500">
-                    Rs {item.sets[0].compare_at_price} PKR
-                  </p>
-                  : null}
-                  
-                  <p className="text-red-600 font-semibold">
-                    Rs {item?.sets[0]?.price} PKR
-                  </p>
-                </div>
-                <Button   onClick={() => {
-                    addToCart({
-                      productId: item._id,
-                      title: item.title,
-                      quantity: 1,
-                      stock: item.stock,
-                      image: item.images[0],
-                      sets: item.sets,
-                    });
-                    saveCartToBackend()
-                    toast.success(`${item.title} added to cart!`);
-                  }} className="cursor-pointer mx-2 my-2 bg-black text-white">
-                          Add To Cart
-                  </Button>
-              </div>
-            </SwiperSlide>
+    <div className="px-4 pb-4 mt-auto">
+      <Button
+        onClick={() => {
+          addToCart({
+            productId: item._id,
+            title: item.title,
+            quantity: 1,
+            stock: item.stock,
+            image: item.images[0],
+            sets: item.sets,
+          });
+          saveCartToBackend();
+          toast.success(`${item.title} added to cart!`);
+        }}
+        className="cursor-pointer my-2 bg-black text-white w-full"
+      >
+        Add To Cart
+      </Button>
+    </div>
+  </div>
+</SwiperSlide>
+
           ))}
         </Swiper>
       </div>
@@ -137,16 +142,16 @@ const Products = ({ ProductsData, heading }: any) => {
           View More
         </Link>
       </div>
-      <ToastContainer
+      {/* <ToastContainer
               position="top-right"
               autoClose={2000}
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
-              pauseOnHover
+              // pauseOnHover
               draggable
               theme="colored"
-            />
+            /> */}
     </div>
   );
 };

@@ -58,24 +58,29 @@ const Products = ({ProductsData}:any) => {
       : 'grid-cols-4'
   }`}
 >
-  {ProductsData ? (
-    ProductsData.map((item: any) => (
-      <div
-        key={item?._id}
-        className={`rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full bg-white ${
-          gridCols === 1 ? 'flex md:flex-row flex-col' : 'flex flex-col'
-        }`}
+{ProductsData ? (
+  ProductsData.map((item: any) => (
+    <div
+      key={item?._id}
+      className={`relative z-40 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full bg-white ${
+        gridCols === 1 ? 'flex md:flex-row flex-col' : 'flex flex-col'
+      }`}
+    >
+      {/* Link wraps only the main content */}
+      <Link
+        href={`/products/${item._id}`}
+        className={`${gridCols === 1 ? ' w-full flex md:flex-row flex-col' : 'w-full'}`}
       >
         <div
-          className={`relative group overflow-hidden ${
-            gridCols === 1 ? 'w-[200px] h-auto' : 'w-full h-64'
+          className={`relative group ${
+            gridCols === 1 ? 'md:w-[200px] md:h-[200px] w-full h-[350px]' : 'w-full h-64'
           }`}
         >
           {/* Primary Image */}
           <Image
             src={item?.images[0]}
             alt="Product"
-            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
+            className="w-full h-full object-cover md:absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
             width={500}
             height={500}
           />
@@ -84,76 +89,62 @@ const Products = ({ProductsData}:any) => {
           <Image
             src={item?.images[1]}
             alt="Product Hover"
-            className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+            className="md:w-full md:h-full object-cover md:absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
             width={500}
             height={500}
           />
 
+          {/* Sale Tag */}
           <p className="absolute bg-black text-white py-1 px-3 rounded-full bottom-5 left-4 text-sm">
             Sale
           </p>
-
-          {/* Hover Buttons */}
-          <div
-            className={`absolute inset-0 transition-opacity duration-300 ${
-              gridCols === 1
-                ? 'flex items-start justify-between p-4 opacity-0 group-hover:opacity-100'
-                : 'flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100'
-            }`}
-          >
-            <div className={`${gridCols === 1 ? "hidden": "flex flex-col gap-2"}`}>
-              <button className="bg-white text-black py-2 px-4 rounded-full text-sm">
-                Quick View
-              </button>
-
-              <Dialog>
-                <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm">
-                  Quick Shop
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
         </div>
 
-        <div className="p-4 flex flex-col gap-1 w-[80%]">
+        <div className="p-4 flex flex-col gap-1">
           <p className="text-base font-medium">{item?.title}</p>
-          {item?.sets[0]?.compare_at_price > 0 ? 
-          <p className="line-through text-sm text-gray-500">
-            Rs {item?.compare_at_price} PKR
-          </p>
-          :null}
+          {item?.sets[0]?.compare_at_price > 0 && (
+            <p className="line-through text-sm text-gray-500">
+              Rs {item?.sets[0]?.compare_at_price} PKR
+            </p>
+          )}
           <p className="text-red-600 font-semibold">Rs {item?.sets[0]?.price} PKR</p>
         </div>
+      </Link>
 
-          <div className={`${gridCols === 1 ? "flex  p-4 flex-col items-end justify-end gap-3": "hidden"}`}>
-          <Button>Quick view</Button>
-          <Button   onClick={() => {
-    addToCart({
-      productId: item._id,
-      title: item.title,
-      quantity: 1,
-      stock: item.stock,
-      image: item.images[0],
-      sets: item.sets,
-    });
-    saveCartToBackend()
-    toast.success(`${item.title} added to cart!`);
-  }} className='cursor-pointer'>AddTo Cart</Button>
-        </div>
+      {/* Buttons outside Link */}
+      <div
+        className={`z-50 ${
+          gridCols === 1
+            ? 'flex p-4 flex-col md:items-end md:justify-end gap-3'
+            : 'flex p-4 flex-col w-full gap-3'
+        }`}
+      >
+        <Button>Quick View</Button>
+
+        <Button
+          onClick={() => {
+            addToCart({
+              productId: item._id,
+              title: item.title,
+              quantity: 1,
+              stock: item.stock,
+              image: item.images[0],
+              sets: item.sets,
+            });
+            saveCartToBackend();
+            toast.success(`${item.title} added to cart!`);
+          }}
+          className="cursor-pointer"
+        >
+          Add To Cart
+        </Button>
       </div>
-    ))
-  ) : (
-    "no products found for this category"
-  )}
+    </div>
+  ))
+) : (
+  "No products found for this category"
+)}
+
 </div>
 
 
@@ -166,7 +157,7 @@ const Products = ({ProductsData}:any) => {
         </Button>
       </div> */}
     
-          <ToastContainer
+          {/* <ToastContainer
         position="top-right"
         autoClose={2000}
         hideProgressBar={false}
@@ -175,7 +166,8 @@ const Products = ({ProductsData}:any) => {
         pauseOnHover
         draggable
         theme="colored"
-      /></div>  
+      /> */}
+      </div>  
     )
 }
 

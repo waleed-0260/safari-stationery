@@ -26,7 +26,7 @@ interface CartItem {
 
 export default function Cart({allCartData}:any) {
   // console.log("allcartdata", allCartData)
-  console.log("amksamdsamfm", allCartData.items)
+  // console.log("amksamdsamfm", allCartData.items)
   const [cartItems, setCartItems] = useState<any[]>(allCartData.items)
 
 const guestId = getGuestId();
@@ -49,9 +49,10 @@ const updateQuantity = async (productId: string, quantity: number) => {
   });
 };
 
+const cart = useCartStore((state)=> state.setCart)
 
   const removeItem = async (productId: string) => {
-    console.log("amdksam priduct is", productId)
+    // console.log("amdksam priduct is", productId)
   if (!guestId) return;
 
   // Optimistically remove item from UI
@@ -87,7 +88,9 @@ const updateQuantity = async (productId: string, quantity: number) => {
             <ShoppingCart className="w-16 h-16 mx-auto text-gray-400 mb-4" />
             <h2 className="text-2xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
             <p className="text-gray-600 mb-6">Add some items to get started</p>
-            <Button>Continue Shopping</Button>
+            <Link href={"/products"}>
+            <Button className="cursor-pointer">Continue Shopping</Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -156,7 +159,7 @@ const updateQuantity = async (productId: string, quantity: number) => {
                           variant="ghost"
                           size="icon"
                           onClick={() => removeItem(item.productId)}
-                          className="text-gray-400 hover:text-red-500"
+                          className="text-gray-400 hover:text-red-500 cursor-pointer"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -220,12 +223,12 @@ const updateQuantity = async (productId: string, quantity: number) => {
                 <div className="space-y-3 mb-4">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
-                    <span>{subtotal.toFixed(2)}</span>
+                    <span>{subtotal.toFixed(2)} PKR</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Shipping</span>
                     <span className={shipping === 0 ? "text-green-600" : ""}>
-                      {shipping === 0 ? "FREE" : `${shipping.toFixed(2)}`}
+                      {shipping === 0 ? "FREE" : `${shipping.toFixed(2)} PKR`}
                     </span>
                   </div>
                   {/* <div className="flex justify-between">
@@ -235,7 +238,7 @@ const updateQuantity = async (productId: string, quantity: number) => {
                   <Separator />
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total</span>
-                    <span>{total.toFixed(2)}</span>
+                    <span>{total.toFixed(2)} PKR</span>
                   </div>
                 </div>
 

@@ -72,13 +72,13 @@ await connectDB();
 const { userId } = await params;
 const body = await req.json();
 const { productId } = body;
-console.log("productId", productId)
+// console.log("productId", productId)
 const objectProductId = new mongoose.Types.ObjectId(productId); // <-- important!
 
 try {
 
   const cartBefore = await Cart.findOne({ userId });
-  console.log("Before update items:", cartBefore?.items);
+  // console.log("Before update items:", cartBefore?.items);
 
   // const result = await Cart.findOneAndUpdate(
   //   { userId },

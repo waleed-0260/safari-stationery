@@ -179,7 +179,7 @@ const handleAddToCart = () => {
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
-              pauseOnHover
+              // pauseOnHovers
               draggable
               theme="colored"
             />

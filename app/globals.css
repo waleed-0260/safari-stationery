@@ -162,3 +162,7 @@
   display: inline-block;
   animation: marquee 15s linear infinite;
 }
+
+body{
+  background-color: #fff8f7;
+}

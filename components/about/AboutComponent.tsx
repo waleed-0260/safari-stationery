@@ -5,17 +5,15 @@ import Image from "next/image"
 
 export default function AboutComponent() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section with Shop Introduction */}
-      <section className="py-16 px-4 md:px-6 bg-white">
-        <div className="container mx-auto max-w-6xl">
+    <div className="container">
+      <section className="py-16 px-4 md:px-6">
+        <div className=" mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About <span className="text-orange-500">Creative Corner</span>
+              About Paper N Play
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Your neighborhood destination for premium stationery and educational toys. Since 2015, we've been serving
-              families with carefully curated products that inspire creativity and learning.
+              We’re a brand built for dreamers, doodlers, and gift-givers — especially students and teens who love cute, colorful things that spark joy.
             </p>
           </div>
 
@@ -65,7 +63,7 @@ export default function AboutComponent() {
 
       {/* Our Story Section */}
       <section className="py-16 px-4 md:px-6 bg-orange-50">
-        <div className="container mx-auto max-w-6xl">
+        <div className=" mx-auto max-w-6xl">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
@@ -111,7 +109,7 @@ export default function AboutComponent() {
 
       {/* Products We Offer */}
       <section className="py-16 px-4 md:px-6 bg-white">
-        <div className="container mx-auto max-w-6xl">
+        <div className=" mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             What You'll Find in Our Shop
           </h2>
@@ -234,7 +232,7 @@ export default function AboutComponent() {
 
       {/* Why Choose Our Shop */}
       <section className="py-16 px-4 md:px-6 bg-gray-100">
-        <div className="container mx-auto max-w-6xl">
+        <div className=" mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
             Why Families Choose Creative Corner
           </h2>
@@ -285,7 +283,7 @@ export default function AboutComponent() {
 
       {/* Visit Us Section */}
       <section className="py-16 px-4 md:px-6 bg-white">
-        <div className="container mx-auto max-w-4xl">
+        <div className=" mx-auto max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Visit Our Shop</h2>
 
           <div className="grid gap-8 md:grid-cols-2">
