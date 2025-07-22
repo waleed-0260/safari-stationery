@@ -5,7 +5,7 @@ import {categoryOptions, subCategoryMap} from "@/lib/Categories"
 import { VscAccount } from "react-icons/vsc";
 import { CiShoppingCart } from "react-icons/ci";
 import Image from 'next/image';
-import logo from "@/public/images/logo.png"
+import logo from "@/public/images/logo.webp"
 import { FaAngleDown } from "react-icons/fa6";
 import Link from 'next/link';
 import SearchProducts from './SearchProducts';
@@ -49,7 +49,15 @@ const Header = () => {
   
   return (
     <>
- <div className="bg-[#7851A9] w-full py-[8px] text-white text-sm overflow-hidden whitespace-nowrap">
+ <div className=" w-full py-[8px] text-white text-sm overflow-hidden whitespace-nowrap" style={{
+    background: `linear-gradient(
+      90deg,
+      oklch(0.75 0.11 11.53),
+      oklch(0.75 0.11 308.8),
+      oklch(0.79 0.09 222.67),
+      oklch(0.84 0.16 90.78)
+    )`,
+  }}>
   <div className="animate-marquee inline-block min-w-full">
     <span className="mx-8">Free Delivery for orders within Bahria town</span>
     <span className="mx-8">Minimum order limit Rs 500</span>
@@ -73,7 +81,15 @@ const Header = () => {
           <FiMenu />
         </p>
       </SheetTrigger>
-      <SheetContent className="overflow-y-scroll">
+      <SheetContent className="overflow-y-scroll" style={{
+    background: `linear-gradient(
+      90deg,
+      oklch(0.75 0.11 11.53),
+      oklch(0.75 0.11 308.8),
+      oklch(0.79 0.09 222.67),
+      oklch(0.84 0.16 90.78)
+    )`,
+  }}>
         <SheetHeader>
           <SheetTitle></SheetTitle>
           {categoryOptions.map((item) => {

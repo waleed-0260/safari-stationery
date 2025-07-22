@@ -136,7 +136,7 @@ const Products = ({ ProductsData, heading }: any) => {
       <div className="flex justify-center mt-8">
         <Link
           // variant={"outline"}
-          className="p-2 px-4 hover:bg-black bg-white text-black border-2 hover:text-white cursor-pointer rounded-full transition-md"
+          className="button"
           href={"/products"}
         >
           View More

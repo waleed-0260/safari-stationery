@@ -51,7 +51,15 @@ const SearchProducts = () => {
           <IoSearch />
         </p>
       </SheetTrigger>
-      <SheetContent className="bg-[#E6DAF0]">
+      <SheetContent style={{
+    background: `linear-gradient(
+      90deg,
+      oklch(0.75 0.11 11.53),
+      oklch(0.75 0.11 308.8),
+      oklch(0.79 0.09 222.67),
+      oklch(0.84 0.16 90.78)
+    )`,
+  }}>
         <SheetHeader>
           <SheetTitle>
             <div className="relative w-full max-w-sm mt-[20px]">

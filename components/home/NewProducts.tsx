@@ -20,8 +20,8 @@ const NewProducts = ({ data, heading }: any) => {
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
 
   return (
-    <div className='w-full my-4 container'>
-      <p className='text-4xl font-bold mb-4 heading text-center'>{heading}</p>
+    <div className='bg-red-600  container'>
+      <p className='text-4xl font-bold mb-4 heading text-center mt-[40px]'>{heading}</p>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-3 relative" data-aos="fade-up">
    {data ? data.map((item: any) => (
   <div

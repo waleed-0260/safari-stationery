@@ -12,6 +12,7 @@ import Updates from "@/components/home/Updates";
 import SingleProducts from "@/components/Products/SingleProducts";
 import NewProducts from "@/components/home/NewProducts";
 import Contact from "@/components/home/Contact";
+import Slider from "@/components/home/Slider";
 
 function getRandomItem<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -43,6 +44,7 @@ const featuredProducts = allProducts.filter((product: any) => product.isFeatured
       {/* ✅ Pass a single random product */}
       {/* <SingleProduct product={randomProduct} /> */}
       <SingleProducts data={randomProduct}/>
+      <Slider/>
       <NewProducts data={latestProducts} heading="New Arrivals"/>
       <NewProducts data={discountedProducts} heading="Discounted Products -- 15% off"/>
       {/* <Faq /> */}
