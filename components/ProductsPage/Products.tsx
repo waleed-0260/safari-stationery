@@ -20,8 +20,12 @@ import { useState } from 'react';
 // import { ToastContainer } from 'react-toastify';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useRouter } from 'next/navigation';
+import { getGuestId } from '@/hooks/getGuestId';
+import parse from "html-react-parser"
 const Products = ({ProductsData}:any) => {
+  const guestId = getGuestId()
+  const router = useRouter();
     const [gridCols, setGridCols] = useState(1);
       const addToCart = useCartStore((state) => state.addToCart);
       const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
@@ -108,6 +112,7 @@ const Products = ({ProductsData}:any) => {
             </p>
           )}
           <p className="text-red-600 font-semibold">Rs {item?.sets[0]?.price} PKR</p>
+          {gridCols === 1 ? <>{parse(item?.description.slice(0,150))}...</>:null}
         </div>
       </Link>
 
@@ -119,7 +124,31 @@ const Products = ({ProductsData}:any) => {
             : 'flex p-4 flex-col w-full gap-3'
         }`}
       >
-        <Button>Quick View</Button>
+
+<Button
+  onClick={() => {
+addToCart({
+              productId: item._id,
+              title: item.title,
+              quantity: 1,
+              stock: item.stock,
+              image: item.images[0],
+              sets: item.sets,
+            });
+
+    // 2. Save to backend
+   saveCartToBackend();
+
+    // 3. Show toast
+    toast.success(`${item.title} added to cart!`);
+
+    // 4. Redirect to checkout
+    router.push(`/cart/${guestId}`);
+  }}
+  className="bg-white hover:bg-black text-black hover:text-white w-[150px] cursor-pointer"
+>
+  Buy Now
+</Button>
 
         <Button
           onClick={() => {
@@ -134,7 +163,7 @@ const Products = ({ProductsData}:any) => {
             saveCartToBackend();
             toast.success(`${item.title} added to cart!`);
           }}
-          className="cursor-pointer"
+          className="cursor-pointer  w-[150px]"
         >
           Add To Cart
         </Button>

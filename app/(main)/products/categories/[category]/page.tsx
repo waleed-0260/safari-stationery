@@ -25,7 +25,7 @@ const formattedCategory = decodedCategory
               <FaTag className="text-xl" />
               <span className="uppercase tracking-widest text-sm font-semibold">Category</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-800 mb-3">
+            <h1 className="text-3xl md:text-5xl heading font-bold text-gray-800 mb-3">
               {formattedCategory}
             </h1>
             <p className="text-gray-500 text-base md:text-lg">

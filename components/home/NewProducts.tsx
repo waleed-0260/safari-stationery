@@ -14,14 +14,18 @@ import ProductPopup from "./ProductPopup";
 import { Button } from "../ui/button";
 import { useCartStore } from "@/hooks/useCartStore";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { getGuestId } from "@/hooks/getGuestId";
 const NewProducts = ({ data, heading }: any) => {
   //   const latestProducts = data.slice(-8).reverse(); // Reverse to show newest first
   const addToCart = useCartStore((state) => state.addToCart);
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
+  const router = useRouter();
+  const guestId = getGuestId();
 
   return (
-    <div className='bg-red-600  container'>
-      <p className='text-4xl font-bold mb-4 heading text-center mt-[40px]'>{heading}</p>
+    <div className=' container'>
+      <p className='text-4xl font-bold mb-4 heading text-center mt-[60px]'>{heading}</p>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-3 relative" data-aos="fade-up">
    {data ? data.map((item: any) => (
   <div
@@ -70,7 +74,7 @@ const NewProducts = ({ data, heading }: any) => {
     </Link>
 
     {/* Hover Buttons - outside Link */}
-    <div className="absolute left-1/2 top-[40%] transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+    {/* <div className="absolute left-1/2 top-[40%] transform -translate-x-1/2 -translate-y-1/2 inline-block gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
       <div className="flex flex-col gap-4">
         <Dialog>
           <DialogTrigger className="bg-white text-black py-2 px-4 rounded-full text-sm cursor-pointer">
@@ -86,7 +90,7 @@ const NewProducts = ({ data, heading }: any) => {
           Quick Shop
         </button>
       </div>
-    </div>
+    </div> */}
 
     {/* Add to Cart Button - outside Link */}
     <div className="px-4 pb-4">
@@ -107,6 +111,30 @@ const NewProducts = ({ data, heading }: any) => {
       >
         Add To Cart
       </Button>
+          <Button
+              onClick={() => {
+            addToCart({
+                          productId: item._id,
+                          title: item.title,
+                          quantity: 1,
+                          stock: item.stock,
+                          image: item.images[0],
+                          sets: item.sets,
+                        });
+            
+                // 2. Save to backend
+               saveCartToBackend();
+            
+                // 3. Show toast
+                toast.success(`${item.title} added to cart!`);
+            
+                // 4. Redirect to checkout
+                router.push(`/cart/${guestId}`);
+              }}
+              className="bg-white hover:bg-black text-black hover:text-white cursor-pointer w-full"
+            >
+              Buy Now
+            </Button>
     </div>
   </div>
 )) : null}

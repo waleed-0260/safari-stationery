@@ -81,15 +81,7 @@ const Header = () => {
           <FiMenu />
         </p>
       </SheetTrigger>
-      <SheetContent className="overflow-y-scroll" style={{
-    background: `linear-gradient(
-      90deg,
-      oklch(0.75 0.11 11.53),
-      oklch(0.75 0.11 308.8),
-      oklch(0.79 0.09 222.67),
-      oklch(0.84 0.16 90.78)
-    )`,
-  }}>
+      <SheetContent className="overflow-y-scroll">
         <SheetHeader>
           <SheetTitle></SheetTitle>
           {categoryOptions.map((item) => {

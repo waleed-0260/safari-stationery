@@ -72,7 +72,7 @@ export default function Collection() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8 text-gray-800 heading">Stationery Collection</h1>
+      <h1 className="text-3xl font-bold text-center mb-8  heading">Stationery Collection</h1>
       <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
         Discover our curated collection of premium stationery products designed to inspire creativity and enhance
         productivity.

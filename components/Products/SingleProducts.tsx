@@ -9,6 +9,7 @@ import parse from "html-react-parser"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Router } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const SingleProducts = ({ data }: any) => {
   // console.log("seskao;fkdf", data)
@@ -18,7 +19,7 @@ const SingleProducts = ({ data }: any) => {
   const saveCartToBackend = useCartStore((state) => state.saveCartToBackend);
     const loadCartFromBackend = useCartStore((state) => state.loadCartFromBackend); // ✅ Load from backend
   const cartItems = useCartStore((state) => state.cart); // ✅ get current cart items
-
+  const router = useRouter();
 
   const [selectedColor, setSelectedColor] = useState<string>(data?.colors?.[0] || "");
   const [quantity, setQuantity] = useState<number>(1);
@@ -34,7 +35,7 @@ const SingleProducts = ({ data }: any) => {
 
 const handleAddToCart = () => {
     const alreadyInCart = cartItems?.some(
-      (item: any) => item.productId === data?._id && item.color === selectedColor
+      (item: any) => data.productId === data?._id && data.color === selectedColor
     );
 
     if (alreadyInCart) {
@@ -56,6 +57,26 @@ const handleAddToCart = () => {
   saveCartToBackend(); // Optional: sync with backend
   toast.success("Product added to cart!");
 };
+
+const handleBuyNow = ()=>{
+addToCart({
+                      productId: data._id,
+                      title: data.title,
+                      quantity: quantity,
+                      stock: data.stock,
+                      image: data.images[0],
+                      sets: data.sets,
+                    });
+        
+            // 2. Save to backend
+           saveCartToBackend();
+        
+            // 3. Show toast
+            toast.success(`${data.title} added to cart!`);
+        
+            // 4. Redirect to checkout
+            router.push(`/cart/${guestId}`);
+}
 
     const [selectedImage, setSelectedImage] = useState(data?.images[0])
   const [selectedSetIndex, setSelectedSetIndex] = useState(0);
@@ -117,7 +138,7 @@ const handleAddToCart = () => {
                       : "text-gray-800"
                   }`}
                 >
-                  {item.set} - {item.size}
+                  {data.set} - {data.size}
                 </button>
               ))}
             </div>
@@ -168,8 +189,11 @@ const handleAddToCart = () => {
         <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer bg-black text-white ">
           Add To Cart
         </Button>
+        <Button onClick={handleBuyNow} className="cursor-pointer hover:bg-black hover:text-white bg-white text-black">
+          Buy Now
+        </Button>
 
-        <div>{parse(data?.description)}</div>
+        <div className="text">{parse(data?.description)}</div>
 
 
       </div>

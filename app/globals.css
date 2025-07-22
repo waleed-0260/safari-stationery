@@ -146,8 +146,9 @@
 }
 .text{
     font-family: "Roboto Flex", sans-serif;
-    font-weight: 700;
-    color: #d8d3dc;
+    /* font-weight: 700; */
+    /* font-weight: normal; */
+    /* color: #181718; */
 }
 .head{
   font-family: "Pacifico", cursive;
@@ -174,10 +175,10 @@ body{
   padding: 12px 24px;
   font-size: 16px;
   font-weight: bold;
-  color: white;
-  background-color: oklch(0.75 0.11 11.53); /* Default background */
-  border: none;
-  border-radius: 12px;
+  color: black;
+  background-color: white; /* Default background */
+  border: 1px solid;
+  border-radius: 20px;
   cursor: pointer;
   transition: background 0.4s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -192,4 +193,10 @@ body{
     oklch(0.79 0.09 222.67),
     oklch(0.84 0.16 90.78)
   );
+}
+
+@media screen and (min-width: 1800px) {
+  .hero-large {
+    height: 65rem;
+  }
 }

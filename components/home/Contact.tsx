@@ -4,7 +4,7 @@ const Contact = () => {
   return (
     <div className="w-full container my-10">
       {/* Left Side - Map */}
-      <p className='font-bold text-3xl heading text-center'> Visit Our Store</p>
+      <p className='font-bold text-3xl heading'> Visit Our Store</p>
       <div className='flex md:flex-row flex-col gap-3 mt-3'>
 
 

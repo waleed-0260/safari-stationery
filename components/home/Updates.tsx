@@ -29,7 +29,7 @@ const Updates = () => {
 //     </div>
 //     </div>
   // {/* Satisfied or refunded */}
-  <div className='grid grid-cols-2 gap-4 container w-[70%]'>
+  <div className='grid md:grid-cols-2 grid-cols-1 gap-4 container w-[70%]'>
   <div className="flex items-start gap-4">
     <FaShippingFast className="text-2xl text-gray-700" />
     <div>
