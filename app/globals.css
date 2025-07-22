@@ -136,6 +136,9 @@
 .bgColors{
   background-color: #D9C2E9;
 }
+.secondBg {
+  background-color: #ded7e3;
+}
 
 .heading{
   /* font-family: "Pacifico", cursive;*/
