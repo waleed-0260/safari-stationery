@@ -71,11 +71,7 @@ export default function Collection() {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
 
   return (
-<<<<<<< HEAD
-    // <div className="w-full secondBg">
-=======
     <div className="w-full secondBg">
->>>>>>> 0b3d13782d4f692ee5e1f1728266ff805f1677ea
 
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8  heading">Stationery Collection</h1>
@@ -121,11 +117,7 @@ export default function Collection() {
         ))}
       </div>
     </div>
-<<<<<<< HEAD
-        // </div>
-=======
         </div>
->>>>>>> 0b3d13782d4f692ee5e1f1728266ff805f1677ea
 
   )
 }
