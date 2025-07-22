@@ -61,7 +61,7 @@ const Header = () => {
   </div>
 </div>
 
-    <div className='flex items-center justify-center w-full md:h-[120px] h-[90px] bg-white' 
+    <div className='flex items-center justify-center w-full md:h-[120px] h-[90px] ' 
   >
     <div className='flex flex-row items-center justify-between w-[90%]'>
       <div className='md:hidden flex'>
