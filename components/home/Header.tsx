@@ -44,6 +44,8 @@ const Header = () => {
 
     return () => clearInterval(interval); // cleanup
   }, []);
+    const [isSheetOpen, setIsSheetOpen] = useState(false);
+
   
   return (
     <>
@@ -65,59 +67,61 @@ const Header = () => {
   >
     <div className='flex flex-row items-center justify-between w-[90%]'>
       <div className='md:hidden flex'>
-      <Sheet>
-  <SheetTrigger>
-    <p className='text-3xl cursor-pointer'>
-      <FiMenu />
-    </p>
-  </SheetTrigger>
-  <SheetContent className="overflow-y-scroll">
-    <SheetHeader>
-      <SheetTitle></SheetTitle>
-      {categoryOptions.map((item) => {
-        const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
-        const [open, setOpen] = useState(false);
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+      <SheetTrigger asChild>
+        <p className="text-3xl cursor-pointer">
+          <FiMenu />
+        </p>
+      </SheetTrigger>
+      <SheetContent className="overflow-y-scroll">
+        <SheetHeader>
+          <SheetTitle></SheetTitle>
+          {categoryOptions.map((item) => {
+            const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
+            const [open, setOpen] = useState(false);
 
-        return (
-          <div key={item.value} className="mb-2">
-            <div className="flex justify-between items-center w-full">
-              <Link
-                href={`/products/categories/${item.value}`}
-                className="block w-full py-2 text-base font-medium"
-              >
-                {item.label}
-              </Link>
+            return (
+              <div key={item.value} className="mb-2">
+                <div className="flex justify-between items-center w-full">
+                  <Link
+                    href={`/products/categories/${item.value}`}
+                    className="block w-full py-2 text-base font-medium"
+                    onClick={() => setIsSheetOpen(false)} // 👈 closes the sheet
+                  >
+                    {item.label}
+                  </Link>
 
-              {subCategories && (
-                <button
-                  onClick={() => setOpen((prev) => !prev)}
-                  className="text-base font-semibold text-gray-600"
-                >
-                  <FaAngleDown />
-                </button>
-              )}
-            </div>
-
-            {subCategories && open && (
-              <ul className="ml-4 mt-2 space-y-1">
-                {subCategories.map((subItem) => (
-                  <li key={subItem.value}>
-                    <Link
-                      href={`/products/sub-category/${subItem.value}`}
-                      className="text-sm font-semibold text-gray-700 hover:text-primary block"
+                  {subCategories && (
+                    <button
+                      onClick={() => setOpen((prev) => !prev)}
+                      className="text-base font-semibold text-gray-600"
                     >
-                      {subItem.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        );
-      })}
-    </SheetHeader>
-  </SheetContent>
-</Sheet>
+                      <FaAngleDown />
+                    </button>
+                  )}
+                </div>
+
+                {subCategories && open && (
+                  <ul className="ml-4 mt-2 space-y-1">
+                    {subCategories.map((subItem) => (
+                      <li key={subItem.value}>
+                        <Link
+                          href={`/products/sub-category/${subItem.value}`}
+                          className="text-sm font-semibold text-gray-700 hover:text-primary block"
+                          onClick={() => setIsSheetOpen(false)} // 👈 closes the sheet
+                        >
+                          {subItem.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
       </div>
         <Link href={"/"} className='h-[150px] w-[150px]'>
             <Image src={logo} alt="" className=''/>
