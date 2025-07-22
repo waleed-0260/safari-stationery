@@ -24,7 +24,11 @@ const NewProducts = ({ data, heading }: any) => {
   const guestId = getGuestId();
 
   return (
+<<<<<<< HEAD
     // <div className="w-full secondBg">
+=======
+    <div className="w-full secondBg">
+>>>>>>> 0b3d13782d4f692ee5e1f1728266ff805f1677ea
     <div className=' container'>
       <p className='text-4xl font-bold mb-4 heading text-center mt-[60px]'>{heading}</p>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-3 relative" data-aos="fade-up">
@@ -152,7 +156,11 @@ const NewProducts = ({ data, heading }: any) => {
         theme="colored"
       /> */}
       </div>
+<<<<<<< HEAD
     // </div>
+=======
+    </div>
+>>>>>>> 0b3d13782d4f692ee5e1f1728266ff805f1677ea
   );
 };
 

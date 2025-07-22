@@ -15,8 +15,12 @@ import uhu from "@/public/images/uhu.webp";
 
 const Slider = () => {
   return (
+<<<<<<< HEAD
     <div className="w-full secondBg
     flex items-center justify-center">
+=======
+    <div className="w-full secondBg">
+>>>>>>> 0b3d13782d4f692ee5e1f1728266ff805f1677ea
 
         <div className='container flex items-center justify-center m-6'>
         <Swiper

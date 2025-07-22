@@ -189,7 +189,7 @@ addToCart({
         <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer bg-black text-white ">
           Add To Cart
         </Button>
-        <Button onClick={handleBuyNow} className="cursor-pointer hover:bg-black hover:text-white bg-white text-black">
+        <Button onClick={handleBuyNow} className="cursor-pointer hover:bg-black hover:text-white bg-white text-black border-2">
           Buy Now
         </Button>
 
