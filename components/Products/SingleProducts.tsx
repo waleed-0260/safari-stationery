@@ -62,8 +62,8 @@ const handleAddToCart = () => {
     const sets = data?.sets;
 
   return (
-    <div className="container flex md:flex-row flex-col justify-between items-start py-8">
-      <div className="flex flex-col-reverse md:w-[50%] gap-4" data-aos="fade-left">
+    <div className="container flex md:flex-row flex-col justify-between items-start py-8" data-aos="fade-up">
+      <div className="flex flex-col-reverse md:w-[50%] gap-4" >
               <div className={`md:flex md:flex-row grid grid-cols-4 gap-2 md:w-[15%]`}>
         {data?.images.map((img:any, index:any) => (
           <img
@@ -82,7 +82,7 @@ const handleAddToCart = () => {
         </Zoom>
       </div>
 
-      <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" data-aos="fade-right">
+      <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" >
         {/* <p className="text-sm">{data?.title}</p> */}
         <p className="text-4xl font-semibold heading">{data?.title}</p>
 
