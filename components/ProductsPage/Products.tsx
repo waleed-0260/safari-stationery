@@ -145,7 +145,7 @@ addToCart({
     // 4. Redirect to checkout
     router.push(`/cart/${guestId}`);
   }}
-  className="bg-white hover:bg-black text-black hover:text-white w-[150px] cursor-pointer"
+  className="bg-white hover:bg-black text-black hover:text-white w-[150px] cursor-pointer border-2"
 >
   Buy Now
 </Button>

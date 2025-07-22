@@ -32,7 +32,7 @@ const Products = ({ ProductsData, heading }: any) => {
       const guestId = getGuestId();
 
   return (
-    <div className="w-full py-8 container" data-aos='fade-up'>
+    <div className="w-full py-8 container secondBg" data-aos='fade-up'>
       <h2 className="text-center heading mb-6">{heading}</h2>
 
       <div className="relative">
@@ -149,7 +149,7 @@ const Products = ({ ProductsData, heading }: any) => {
           // 4. Redirect to checkout
           router.push(`/cart/${guestId}`);
         }}
-        className="bg-white hover:bg-black text-black hover:text-white cursor-pointer w-full"
+        className="bg-white hover:bg-black text-black hover:text-white cursor-pointer w-full border-2"
       >
         Buy Now
       </Button>

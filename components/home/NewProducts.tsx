@@ -24,6 +24,7 @@ const NewProducts = ({ data, heading }: any) => {
   const guestId = getGuestId();
 
   return (
+    // <div className="w-full secondBg">
     <div className=' container'>
       <p className='text-4xl font-bold mb-4 heading text-center mt-[60px]'>{heading}</p>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-3 relative" data-aos="fade-up">
@@ -131,7 +132,7 @@ const NewProducts = ({ data, heading }: any) => {
                 // 4. Redirect to checkout
                 router.push(`/cart/${guestId}`);
               }}
-              className="bg-white hover:bg-black text-black hover:text-white cursor-pointer w-full"
+              className="bg-white hover:bg-black text-black hover:text-white cursor-pointer w-full border-2"
             >
               Buy Now
             </Button>
@@ -150,7 +151,8 @@ const NewProducts = ({ data, heading }: any) => {
         draggable
         theme="colored"
       /> */}
-    </div>
+      </div>
+    // </div>
   );
 };
 

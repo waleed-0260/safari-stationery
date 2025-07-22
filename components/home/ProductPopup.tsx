@@ -64,7 +64,7 @@ const ProductPopup = ({ id }: { id: string }) => {
           <button className="w-full bg-green-600 text-white py-3 rounded-md text-sm hover:bg-green-700 transition">
             Add to Cart
           </button>
-          <button className="w-full border border-gray-300 py-3 rounded-md text-sm hover:bg-gray-100 transition">
+          <button className="w-full border border-gray-300 py-3 rounded-md text-sm hover:bg-gray-100 transition border-2">
             Buy Now
           </button>
         </div>
