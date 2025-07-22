@@ -61,9 +61,7 @@ const Header = () => {
   </div>
 </div>
 
-    <div className='flex items-center justify-center w-full md:h-[120px] h-[90px]' style={{
-    background: 'linear-gradient(to right, #F191ED, #a2d2ff)'
-  }}
+    <div className='flex items-center justify-center w-full md:h-[120px] h-[90px] bg-white' 
   >
     <div className='flex flex-row items-center justify-between w-[90%]'>
       <div className='md:hidden flex'>
