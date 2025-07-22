@@ -11,8 +11,11 @@ const page = async ({
   const { category } = await params;
   const products = await GetProductsByCategory(category);
 
-  const formattedCategory = category.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
-
+const decodedCategory = decodeURIComponent(category);
+const formattedCategory = decodedCategory
+  .replace(/-/g, ' ')
+  .replace(/\b\w/g, (char) => char.toUpperCase());
+  
   return (
     <div className='flex flex-col justify-center items-center w-full'>
       {products && products.length > 0 ? (

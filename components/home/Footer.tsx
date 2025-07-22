@@ -1,11 +1,15 @@
+"use client"
 import React from 'react';
 import Link from 'next/link';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from 'react-icons/fa';
 import logo from "@/public/images/logo.png"
 import Image from 'next/image';
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+
 const Footer = () => {
   return (
+    <>
     <footer className=" text-white pt-10 pb-6 px-6 md:px-16  bg-gray-700">
       <div className="grid md:grid-cols-4 gap-10 mb-10">
         {/* Logo & Description */}
@@ -85,6 +89,16 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    <FloatingWhatsApp
+          phoneNumber="+92342222222"
+          accountName="Paper N Play"
+          statusMessage="Replies within 15 minutes"
+          chatMessage="Hello there! How can I help you ?"
+          avatar="/images/logo.png"
+          chatboxHeight={350}
+          buttonClassName="floating-whatsapp-button"
+        />
+        </>
   );
 };
 

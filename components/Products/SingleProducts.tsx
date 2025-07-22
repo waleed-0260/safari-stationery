@@ -64,7 +64,7 @@ const handleAddToCart = () => {
   return (
     <div className="container flex md:flex-row flex-col justify-between items-start py-8">
       <div className="flex flex-col-reverse md:w-[50%] gap-4" data-aos="fade-left">
-              <div className="flex flex-row gap-2 md:w-[15%]">
+              <div className={`md:flex md:flex-row grid grid-cols-4 gap-2 md:w-[15%]`}>
         {data?.images.map((img:any, index:any) => (
           <img
             key={index}
@@ -96,7 +96,7 @@ const handleAddToCart = () => {
       {sets?.length === 1 ? (
         <p className="text-red-500 text-lg font-semibold">
           Rs {sets[0]?.price} <br />
-          {sets[0].compare_at_price === 1  && (
+          {sets[0].compare_at_price > 0   && (
             <span className="line-through text-gray-400 text-sm ml-2">
               Rs {sets[0].compare_at_price}
             </span>

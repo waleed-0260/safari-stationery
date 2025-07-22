@@ -165,4 +165,5 @@
 
 body{
   background-color: #fff8f7;
+  overflow-x: hidden;
 }

@@ -104,7 +104,7 @@ const Header = () => {
                   <li key={subItem.value}>
                     <Link
                       href={`/products/sub-category/${subItem.value}`}
-                      className="text-sm text-gray-700 hover:text-primary block"
+                      className="text-sm font-semibold text-gray-700 hover:text-primary block"
                     >
                       {subItem.label}
                     </Link>

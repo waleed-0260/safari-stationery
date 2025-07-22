@@ -28,7 +28,7 @@ const Products = ({ProductsData}:any) => {
     
   return (
     <div className="container">
-      <h2 className="text-center text-4xl font-bold mb-6 heading">Trending Products</h2>
+      {/* <h2 className="text-center text-4xl font-bold mb-6 heading">Trending Products</h2> */}
       <div className='flex flex-row items-center justify-center gap-4'>
         <Rows3
           onClick={() => setGridCols(1)}

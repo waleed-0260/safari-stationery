@@ -23,7 +23,7 @@ const Contact = () => {
         <h1 className='text-3xl font-bold heading'>Contact Information</h1>
         <div className='flex flex-row items-center gap-2'>
           <h2 className="text-xl font-bold mb-2">Address</h2>
-          <p>123 Main Street,<br />Multan, Punjab, Pakistan</p>
+          <p>Safari Mall Bahria Town<br />Lahore, Punjab, Pakistan</p>
         </div>
 
         <div className='flex flex-row items-center gap-2'>
