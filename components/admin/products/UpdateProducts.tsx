@@ -38,6 +38,7 @@ const UpdateProducts = ({data, id}:any) => {
         { value: 'School Supplies', label: 'School Supplies' },
         { value: 'Art Supplies', label: 'Art Supplies' },
         { value: 'Party Supplies', label: 'Party Supplies' },
+{ value: 'Journals', label: 'Journals' },
         { value: 'Toys', label: 'Toys' },
         { value: 'Trending', label: 'Trending' },
       ];
@@ -56,7 +57,6 @@ const UpdateProducts = ({data, id}:any) => {
         { value: "Thumbpins/Paper Clips", label: "Thumbpins/Paper Clips" },
         { value: "Sticky Notes", label: "Sticky Notes" },
         { value: "Stapler", label: "Stapler" },
-        { value: "Journals", label: "Journals" },
         { value: "Registers", label: "Regsiters" },
       ],
       "Deals": [
