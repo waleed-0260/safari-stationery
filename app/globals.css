@@ -203,3 +203,43 @@ body{
     height: 65rem;
   }
 }
+
+
+/* Base Button Style */
+.add-to-cart {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(251, 225, 225);
+  background-color: oklch(0.79 0.09 222.67); /* Default background */
+  border: 1px solid;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.4s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover Effect with Gradient */
+.add-to-cart:hover {
+  background-color: oklch(0.75 0.11 308.8);
+}
+
+.buy-now {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: oklch(0.79 0.09 222.67);
+  background-color: transparent; /* Default background */
+  border: 1px solid oklch(0.79 0.09 222.67);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.4s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover Effect with Gradient */
+.buy-now:hover {
+  /* background-color: oklch(0.75 0.11 308.8); */
+  color: white;
+  background-color: oklch(0.79 0.09 222.67);
+}

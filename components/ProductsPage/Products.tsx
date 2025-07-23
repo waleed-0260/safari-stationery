@@ -145,7 +145,7 @@ addToCart({
     // 4. Redirect to checkout
     router.push(`/cart/${guestId}`);
   }}
-  className="bg-white hover:bg-black text-black hover:text-white w-[150px] cursor-pointer border-2"
+  className="buy-now md:w-[150px]"
 >
   Buy Now
 </Button>
@@ -163,7 +163,7 @@ addToCart({
             saveCartToBackend();
             toast.success(`${item.title} added to cart!`);
           }}
-          className="cursor-pointer  w-[150px]"
+          className="add-to-cart md:w-[150px]"
         >
           Add To Cart
         </Button>

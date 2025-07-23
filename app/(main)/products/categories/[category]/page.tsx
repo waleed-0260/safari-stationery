@@ -29,7 +29,7 @@ const formattedCategory = decodedCategory
             <h1 className="text-3xl md:text-5xl heading font-bold text-gray-800 mb-3">
               {formattedCategory}
             </h1>
-            <p className="text-gray-500 text-base md:text-lg">
+            <p className="text-gray-500 text-base md:text-lg w-[90%]">
               Explore our finest collection in the <strong>{formattedCategory}</strong> category. Hand-picked and best-quality products for you.
             </p>
           </div>

@@ -10,7 +10,7 @@ const page = async({
     const cartProducts = await GetCartById(id);
     // console.log("getting cart o page", cartProducts)
   return (
-    <div><div className='mt-[100px]'></div><Cart allCartData={cartProducts || []}/></div>
+    <div><div className='mt-[140px]'></div><Cart allCartData={cartProducts || []}/></div>
   )
 }
 

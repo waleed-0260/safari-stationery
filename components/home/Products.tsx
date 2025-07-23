@@ -125,7 +125,7 @@ const Products = ({ ProductsData, heading }: any) => {
           saveCartToBackend();
           toast.success(`${item.title} added to cart!`);
         }}
-        className="cursor-pointer my-2 bg-black text-white w-full"
+        className="add-to-cart w-full"
       >
         Add To Cart
       </Button>
@@ -149,7 +149,7 @@ const Products = ({ ProductsData, heading }: any) => {
           // 4. Redirect to checkout
           router.push(`/cart/${guestId}`);
         }}
-        className="bg-white hover:bg-black text-black hover:text-white cursor-pointer w-full border-2"
+        className="buy-now mt-2 w-full"
       >
         Buy Now
       </Button>

@@ -110,7 +110,7 @@ const Header = () => {
                 </div>
 
                 {subCategories && open && (
-                  <ul className="ml-4 mt-2 space-y-1">
+                  <ul className="ml-4 mt-2 space-y-2">
                     {subCategories.map((subItem) => (
                       <li key={subItem.value}>
                         <Link

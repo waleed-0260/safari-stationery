@@ -186,10 +186,10 @@ addToCart({
         )}
 
         {/* Buttons */}
-        <Button variant="outline" onClick={handleAddToCart} className="cursor-pointer bg-black text-white ">
+        <Button variant="outline" onClick={handleAddToCart} className="add-to-cart">
           Add To Cart
         </Button>
-        <Button onClick={handleBuyNow} className="cursor-pointer hover:bg-black hover:text-white bg-white text-black border-2">
+        <Button onClick={handleBuyNow} className="buy-now">
           Buy Now
         </Button>
 

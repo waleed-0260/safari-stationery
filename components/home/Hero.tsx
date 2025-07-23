@@ -30,7 +30,7 @@ export default function Hero() {
           href="/products"
           className=""
         >
-          <Button className="py-4 px-4 cursor-pointer">
+          <Button className="add-to-cart cursor-pointer">
           View Products
           </Button>
         </Link>

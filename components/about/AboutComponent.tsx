@@ -66,8 +66,8 @@ export default function AboutComponent() {
         <div className=" mx-auto ">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
-              <div className="space-y-4 text-gray-700 leading-relaxed">
+              <h2 className="text-3xl md:text-4xl heading font-bold text-gray-900 mb-6">Our Story</h2>
+              <div className="space-y-4 text-gray-700 w-[80%]">
                 <p>
                   Creative Corner began as a small dream in 2015 when Sarah and Mike, both educators and parents,
                   noticed a gap in their local community for quality educational materials and creative supplies.
@@ -82,7 +82,7 @@ export default function AboutComponent() {
                 </p>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-6">
+              <div className="mt-8 grid md:grid-cols-2 grid-cols-1 gap-6">
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
                   <div className="text-2xl font-bold">8+</div>
                   <div className="text-sm text-gray-600">Years Serving</div>
@@ -110,7 +110,7 @@ export default function AboutComponent() {
       {/* Products We Offer */}
       <section className="py-16 px-4 md:px-6 bg-white">
         <div className=" mx-auto max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl md:text-4xl heading font-bold text-center text-gray-900 mb-12">
             What You'll Find in Our Shop
           </h2>
 
@@ -233,7 +233,7 @@ export default function AboutComponent() {
       {/* Why Choose Our Shop */}
       <section className="py-16 px-4 md:px-6 bg-gray-100">
         <div className=" mx-auto max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+          <h2 className="text-3xl md:text-4xl heading font-bold text-center text-gray-900 mb-12">
             Why Families Choose Creative Corner
           </h2>
 
@@ -284,7 +284,7 @@ export default function AboutComponent() {
       {/* Visit Us Section */}
       <section className="py-16 px-4 md:px-6 bg-white">
         <div className=" mx-auto max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">Visit Our Shop</h2>
+          <h2 className="text-3xl md:text-4xl heading font-bold text-center text-gray-900 mb-12">Visit Our Shop</h2>
 
           <div className="grid gap-8 md:grid-cols-2">
             <Card className="border-0 shadow-lg">
