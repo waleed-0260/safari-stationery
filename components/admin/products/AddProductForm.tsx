@@ -77,6 +77,12 @@ const AddProductForm = () => {
     { value: "Lunch Box", label: "Lunch Box" },
     { value: "Water Bottle", label: "Water Bottle" },
   ],
+  "Journals": [
+      { value: "Cute Journals", label: "Cute Journals" },
+    { value: "Ring Journals", label: "Ring Journals" },
+    { value: "Mini Diaries", label: "Mini Diaries" },
+    { value: "Journal Kits", label: "Journal Kits" },
+  ],
 };
 
 const colorsOptions = [
@@ -114,7 +120,7 @@ const colorsOptions = [
       // price: Yup.number().required("Price is required"),
       compare_at_price: Yup.number(),
       category: Yup.array().min(1, "Select at least one category"),
-      sub_category: Yup.array().min(1, "Select at least one sub category"),
+      sub_category: Yup.array(),
       stock: Yup.number().required("Stock is required"),
       isFeatured: Yup.string().required("Please choose an option"),
       colors: Yup.array(),

@@ -28,6 +28,8 @@ const page = async({
 
   return (
     <div className='flex flex-col items-center justify-center w-full'>
+      <div className='mt-[150px]'></div>
+
         <div className='bg-gray-300  w-full flex flex-row justify-center items-center'>
           <div className='container flex flex-row justify-between items-center'>
 
