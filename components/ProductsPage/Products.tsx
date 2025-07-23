@@ -126,7 +126,7 @@ const Products = ({ProductsData}:any) => {
       >
 
 <Button
-  onClick={() => {
+  onClick={async() => {
 addToCart({
               productId: item._id,
               title: item.title,
