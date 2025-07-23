@@ -25,49 +25,55 @@ interface CartItem {
 }
 
 export default function Cart({allCartData}:any) {
-  // console.log("allcartdata", allCartData)
-  // console.log("amksamdsamfm", allCartData.items)
-  const [cartItems, setCartItems] = useState<any[]>(allCartData.items)
+  const guestId = getGuestId();
 
-const guestId = getGuestId();
-// console.log("guesitd",guestId)
-const updateQuantity = async (productId: string, quantity: number) => {
-  if (!guestId) return;
+  const cartItems = useCartStore((state) => state.cart);
+  const setCart = useCartStore((state) => state.setCart);
+  const loadCartFromBackend = useCartStore((state) => state.loadCartFromBackend);
 
-  // Prevent quantity from going below 1
-  const safeQuantity = Math.max(quantity, 1);
-  setCartItems((prevItems) =>
-    prevItems.map((item) =>
+  // ✅ Load cart on mount
+  useEffect(() => {
+    if (guestId) loadCartFromBackend();
+  }, [guestId]);
+
+  // ✅ Quantity update
+  const updateQuantity = async (productId: string, quantity: number) => {
+    if (!guestId) return;
+
+    const safeQuantity = Math.max(quantity, 1);
+
+    // Update Zustand cart
+    const updatedCart = cartItems.map((item) =>
       item.productId === productId
         ? { ...item, quantity: safeQuantity }
         : item
-    )
-  );
-   await UpdateCartItemByUserId(guestId, {
-    productId,
-    quantity: safeQuantity,
-  });
-};
+    );
 
-const cart = useCartStore((state)=> state.setCart)
+    setCart(updatedCart);
 
+    // Save to backend
+    await UpdateCartItemByUserId(guestId, {
+      productId,
+      quantity: safeQuantity,
+    });
+  };
+
+  // ✅ Remove item
   const removeItem = async (productId: string) => {
-    // console.log("amdksam priduct is", productId)
-  if (!guestId) return;
+    if (!guestId) return;
 
-  // Optimistically remove item from UI
-  const previousCart = [...cartItems];
-  setCartItems((items) => items.filter((item) => item.productId !== productId));
+    const previousCart = [...cartItems];
+    const updatedCart = cartItems.filter((item) => item.productId !== productId);
+    setCart(updatedCart);
 
-  // Call backend to remove item
-  const response = await DeleteCartItemByUserId(guestId, {productId});
+    const response = await DeleteCartItemByUserId(guestId, { productId });
 
-  if (!response) {
-    // Rollback if failed
-    setCartItems(previousCart);
-    console.error("❌ Failed to remove item from backend");
-  }
-};
+    if (!response) {
+      // Rollback
+      setCart(previousCart);
+      console.error("❌ Failed to remove item from backend");
+    }
+  };
 
 
     const subtotal = useMemo(() => {
@@ -116,7 +122,7 @@ const cart = useCartStore((state)=> state.setCart)
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cartItems.map((item) => (
+            {cartItems.map((item:any) => (
               <Card key={item._id}>
                 <CardContent className="p-6">
                   <div className="flex gap-4">

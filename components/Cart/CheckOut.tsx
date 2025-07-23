@@ -29,15 +29,19 @@ export default function CheckOut() {
   }, []);
 
   // const subtotal = cartItems.reduce((sum, item) => sum + item?.sets[0]?.price * item?.quantity, 0);
-const totalAmount = useMemo(() => {
+const { totalAmount, shippingAdded } = useMemo(() => {
   const subtotal = cartItems.reduce((total, item) => {
     const price = item.sets?.[0]?.price || 0;
     return total + price * item.quantity;
   }, 0);
 
-  // Add 100 if subtotal is less than 2000
-  return subtotal < 2000 ? subtotal + 100 : subtotal;
+  const shippingFee = 100;
+  const shippingAdded = subtotal < 2000;
+  const totalAmount = shippingAdded ? subtotal + shippingFee : subtotal;
+
+  return { totalAmount, shippingAdded };
 }, [cartItems]);
+
 
   const formik = useFormik({
     initialValues: {
@@ -247,14 +251,9 @@ const totalAmount = useMemo(() => {
                     <span>Subtotal</span>
                     <span>Rs {totalAmount.toFixed(0)}</span>
                   </div>
-                  {/* <div className="flex justify-between text-sm">
-                    <span>Shipping</span>
-                    <span>Rs {shipping}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Tax</span>
-                    <span>Rs {tax.toFixed(0)}</span>
-                  </div> */}
+                  {shippingAdded ? <div className="flex justify-between text-sm">
+                    <span>Included Rs 100 shipping fee</span>
+                  </div>:null}
                   <Separator />
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total</span>
