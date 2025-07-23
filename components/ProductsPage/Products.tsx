@@ -126,8 +126,8 @@ const Products = ({ProductsData}:any) => {
       >
 
 <Button
-  onClick={() => {
-addToCart({
+  onClick={async() => {
+await addToCart({
               productId: item._id,
               title: item.title,
               quantity: 1,
@@ -137,7 +137,7 @@ addToCart({
             });
 
     // 2. Save to backend
-   saveCartToBackend();
+   await saveCartToBackend();
 
     // 3. Show toast
     toast.success(`${item.title} added to cart!`);
