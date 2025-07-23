@@ -16,6 +16,7 @@ const formattedCategory = decodedCategory
   
   return (
     <div className='flex flex-col justify-center items-center w-full'>
+      <div className='mt-[150px]'></div>
       {products && products.length > 0 ? (
         <>
           <div className="w-full max-w-5xl text-center py-10">

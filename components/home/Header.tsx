@@ -48,7 +48,7 @@ const Header = () => {
 
   
   return (
-    <>
+    <div className='fixed top-0 bgColors shadow-md z-50 w-full'>
  <div className=" w-full py-[8px] text-white text-sm overflow-hidden whitespace-nowrap" style={{
     background: `linear-gradient(
       90deg,
@@ -71,10 +71,10 @@ const Header = () => {
   </div>
 </div>
 
-    <div className='flex items-center justify-center w-full md:h-[120px] h-[90px] ' 
+    <div className='flex items-center justify-center w-full lg:h-[120px] h-[90px] ' 
   >
     <div className='flex flex-row items-center justify-between w-[90%]'>
-      <div className='md:hidden flex'>
+      <div className='lg:hidden flex'>
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
         <p className="text-3xl cursor-pointer">
@@ -134,14 +134,15 @@ const Header = () => {
         <Link href={"/"} className='h-[150px] w-[150px]'>
             <Image src={logo} alt="" className=''/>
         </Link>
-        <div className='md:grid grid-cols-4 hidden'>
+        <div className='lg:grid grid-cols-4 hidden'>
             {categoryOptions.map((item: any, index) => {
   const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
   
   return (
     <div key={index} className="relative group cursor-pointer">
       <Link className="flex flex-row items-center gap-1 hover:text-primary transition duration-200 ml-3 mt-3 head font-semebold text-md" href={`/products/categories/${item.value}`}>
-        {item.icon} {item.label} 
+        {item.icon} {item.label}
+        <FaAngleDown/>
       </Link>
 
       {/* Dropdown - only if subcategories exist */}
@@ -170,15 +171,16 @@ const Header = () => {
 
         </div>
 
-        <div className='flex flex-row md:gap-4 gap-2'>
+        <div className='flex flex-row lg:gap-4 gap-2'>
           <SearchProducts/>
-             <p className='text-3xl cursor-pointer md:block hidden'><VscAccount/></p>
+             <p className='text-3xl cursor-pointer lg:block hidden'><VscAccount/></p>
             <Carticon/>
         </div>
 
     </div>
     </div>
-      </>
+    </div>
+      
   )
 }
 

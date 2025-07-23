@@ -8,16 +8,16 @@ import {Autoplay, Navigation, Pagination} from "swiper/modules";
 import Image from 'next/image';
 import casio from "@/public/images/casio.png";
 import creta from "@/public/images/creta.png";
-import maries from "@/public/images/maries.webp";
+import maries from "@/public/images/maries.png";
 import mont from "@/public/images/mont.png";
-import piano from "@/public/images/piano.webp";
-import uhu from "@/public/images/uhu.webp";
+import piano from "@/public/images/piano.png";
+import uhu from "@/public/images/uhu.png";
 
 const Slider = () => {
   return (
     <div className="w-full secondBg">
 
-        <div className='container flex items-center justify-center m-6'>
+        <div className=' flex items-center justify-center my-6'>
         <Swiper
         // spaceBetween={50}
         breakpoints={{
@@ -41,7 +41,7 @@ const Slider = () => {
         speed={1000}
         modules={[Navigation, Pagination, Autoplay]}
         loop={true}
-        className="lg:w-[1000px] w-[80%] h-[120px]"
+        className="my-4 w-[100%] h-[120px]"
       >
         <SwiperSlide>
           <div className="w-[150px] h-[110px]">

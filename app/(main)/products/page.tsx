@@ -6,6 +6,7 @@ const page = async() => {
   const products = await GetProducts();
   return (
     <div className='flex flex-col justify-center items-center w-full '>
+      <div className='mt-[150px]'></div>
       <Products ProductsData={products}/>
     </div>
   )

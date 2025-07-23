@@ -30,7 +30,7 @@ const NewProducts = ({ data, heading }: any) => {
    {data ? data.map((item: any) => (
   <div
     key={item._id}
-    className="flex flex-col rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-auto group my-[10px] relative"
+    className="flex flex-col justify-between rounded-lg shadow-md overflow-hidden bg-white hover:shadow-xl transition duration-300 h-auto group my-[10px] relative"
   >
     {/* Link wraps only image and product info */}
     <Link href={`/products/${item._id}`} className="w-full">
@@ -93,7 +93,7 @@ const NewProducts = ({ data, heading }: any) => {
     </div> */}
 
     {/* Add to Cart Button - outside Link */}
-    <div className="px-4 pb-4">
+    <div className="px-4 pb-4 flex justify-end flex-col items-end">
       <Button
         onClick={() => {
           addToCart({

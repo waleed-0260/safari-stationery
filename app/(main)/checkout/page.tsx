@@ -4,6 +4,7 @@ import React from 'react'
 const page = () => {
   return (
     <div>
+      <div className='mt-[140px]'></div>
         <CheckOut/>
     </div>
   )

@@ -62,8 +62,8 @@ export default function AboutComponent() {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-16 px-4 md:px-6 bg-orange-50">
-        <div className=" mx-auto max-w-6xl">
+      <section className="py-16 px-4 md:px-6 secondBg w-full">
+        <div className=" mx-auto ">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
@@ -84,11 +84,11 @@ export default function AboutComponent() {
 
               <div className="mt-8 grid grid-cols-2 gap-6">
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                  <div className="text-2xl font-bold text-orange-500">8+</div>
+                  <div className="text-2xl font-bold">8+</div>
                   <div className="text-sm text-gray-600">Years Serving</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                  <div className="text-2xl font-bold text-orange-500">5000+</div>
+                  <div className="text-2xl font-bold">5000+</div>
                   <div className="text-sm text-gray-600">Happy Customers</div>
                 </div>
               </div>
@@ -120,7 +120,7 @@ export default function AboutComponent() {
               <CardContent className="p-8">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="p-3 bg-orange-100 rounded-full">
-                    <Package className="h-8 w-8 text-orange-500" />
+                    <Package className="h-8 w-8" />
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900">Premium Stationery</h3>
                 </div>
@@ -260,7 +260,7 @@ export default function AboutComponent() {
 
             <div className="text-center">
               <div className="p-4 bg-orange-100 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                <MapPin className="h-8 w-8 text-orange-500" />
+                <MapPin className="h-8 w-8" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">Local Community</h3>
               <p className="text-gray-600 text-sm">
@@ -292,7 +292,7 @@ export default function AboutComponent() {
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Store Information</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5 text-orange-500" />
+                    <MapPin className="h-5 w-5" />
                     <div>
                       <p className="font-semibold">Address</p>
                       <p className="text-gray-600">123 Main Street, Downtown District</p>
@@ -300,7 +300,7 @@ export default function AboutComponent() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <Clock className="h-5 w-5 text-orange-500" />
+                    <Clock className="h-5 w-5" />
                     <div>
                       <p className="font-semibold">Hours</p>
                       <p className="text-gray-600">Mon-Sat: 9AM-7PM, Sun: 11AM-5PM</p>
@@ -308,7 +308,7 @@ export default function AboutComponent() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-orange-500" />
+                    <Phone className="h-5 w-5" />
                     <div>
                       <p className="font-semibold">Phone</p>
                       <p className="text-gray-600">(555) 123-4567</p>
@@ -316,7 +316,7 @@ export default function AboutComponent() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-orange-500" />
+                    <Mail className="h-5 w-5" />
                     <div>
                       <p className="font-semibold">Email</p>
                       <p className="text-gray-600">hello@creativecorner.com</p>
@@ -367,7 +367,7 @@ export default function AboutComponent() {
           </div>
 
           <div className="text-center mt-8">
-            <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white mr-4">
+            <Button size="lg" className="button text-white mr-4">
               Get Directions
             </Button>
             <Button

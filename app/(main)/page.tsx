@@ -38,19 +38,18 @@ const featuredProducts = allProducts.filter((product: any) => product.isFeatured
     <div className="flex items-center justify-center flex-col w-full">
       <AOSInitializer />
       <Hero />
-      {/* <Boxes /> */}
+      {/* <div className="mt-[300px]"> */}
+      <div className="mt-[150px]"></div>
+
       <Products ProductsData={featuredProducts} heading="Trending Products" />
       <Collections />
-      {/* ✅ Pass a single random product */}
-      {/* <SingleProduct product={randomProduct} /> */}
       <SingleProducts data={randomProduct}/>
       <Slider/>
       <NewProducts data={latestProducts} heading="New Arrivals"/>
       <NewProducts data={discountedProducts} heading="Discounted Products -- 15% off"/>
-      {/* <Faq /> */}
       <Updates />
       <Contact/>
-      {/* <CallToEmail /> */}
+      {/* </div> */}
     </div>
   );
 }
