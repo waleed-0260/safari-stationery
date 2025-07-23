@@ -140,7 +140,7 @@ const Header = () => {
   
   return (
     <div key={index} className="relative group cursor-pointer">
-      <Link className="flex flex-row items-center gap-1 hover:text-primary transition duration-200 ml-3 mt-3 head font-semebold text-md" href={`/products/categories/${item.value}`}>
+      <Link className="flex flex-row items-center gap-1 hover:text-primary transition duration-200 ml-1 mt-3 head  text-md" href={`/products/categories/${item.value}`}>
         {item.icon} {item.label}
         <FaAngleDown/>
       </Link>
