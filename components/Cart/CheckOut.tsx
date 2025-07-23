@@ -38,9 +38,6 @@ const totalAmount = useMemo(() => {
   // Add 100 if subtotal is less than 2000
   return subtotal < 2000 ? subtotal + 100 : subtotal;
 }, [cartItems]);
-  // const shipping = 9.99;
-  // const tax = subtotal * 0.08;
-  // const totalAmount = subtotal + shipping + tax;
 
   const formik = useFormik({
     initialValues: {

@@ -129,7 +129,7 @@ const NewProducts = ({ data, heading }: any) => {
                 toast.success(`${item.title} added to cart!`);
             
                 // 4. Redirect to checkout
-                router.push(`/cart/${guestId}`);
+                router.push(`/checkout`);
               }}
               className="buy-now mt-2 w-full"
             >

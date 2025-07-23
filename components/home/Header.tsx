@@ -134,13 +134,13 @@ const Header = () => {
         <Link href={"/"} className='h-[150px] w-[150px]'>
             <Image src={logo} alt="" className=''/>
         </Link>
-        <div className='lg:grid grid-cols-5 hidden'>
+        <div className='lg:grid grid-cols-4 hidden'>
             {categoryOptions.map((item: any, index) => {
   const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
   
   return (
     <div key={index} className="relative group cursor-pointer">
-      <Link className="flex flex-row items-center gap-1 hover:text-primary transition duration-200 ml-1 mt-3 head  text-md" href={`/products/categories/${item.value}`}>
+      <Link className="flex flex-row items-center gap-1 hover:text-primary transition duration-200 ml-2 mt-3 head  text-md" href={`/products/categories/${item.value}`}>
         {item.icon} {item.label}
         <FaAngleDown/>
       </Link>

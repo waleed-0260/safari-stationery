@@ -75,7 +75,7 @@ addToCart({
             toast.success(`${data.title} added to cart!`);
         
             // 4. Redirect to checkout
-            router.push(`/cart/${guestId}`);
+            router.push(`/checkout`);
 }
 
     const [selectedImage, setSelectedImage] = useState(data?.images[0])
