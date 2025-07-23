@@ -130,7 +130,7 @@ const Products = ({ ProductsData, heading }: any) => {
         Add To Cart
       </Button>
       <Button
-        onClick={() => {
+        onClick={async() => {
       addToCart({
                     productId: item._id,
                     title: item.title,
@@ -141,7 +141,7 @@ const Products = ({ ProductsData, heading }: any) => {
                   });
       
           // 2. Save to backend
-         saveCartToBackend();
+         await saveCartToBackend();
       
           // 3. Show toast
           toast.success(`${item.title} added to cart!`);

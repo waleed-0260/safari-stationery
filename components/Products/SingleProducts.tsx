@@ -58,7 +58,7 @@ const handleAddToCart = () => {
   toast.success("Product added to cart!");
 };
 
-const handleBuyNow = ()=>{
+const handleBuyNow = async()=>{
 addToCart({
                       productId: data._id,
                       title: data.title,
@@ -69,7 +69,7 @@ addToCart({
                     });
         
             // 2. Save to backend
-           saveCartToBackend();
+           await saveCartToBackend();
         
             // 3. Show toast
             toast.success(`${data.title} added to cart!`);

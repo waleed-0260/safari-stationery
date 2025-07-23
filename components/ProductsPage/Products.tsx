@@ -137,7 +137,7 @@ addToCart({
             });
 
     // 2. Save to backend
-   saveCartToBackend();
+   await saveCartToBackend();
 
     // 3. Show toast
     toast.success(`${item.title} added to cart!`);
