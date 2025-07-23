@@ -134,7 +134,7 @@ const Header = () => {
         <Link href={"/"} className='h-[150px] w-[150px]'>
             <Image src={logo} alt="" className=''/>
         </Link>
-        <div className='lg:grid grid-cols-5 hidden'>
+        <div className='lg:grid grid-cols-4 hidden'>
             {categoryOptions.map((item: any, index) => {
   const subCategories = subCategoryMap[item.label as keyof typeof subCategoryMap];
   
