@@ -173,7 +173,7 @@ const colorsOptions = [
           setLoading(false);
         }
       } catch (error) {
-          setLoading(false);
+        setLoading(false);
         console.error("Error uploading product:", error);
         alert("Something went wrong.");
       }
@@ -502,18 +502,31 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
       <label className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md h-32 cursor-pointer hover:bg-gray-100">
         <span className="text-gray-400 text-sm">Click to upload</span>
         <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => {
-            const file = e.currentTarget.files?.[0];
-            if (!file) return;
-            const newImages = [...formik.values.images, file];
-            if (newImages.length <= 6) {
-              formik.setFieldValue("images", newImages);
-            }
-          }}
-        />
+  type="file"
+  accept="image/jpeg,image/png,image/webp"
+  className="hidden"
+  onChange={(e) => {
+    const file = e.currentTarget.files?.[0];
+    if (!file) return;
+
+    // ✅ Validate file type
+    const validTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!validTypes.includes(file.type)) {
+      alert("Only JPG, PNG, and WebP images are allowed.");
+      return;
+    }
+
+    const newImages = [...formik.values.images, file];
+    if (newImages.length > 6) {
+      alert("You can upload a maximum of 6 images.");
+      return;
+    }
+
+    // ✅ Set valid image in Formik
+    formik.setFieldValue("images", newImages);
+  }}
+/>
+
       </label>
     )}
   </div>
