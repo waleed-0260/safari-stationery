@@ -99,7 +99,7 @@ addToCart({
         ))}
       </div>
         <Zoom>
-          <img alt="Product" src={selectedImage}/>
+          <img alt="Product" src={selectedImage} className=" h-[400px]"/>
         </Zoom>
       </div>
 
