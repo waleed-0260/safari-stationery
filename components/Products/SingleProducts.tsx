@@ -138,7 +138,7 @@ addToCart({
                       : "text-gray-800"
                   }`}
                 >
-                  {data.set} - {data.size}
+                  {item.set} {item.size}
                 </button>
               ))}
             </div>

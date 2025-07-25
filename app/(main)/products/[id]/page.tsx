@@ -21,7 +21,7 @@ const page = async({
 
   // 3. Fetch related products by category (excluding current one)
   const relatedProducts = category
-    ? (await GetProductsBySubCategory(category)).filter((item: any) => item._id !== id)
+    ? (await GetProductsBySubCategory(category))?.filter((item: any) => item._id !== id)
     : [];
 
     // console.log("relatedProducts", relatedProducts)
@@ -43,7 +43,7 @@ const page = async({
         </div>
 
         <SingleProducts data={data}/>
-        {relatedProducts.length > 0  ? 
+        {relatedProducts?.length > 0  ? 
         <Products ProductsData={relatedProducts} heading="You may also like it"/> :
         null  
       }

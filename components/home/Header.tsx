@@ -147,7 +147,7 @@ const Header = () => {
 
       {/* Dropdown - only if subcategories exist */}
       {subCategories && (
-        <div className="absolute left-0 top-full mt-0 bg-white border shadow-md rounded-md p-3 hidden group-hover:block z-50 min-w-[200px]">
+        <div className="absolute left-0 top-full mt-0 bg-white overflow-y-auto border shadow-md rounded-md p-3 hidden group-hover:block z-50 min-w-[200px]">
           <ul className="space-y-2">
             {subCategories.map((subItem, subIndex) => (
               <li
