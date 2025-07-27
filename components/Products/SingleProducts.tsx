@@ -10,7 +10,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
-import ReactImageMagnify from 'react-image-magnify';
 
 const SingleProducts = ({ data }: any) => {
   // console.log("seskao;fkdf", data)
@@ -99,7 +98,10 @@ addToCart({
           />
         ))}
       </div>
-        <ReactImageMagnify {...{
+      <Zoom>
+          <img alt="Product" src={selectedImage}/>
+        </Zoom>
+        {/* <ReactImageMagnify {...{
     smallImage: {
         alt: 'Wristwatch by Ted Baker London',
         isFluidWidth: false,
@@ -112,7 +114,7 @@ addToCart({
         width:600,
         height: 800
     }
-}} />
+}} /> */}
       </div>
 
       <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" >
