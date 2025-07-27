@@ -251,3 +251,13 @@ body{
   color: white;
   background-color: oklch(0.79 0.09 222.67);
 }
+
+.parsed-description ol {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-left: 1rem;
+}
+
+.parsed-description li::marker {
+  color: black; /* or whatever bullet color you want */
+}

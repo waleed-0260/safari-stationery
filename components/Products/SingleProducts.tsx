@@ -8,8 +8,9 @@ import { getGuestId } from "@/hooks/getGuestId";
 import parse from "html-react-parser"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Router } from "lucide-react";
+// import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ReactImageMagnify from 'react-image-magnify';
 
 const SingleProducts = ({ data }: any) => {
   // console.log("seskao;fkdf", data)
@@ -98,9 +99,20 @@ addToCart({
           />
         ))}
       </div>
-        <Zoom>
-          <img alt="Product" src={selectedImage} className=" h-[400px]"/>
-        </Zoom>
+        <ReactImageMagnify {...{
+    smallImage: {
+        alt: 'Wristwatch by Ted Baker London',
+        isFluidWidth: false,
+        src: selectedImage,
+        height:500,
+        width: 400  
+    },
+    largeImage: {
+        src: selectedImage,
+        width:600,
+        height: 800
+    }
+}} />
       </div>
 
       <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" >
@@ -193,7 +205,7 @@ addToCart({
           Buy Now
         </Button>
 
-        <div className="text">{parse(data?.description)}</div>
+<div className="text parsed-description">{parse(data?.description)}</div>
 
 
       </div>
