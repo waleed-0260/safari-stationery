@@ -59,7 +59,7 @@ const Footer = () => {
               placeholder="Enter your email"
               className="w-full px-4 py-2 rounded-md text-black bg-white"
             />
-            <button className="bg-red-600 px-4 py-2 rounded-md text-white hover:bg-red-700 w-full mt-1">
+            <button className="add-to-cart px-4 py-2 rounded-md text-white hover:bg-red-700 w-full mt-1">
               Subscribe
             </button>
           </div>

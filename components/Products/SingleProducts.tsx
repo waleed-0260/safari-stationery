@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
@@ -10,6 +10,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { Router } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Swiper as SwiperType } from 'swiper';
+
 
 const SingleProducts = ({ data }: any) => {
   // console.log("seskao;fkdf", data)
@@ -82,40 +88,54 @@ addToCart({
   const [selectedSetIndex, setSelectedSetIndex] = useState(0);
     const sets = data?.sets;
 
+      const [selectedIndex, setSelectedIndex] = useState(0);
+  const swiperRef = useRef<SwiperType | null>(null);
+
   return (
     <div className="container flex md:flex-row flex-col justify-between items-start py-8" data-aos="fade-up">
-      <div className="flex flex-col-reverse md:w-[50%] gap-4" >
-              <div className={`md:flex md:flex-row grid grid-cols-4 gap-2 md:w-[15%]`}>
-        {data?.images.map((img:any, index:any) => (
+          <div className="flex flex-col-reverse md:w-[50%] w-full gap-4">
+      {/* Thumbnails */}
+      <div className="md:flex md:flex-row grid grid-cols-4 gap-2">
+        {data?.images.map((img: string, index: number) => (
           <img
             key={index}
             src={img}
             alt={`Thumbnail ${index + 1}`}
             className={`w-full h-20 object-cover rounded-md cursor-pointer border ${
-              selectedImage === img ? 'border-blue-600' : 'border-gray-300'
+              selectedIndex === index ? 'border-blue-600' : 'border-gray-300'
             }`}
-            onClick={() => setSelectedImage(img)}
+            onClick={() => {
+              setSelectedIndex(index);
+              swiperRef.current?.slideToLoop(index); // jump to that slide
+            }}
           />
         ))}
       </div>
+
+      {/* Main Image Swiper with Zoom */}
+      <Swiper
+        modules={[Navigation]}
+        loop={true}
+        slidesPerView={1}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onSlideChange={(swiper) => setSelectedIndex(swiper.realIndex)}
+        className="w-full"
+      >
+{data?.images
+  .filter((img: string) => !!img) // remove empty strings or null
+  .map((img: string, index: number) => (
+    <SwiperSlide key={index}>
       <Zoom>
-          <img alt="Product" src={selectedImage}/>
-        </Zoom>
-        {/* <ReactImageMagnify {...{
-    smallImage: {
-        alt: 'Wristwatch by Ted Baker London',
-        isFluidWidth: false,
-        src: selectedImage,
-        height:500,
-        width: 400  
-    },
-    largeImage: {
-        src: selectedImage,
-        width:600,
-        height: 800
-    }
-}} /> */}
-      </div>
+        <img
+          alt={`Product ${index + 1}`}
+          src={img}
+          className="w-full max-h-[500px] object-cover rounded-md"
+        />
+      </Zoom>
+    </SwiperSlide>
+))}
+      </Swiper>
+    </div>
 
       <div className="flex flex-col gap-4 md:w-[40%] w-full md:mt-0 mt-3" >
         {/* <p className="text-sm">{data?.title}</p> */}
