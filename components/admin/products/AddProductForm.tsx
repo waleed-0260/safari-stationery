@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 // import { useEditor, EditorContent } from "@tiptap/react";
 // import StarterKit from "@tiptap/starter-kit";
 import { Editor } from 'primereact/editor';
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 type CategoryOption = {
   value: string;
@@ -405,7 +407,7 @@ value={categoryOptions.filter(option => formik.values.category.includes(option.v
           </div>
            <div>
             <label className="block mb-1 font-medium text-gray-700">Colors</label>
-            <Select
+            {/* <Select
   isMulti
   name="colors"
   options={colorsOptions}
@@ -415,8 +417,11 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
   onChange={(selected) =>
     formik.setFieldValue("colors", selected.map((item) => item.value))
   }
+/> */}
+<TagsInput
+  value={formik.values.colors}
+  onChange={(tags) => formik.setFieldValue('colors', tags)}
 />
-
             {formik.touched.colors && formik.errors.colors && (
               <p className="text-red-500 text-sm mt-1">{formik.errors.colors}</p>
             )}
