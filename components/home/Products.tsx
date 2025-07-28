@@ -164,7 +164,7 @@ const Products = ({ ProductsData, heading }: any) => {
       <div className="flex justify-center mt-8">
         <Link
           // variant={"outline"}
-          className="button"
+          className="add-to-cart rounded-md"
           href={"/products"}
         >
           View More
