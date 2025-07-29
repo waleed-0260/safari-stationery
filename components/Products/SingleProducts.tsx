@@ -129,7 +129,7 @@ addToCart({
         <img
           alt={`Product ${index + 1}`}
           src={img}
-          className="w-full max-h-[500px] object-cover rounded-md"
+          className="w-full h-[500px] object-cover rounded-md"
         />
       </Zoom>
     </SwiperSlide>

@@ -5,7 +5,8 @@ import * as Yup from "yup";
 import Select from 'react-select';
 import { Button } from "@/components/ui/button";
 import { Editor } from 'primereact/editor';
-
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 
 type CategoryOption = {
@@ -78,6 +79,7 @@ const UpdateProducts = ({data, id}:any) => {
     { value: "Ring Journals", label: "Ring Journals" },
     { value: "Mini Diaries", label: "Mini Diaries" },
     { value: "Journal Kits", label: "Journal Kits" },
+    { value: "Hard Cover Diary", label: "Hard Cover Diary" },
   ],
     };
     
@@ -374,7 +376,7 @@ value={categoryOptions.filter(option => formik.values.category.includes(option.v
           </div>
            <div>
             <label className="block mb-1 font-medium text-gray-700">Colors</label>
-            <Select
+            {/* <Select
   isMulti
   name="colors"
   options={colorsOptions}
@@ -384,6 +386,10 @@ value={colorsOptions.filter(option => formik.values.colors.includes(option.value
   onChange={(selected) =>
     formik.setFieldValue("colors", selected.map((item) => item.value))
   }
+/> */}
+<TagsInput
+  value={formik.values.colors}
+  onChange={(tags) => formik.setFieldValue('colors', tags)}
 />
 
             {formik.touched.colors && formik.errors.colors && (

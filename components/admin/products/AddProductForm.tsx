@@ -84,6 +84,7 @@ const AddProductForm = () => {
     { value: "Ring Journals", label: "Ring Journals" },
     { value: "Mini Diaries", label: "Mini Diaries" },
     { value: "Journal Kits", label: "Journal Kits" },
+    { value: "Hard Cover Diary", label: "Hard Cover Diary" },
   ],
 };
 

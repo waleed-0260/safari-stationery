@@ -21,6 +21,13 @@ const productSchema = new mongoose.Schema(
     stock: { type: Number, default: 0 },
     // tags: [{ type: String }], // For search/filter
     isFeatured: { type: Boolean, default: false }, // for "Deals"
+    reviews: [
+      {
+        name: {type: String},
+        email: {type: String},
+        message: {type: String}
+      }
+    ]
   },
   { timestamps: true }
 );
