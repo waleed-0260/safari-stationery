@@ -3,12 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { Product } from "@/models/Product";
 import { connectDB } from "@/lib/Mongodb";
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest, {
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const { name, email, message } = await req.json();
 
     await connectDB();
