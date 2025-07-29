@@ -7,6 +7,7 @@ import { GetProductsById } from '@/lib/GetProducts';
 // import { GetProductsByCategory } from '@/lib/GetProducts';
 import { GetProductsBySubCategory } from '@/lib/GetProducts';
 import Products from '@/components/home/Products';
+import Reviews from '@/components/Products/Reviews';
 const page = async({
   params,
 }: {
@@ -28,7 +29,7 @@ const page = async({
 
   return (
     <div className='flex flex-col items-center justify-center w-full'>
-      <div className='mt-[120px]'></div>
+      <div className='mt-[150px]'></div>
 
         <div className='bg-gray-300  w-full flex flex-row justify-center items-center'>
           <div className='container flex flex-row justify-between items-center'>
@@ -43,6 +44,7 @@ const page = async({
         </div>
 
         <SingleProducts data={data}/>
+        <Reviews productId={data._id}/>
         {relatedProducts?.length > 0  ? 
         <Products ProductsData={relatedProducts} heading="You may also like it"/> :
         null  

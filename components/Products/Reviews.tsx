@@ -1,5 +1,5 @@
+"use client"
 import React from "react"
-
 import { useState } from "react"
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -23,28 +23,8 @@ interface Review {
   message: string
 }
 
-export default function Component() {
-  const [reviews, setReviews] = useState<Review[]>([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      message: "Great product! Really satisfied with the quality and service. Would definitely recommend to others.",
-    },
-    {
-      id: 2,
-      name: "Sarah Johnson",
-      email: "sarah@example.com",
-      message:
-        "Excellent experience from start to finish. The team was professional and the results exceeded my expectations.",
-    },
-    {
-      id: 3,
-      name: "Mike Chen",
-      email: "mike@example.com",
-      message: "Outstanding service and attention to detail. Will definitely be using this again in the future.",
-    },
-  ])
+export default function Reviews({productId}: {productId: String}) {
+  const [reviews, setReviews] = useState<Review[]>([])
 
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -53,22 +33,37 @@ export default function Component() {
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
 
-    if (formData.name && formData.email && formData.message) {
-      const newReview: Review = {
-        id: reviews.length + 1,
-        name: formData.name,
-        email: formData.email,
-        message: formData.message,
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const { name, email, message } = formData;
+
+    if (name && email && message) {
+      try {
+        const res = await fetch(`/api/products/${productId}/review`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, message }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          // Optionally update local state with latest reviews
+          setReviews([data.data[data.data.length - 1], ...reviews]);
+          setFormData({ name: "", email: "", message: "" });
+          setOpen(false);
+        } else {
+          console.error("Error submitting review:", data.message);
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-
-      setReviews([newReview, ...reviews])
-      setFormData({ name: "", email: "", message: "" })
-      setOpen(false)
     }
-  }
+  };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
@@ -78,7 +73,7 @@ export default function Component() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-8">
         <div>
           <h2 className="text-3xl font-bold">Customer Reviews</h2>
@@ -87,12 +82,12 @@ export default function Component() {
 
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button className="cursor-pointer">
               <Plus className="w-4 h-4 mr-2" />
               Add Review
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] max-h-[400px] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Add a Review</DialogTitle>
               <DialogDescription>
@@ -135,7 +130,7 @@ export default function Component() {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">Submit Review</Button>
+                <Button type="submit" className="cursor-pointer">Submit Review</Button>
               </DialogFooter>
             </form>
           </DialogContent>
@@ -143,8 +138,8 @@ export default function Component() {
       </div>
 
       <div className="space-y-6">
-        {reviews.map((review, index) => (
-          <div key={review.id}>
+        {reviews?.map((review, index) => (
+          <div key={index}>
             <div className="space-y-3">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
