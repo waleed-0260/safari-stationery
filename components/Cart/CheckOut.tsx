@@ -29,6 +29,10 @@ export default function CheckOut() {
   }, []);
 
   // const subtotal = cartItems.reduce((sum, item) => sum + item?.sets[0]?.price * item?.quantity, 0);
+    const [couponCode, setCouponCode] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
 const { totalAmount, shippingAdded } = useMemo(() => {
   const subtotal = cartItems.reduce((total, item) => {
     const price = item.sets?.[0]?.price || 0;
@@ -37,8 +41,10 @@ const { totalAmount, shippingAdded } = useMemo(() => {
 
   const shippingFee = 100;
   const shippingAdded = subtotal < 2000;
-  const totalAmount = shippingAdded ? subtotal + shippingFee : subtotal;
-
+  let totalAmount = shippingAdded ? subtotal + shippingFee : subtotal;
+    if (couponApplied) {
+      totalAmount = totalAmount * 0.9;
+    }
   return { totalAmount, shippingAdded };
 }, [cartItems]);
 
@@ -114,6 +120,18 @@ const { totalAmount, shippingAdded } = useMemo(() => {
       }
     },
   });
+
+    const handleCode = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (couponCode.trim().toLowerCase() === "welcome10") {
+      setCouponApplied(true);
+      setErrorMsg("");
+    } else {
+      setCouponApplied(false);
+      setErrorMsg("Invalid coupon code");
+    }
+  };
 
   return (
     <form onSubmit={formik.handleSubmit} className="min-h-screen bg-gray-50 py-8">
@@ -225,10 +243,9 @@ const { totalAmount, shippingAdded } = useMemo(() => {
                 </CardContent>
               </Card> */}
 
-              <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
+              <Button type="submit" className="w-full cursor-pointer add-to-cart" disabled={loading}>
                 <Lock className="w-4 h-4 mr-2" />
                 {loading ? "placing your order": "Place Order"}
-                Place Order
               </Button>
             </div>
 
@@ -247,6 +264,22 @@ const { totalAmount, shippingAdded } = useMemo(() => {
                   ))}
 
                   <Separator />
+                  <div className="flex md:flex-row flex-col">
+      <input
+        type="text"
+        name="code"
+        value={couponCode}
+        onChange={(e) => setCouponCode(e.target.value)}
+        placeholder="Enter coupon code"
+        className="border rounded px-2 w-[60%]"
+      />
+
+      {errorMsg && <p className="text-red-500 text-sm">{errorMsg}</p>}
+
+      <button onClick={handleCode} className="add-to-cart bg-black text-white rounded">
+        Place Order
+      </button>
+                  </div>
                   <div className="flex justify-between text-sm">
                     <span>Subtotal</span>
                     <span>Rs {totalAmount.toFixed(0)}</span>
@@ -259,6 +292,8 @@ const { totalAmount, shippingAdded } = useMemo(() => {
                     <span>Total</span>
                     <span>Rs {totalAmount.toFixed(0)}</span>
                   </div>
+                          {couponApplied && <p className="text-green-600 text-sm">Coupon applied! 10% discount added.</p>}
+
                 </CardContent>
               </Card>
             </div>
