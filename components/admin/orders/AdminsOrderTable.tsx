@@ -177,7 +177,7 @@ export default function AdminOrdersTable({Product}:any) {
                         </div>
                       </td>
                       <td className="p-4">
-                        <div className="font-semibold">{formatCurrency(order.totalAmount)}</div>
+                        <div className="font-semibold">{order.totalAmount.toFixed(0)} PKR</div>
                       </td>
                       <td className="p-4">
                         <StatusBadge status={order.status} />
@@ -285,7 +285,7 @@ export default function AdminOrdersTable({Product}:any) {
                                       {item.sets.length > 0 && (
                                         <>
                                           <span className="mx-2">•</span>
-                                          <span>Price: {formatCurrency(item.sets[0].price)}</span>
+                                          <span>Price: {item.sets[0].price.toFixed(0)}</span>
                                         </>
                                       )}
                                     </div>
@@ -293,8 +293,8 @@ export default function AdminOrdersTable({Product}:any) {
                                   <div className="text-right">
                                     <div className="font-semibold">
                                       {item.sets.length > 0
-                                        ? formatCurrency(item.sets[0].price * item.quantity)
-                                        : "Price TBD"}
+                                        ? (item.sets[0].price * item.quantity).toFixed(0)
+                                        : "Price TBD"} PKR
                                     </div>
                                   </div>
                                 </div>
